@@ -1,0 +1,6 @@
+framework module NerdyUI {
+  umbrella header "NerdyUI-umbrella.h"
+
+  export *
+  module * { export * }
+}
