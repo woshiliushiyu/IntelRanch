@@ -14,13 +14,87 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
+  - HYBMasonryAutoCellHeight (2.0.1):
+    - Masonry (~> 0.6)
+  - IQKeyboardManager (4.0.8)
+  - JSONModel (1.7.0)
+  - Masonry (0.6.4)
+  - MBProgressHUD (1.0.0)
+  - MJRefresh (3.1.12)
+  - NerdyUI (1.1.0):
+    - NerdyUI/Chainable (= 1.1.0)
+    - NerdyUI/Private (= 1.1.0)
+    - NerdyUI/Public (= 1.1.0)
+  - NerdyUI/Chainable (1.1.0):
+    - NerdyUI/Private
+    - NerdyUI/Public
+  - NerdyUI/Private (1.1.0)
+  - NerdyUI/Public (1.1.0):
+    - NerdyUI/Private
+  - PNChart (0.8.9):
+    - UICountingLabel (~> 1.2.0)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
+  - UICountingLabel (1.2.0)
+  - YYCache (1.0.4)
+  - YYImage (1.0.4):
+    - YYImage/Core (= 1.0.4)
+  - YYImage/Core (1.0.4)
+  - YYWebImage (1.0.5):
+    - YYCache
+    - YYImage
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.1.0)
+  - AFNetworking
+  - BlocksKit
+  - FMDB
+  - HYBMasonryAutoCellHeight
+  - IQKeyboardManager
+  - JSONModel
+  - MBProgressHUD
+  - MJRefresh
+  - NerdyUI
+  - PNChart
+  - SDWebImage
+  - YYWebImage
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  HYBMasonryAutoCellHeight: 9296583777080d32ba6257f55e52b7334dd481fc
+  IQKeyboardManager: 1a8189fa153bf09044355ee0ad36826f6767e7f7
+  JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  NerdyUI: cf4bb5e3fc4f588eb02cbd9da5acbbbef43d8cd7
+  PNChart: 84774d225c2126ded6c93d4dbe6ae98c3a73c2d2
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
+  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
+  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
+  YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: d55ca455c44b4a0f3151ea2cc5cdd2a98b1195b7
+PODFILE CHECKSUM: 7e9bf91a1f6186ac219b416b4a9b3a379b5307ed
 
 COCOAPODS: 1.2.0

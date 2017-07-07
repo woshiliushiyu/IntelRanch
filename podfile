@@ -3,7 +3,16 @@ platform:ios,'8.0'
 target 'IntelRanch' do
 inhibit_all_warnings!                   #消除所有第三方的警告
 use_frameworks!
-
-pod 'AFNetworking',     '~> 3.1.0'
-
+pod 'NerdyUI'
+pod 'AFNetworking'
+pod 'HYBMasonryAutoCellHeight'
+pod 'MBProgressHUD'
+pod 'PNChart'
+pod 'MJRefresh'
+pod 'BlocksKit'
+pod 'JSONModel'
+pod 'FMDB'
+pod 'IQKeyboardManager'
+pod 'YYWebImage'
+pod 'SDWebImage'
 end
