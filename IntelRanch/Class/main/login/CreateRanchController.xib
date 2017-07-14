@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16D30" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateRanchController">
+            <connections>
+                <outlet property="AreaText" destination="QQg-SB-I89" id="cN7-Pn-4xO"/>
+                <outlet property="addressText" destination="1uP-0U-WZd" id="tJy-Op-2rY"/>
+                <outlet property="bgView" destination="vaI-hl-jgZ" id="u07-pb-N5B"/>
+                <outlet property="nameText" destination="ezo-XK-vFs" id="sgx-uk-fUF"/>
+                <outlet property="timeText" destination="YDz-Yb-f7P" id="ba6-RJ-lF3"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TRb-hQ-yIm" customClass="TPKeyboardAvoidingScrollView">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vaI-hl-jgZ">
+                            <rect key="frame" x="20" y="20" width="335" height="627"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="牧场名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5i-HS-UQO">
+                                    <rect key="frame" x="15" y="20" width="62" height="18"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="清河牧场" placeholder="请输入牧场名称" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ezo-XK-vFs">
+                                    <rect key="frame" x="15" y="48" width="305" height="30"/>
+                                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="4wK-bJ-vd1"/>
+                                    </constraints>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                </textField>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="牧场地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bni-zk-qRE">
+                                    <rect key="frame" x="15" y="93" width="62" height="18"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="海淀区清河" placeholder="请输入牧场地址" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1uP-0U-WZd">
+                                    <rect key="frame" x="15" y="121" width="305" height="30"/>
+                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="dd2-xG-EAg"/>
+                                    </constraints>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                </textField>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="建场时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6KY-YZ-QVF">
+                                    <rect key="frame" x="15" y="166" width="62" height="18"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="2017-10-11" placeholder="请输入建场时间" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YDz-Yb-f7P">
+                                    <rect key="frame" x="15" y="194" width="305" height="30"/>
+                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="F8g-dx-8pv"/>
+                                    </constraints>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                </textField>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="占地面积" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h9J-8t-PJy">
+                                    <rect key="frame" x="15" y="239" width="62" height="18"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="11" placeholder="请输入占地面积" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="QQg-SB-I89">
+                                    <rect key="frame" x="15" y="267" width="305" height="30"/>
+                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="x34-Tr-nSG"/>
+                                    </constraints>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done"/>
+                                </textField>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RmW-Nf-JBC">
+                                    <rect key="frame" x="15" y="194" width="305" height="30"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="8su-5h-Glv"/>
+                                    </constraints>
+                                    <connections>
+                                        <action selector="setRanchBtn:" destination="-1" eventType="touchUpInside" id="DS2-GH-j30"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="h9J-8t-PJy" firstAttribute="leading" secondItem="vaI-hl-jgZ" secondAttribute="leading" constant="15" id="0oG-bP-TZP"/>
+                                <constraint firstAttribute="trailing" secondItem="1uP-0U-WZd" secondAttribute="trailing" constant="15" id="2w8-iz-ZPb"/>
+                                <constraint firstItem="c5i-HS-UQO" firstAttribute="top" secondItem="vaI-hl-jgZ" secondAttribute="top" constant="20" id="3iI-DJ-Fah"/>
+                                <constraint firstItem="bni-zk-qRE" firstAttribute="leading" secondItem="vaI-hl-jgZ" secondAttribute="leading" constant="15" id="6uz-yf-Y9S"/>
+                                <constraint firstItem="QQg-SB-I89" firstAttribute="leading" secondItem="vaI-hl-jgZ" secondAttribute="leading" constant="15" id="7FQ-8l-SXq"/>
+                                <constraint firstItem="YDz-Yb-f7P" firstAttribute="leading" secondItem="vaI-hl-jgZ" secondAttribute="leading" constant="15" id="82I-Bc-fyn"/>
+                                <constraint firstAttribute="trailing" secondItem="QQg-SB-I89" secondAttribute="trailing" constant="15" id="CLg-TK-pgU"/>
+                                <constraint firstItem="QQg-SB-I89" firstAttribute="top" secondItem="h9J-8t-PJy" secondAttribute="bottom" constant="10" id="EYh-v8-fbB"/>
+                                <constraint firstItem="RmW-Nf-JBC" firstAttribute="top" secondItem="6KY-YZ-QVF" secondAttribute="bottom" constant="10" id="FU4-FL-Atj"/>
+                                <constraint firstAttribute="trailing" secondItem="RmW-Nf-JBC" secondAttribute="trailing" constant="15" id="Gv0-TB-SXn"/>
+                                <constraint firstItem="6KY-YZ-QVF" firstAttribute="leading" secondItem="vaI-hl-jgZ" secondAttribute="leading" constant="15" id="Hvi-oQ-0B2"/>
+                                <constraint firstItem="h9J-8t-PJy" firstAttribute="top" secondItem="YDz-Yb-f7P" secondAttribute="bottom" constant="15" id="NIf-Pa-7PN"/>
+                                <constraint firstItem="1uP-0U-WZd" firstAttribute="top" secondItem="bni-zk-qRE" secondAttribute="bottom" constant="10" id="OWY-l0-HX2"/>
+                                <constraint firstItem="6KY-YZ-QVF" firstAttribute="top" secondItem="1uP-0U-WZd" secondAttribute="bottom" constant="15" id="PGQ-93-ffL"/>
+                                <constraint firstItem="RmW-Nf-JBC" firstAttribute="leading" secondItem="vaI-hl-jgZ" secondAttribute="leading" constant="15" id="PsO-ep-ilm"/>
+                                <constraint firstItem="YDz-Yb-f7P" firstAttribute="top" secondItem="6KY-YZ-QVF" secondAttribute="bottom" constant="10" id="Rcs-mF-nQz"/>
+                                <constraint firstItem="bni-zk-qRE" firstAttribute="top" secondItem="ezo-XK-vFs" secondAttribute="bottom" constant="15" id="Y3t-9q-RXE"/>
+                                <constraint firstItem="ezo-XK-vFs" firstAttribute="top" secondItem="c5i-HS-UQO" secondAttribute="bottom" constant="10" id="YcN-4x-t9q"/>
+                                <constraint firstAttribute="trailing" secondItem="ezo-XK-vFs" secondAttribute="trailing" constant="15" id="i2V-zc-zVw"/>
+                                <constraint firstItem="1uP-0U-WZd" firstAttribute="leading" secondItem="vaI-hl-jgZ" secondAttribute="leading" constant="15" id="jH8-pY-49I"/>
+                                <constraint firstItem="c5i-HS-UQO" firstAttribute="leading" secondItem="vaI-hl-jgZ" secondAttribute="leading" constant="15" id="lIA-6X-xbr"/>
+                                <constraint firstAttribute="trailing" secondItem="YDz-Yb-f7P" secondAttribute="trailing" constant="15" id="nFn-gW-s6w"/>
+                                <constraint firstItem="ezo-XK-vFs" firstAttribute="leading" secondItem="vaI-hl-jgZ" secondAttribute="leading" constant="15" id="yUn-iV-E66"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="vaI-hl-jgZ" firstAttribute="leading" secondItem="TRb-hQ-yIm" secondAttribute="leading" constant="20" id="2jW-Qd-iyL"/>
+                        <constraint firstItem="vaI-hl-jgZ" firstAttribute="top" secondItem="TRb-hQ-yIm" secondAttribute="top" constant="20" id="PN5-bd-1QL"/>
+                        <constraint firstAttribute="trailing" secondItem="vaI-hl-jgZ" secondAttribute="trailing" constant="20" id="YEz-WV-8Yy"/>
+                        <constraint firstItem="vaI-hl-jgZ" firstAttribute="centerY" secondItem="TRb-hQ-yIm" secondAttribute="centerY" id="YVb-aX-lzA"/>
+                        <constraint firstAttribute="bottom" secondItem="vaI-hl-jgZ" secondAttribute="bottom" constant="20" id="ccB-qh-DHZ"/>
+                        <constraint firstItem="vaI-hl-jgZ" firstAttribute="centerX" secondItem="TRb-hQ-yIm" secondAttribute="centerX" id="s2W-24-X7C"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="TRb-hQ-yIm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dGS-D7-avK"/>
+                <constraint firstAttribute="bottom" secondItem="TRb-hQ-yIm" secondAttribute="bottom" id="kFg-mv-lnD"/>
+                <constraint firstAttribute="trailing" secondItem="TRb-hQ-yIm" secondAttribute="trailing" id="q0z-Bb-eLb"/>
+                <constraint firstItem="TRb-hQ-yIm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xqI-D0-MEe"/>
+            </constraints>
+            <point key="canvasLocation" x="-26.5" y="-51.5"/>
+        </view>
+    </objects>
+</document>

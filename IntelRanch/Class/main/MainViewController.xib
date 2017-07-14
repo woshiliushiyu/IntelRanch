@@ -11,6 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="bgBottemView" destination="fIT-Sz-cnT" id="GLW-V9-Tku"/>
+                <outlet property="right" destination="GKa-RJ-fNT" id="ENi-Nq-Y3B"/>
+                <outlet property="top" destination="zfq-GL-IpZ" id="i3I-Hm-MQD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,56 +22,128 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uH7-Wx-1eT">
-                    <rect key="frame" x="29" y="325" width="92" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="牧场基本信息"/>
-                    <connections>
-                        <action selector="basicInfoBtn:" destination="-1" eventType="touchUpInside" id="9Pn-cA-wUf"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NrT-nW-JJs">
-                    <rect key="frame" x="232" y="325" width="92" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="个人基本信息"/>
-                    <connections>
-                        <action selector="personInfoBtn:" destination="-1" eventType="touchUpInside" id="wx8-tn-w2N"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ah-af-2g8">
-                    <rect key="frame" x="29" y="408" width="92" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="新生犊牛管理"/>
-                    <connections>
-                        <action selector="calfManagerBtn:" destination="-1" eventType="touchUpInside" id="ynF-a8-eMw"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8at-1o-fhD">
-                    <rect key="frame" x="232" y="408" width="92" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="犊牛疾病管理"/>
-                    <connections>
-                        <action selector="basicManagerBtn:" destination="-1" eventType="touchUpInside" id="orq-tb-vGa"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ELO-em-d5p">
-                    <rect key="frame" x="29" y="510" width="92" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="犊牛饲料管理"/>
-                    <connections>
-                        <action selector="raisingManagerBtn:" destination="-1" eventType="touchUpInside" id="cCj-k9-0sS"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="byg-df-90G">
-                    <rect key="frame" x="232" y="510" width="92" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="常见问题解答"/>
-                    <connections>
-                        <action selector="problemanageBtn:" destination="-1" eventType="touchUpInside" id="xoe-4B-Fau"/>
-                    </connections>
-                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fIT-Sz-cnT">
+                    <rect key="frame" x="-1" y="397" width="376" height="270"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bj_top" translatesAutoresizingMaskIntoConstraints="NO" id="wGI-nf-m5d">
+                            <rect key="frame" x="0.0" y="0.0" width="376" height="270"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uJw-Nc-1F4">
+                            <rect key="frame" x="221" y="145" width="130" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="9JX-ol-Sf6"/>
+                                <constraint firstAttribute="width" constant="130" id="zsM-nw-dzK"/>
+                            </constraints>
+                            <state key="normal" image="changjianwenti"/>
+                            <connections>
+                                <action selector="problemanageBtn:" destination="-1" eventType="touchUpInside" id="GGa-bL-JiL"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrL-SC-ZNI">
+                            <rect key="frame" x="221" y="80" width="130" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="130" id="8Bh-MB-c7B"/>
+                                <constraint firstAttribute="height" constant="50" id="g7F-Pc-Tb2"/>
+                            </constraints>
+                            <state key="normal" image="jibing"/>
+                            <connections>
+                                <action selector="basicManagerBtn:" destination="-1" eventType="touchUpInside" id="CLd-S9-Oro"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lgZ-Ht-TRc">
+                            <rect key="frame" x="25" y="180" width="130" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="RY5-us-cHu"/>
+                                <constraint firstAttribute="width" constant="130" id="kCd-sb-4rR"/>
+                            </constraints>
+                            <state key="normal" image="siyang"/>
+                            <connections>
+                                <action selector="raisingManagerBtn:" destination="-1" eventType="touchUpInside" id="qnS-t9-0Mf"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSi-vz-cA1">
+                            <rect key="frame" x="25" y="110" width="130" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="96O-iH-1ZG"/>
+                                <constraint firstAttribute="width" constant="130" id="LVA-Wv-DYY"/>
+                            </constraints>
+                            <state key="normal" image="duniuguanli"/>
+                            <connections>
+                                <action selector="calfManagerBtn:" destination="-1" eventType="touchUpInside" id="s9N-Pc-Kso"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ZI-GI-4nU">
+                            <rect key="frame" x="319" y="28" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="4OG-xj-Tgv"/>
+                                <constraint firstAttribute="height" constant="50" id="bXN-Gb-cT0"/>
+                            </constraints>
+                            <state key="normal" image="gerenzhongxin"/>
+                            <connections>
+                                <action selector="personInfoBtn:" destination="-1" eventType="touchUpInside" id="pf1-7R-30Z"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeG-0T-Rt1">
+                            <rect key="frame" x="25" y="40" width="130" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="130" id="Aog-se-7se"/>
+                                <constraint firstAttribute="height" constant="50" id="GjT-nv-OlP"/>
+                            </constraints>
+                            <state key="normal" image="jinbenxinxi"/>
+                            <connections>
+                                <action selector="basicInfoBtn:" destination="-1" eventType="touchUpInside" id="k0H-LP-cJN"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="9ZI-GI-4nU" secondAttribute="trailing" constant="7" id="GKa-RJ-fNT"/>
+                        <constraint firstItem="wGI-nf-m5d" firstAttribute="leading" secondItem="fIT-Sz-cnT" secondAttribute="leading" id="HD9-ol-gxe"/>
+                        <constraint firstItem="CeG-0T-Rt1" firstAttribute="leading" secondItem="fIT-Sz-cnT" secondAttribute="leading" constant="25" id="IhJ-mO-4TF"/>
+                        <constraint firstAttribute="height" constant="270" id="QFh-98-r1K"/>
+                        <constraint firstItem="uJw-Nc-1F4" firstAttribute="top" secondItem="yrL-SC-ZNI" secondAttribute="bottom" constant="15" id="Ra9-1t-shc"/>
+                        <constraint firstAttribute="bottom" secondItem="wGI-nf-m5d" secondAttribute="bottom" id="VSW-br-EeL"/>
+                        <constraint firstAttribute="trailing" secondItem="yrL-SC-ZNI" secondAttribute="trailing" constant="25" id="XMm-xV-PzP"/>
+                        <constraint firstAttribute="trailing" secondItem="wGI-nf-m5d" secondAttribute="trailing" id="XTk-F2-ZlO"/>
+                        <constraint firstItem="lgZ-Ht-TRc" firstAttribute="leading" secondItem="fIT-Sz-cnT" secondAttribute="leading" constant="25" id="faO-Jt-LUZ"/>
+                        <constraint firstItem="lgZ-Ht-TRc" firstAttribute="top" secondItem="xSi-vz-cA1" secondAttribute="bottom" constant="20" id="hOj-h4-q3G"/>
+                        <constraint firstItem="CeG-0T-Rt1" firstAttribute="top" secondItem="fIT-Sz-cnT" secondAttribute="top" constant="40" id="k3p-fe-TNT"/>
+                        <constraint firstItem="wGI-nf-m5d" firstAttribute="top" secondItem="fIT-Sz-cnT" secondAttribute="top" id="kqj-xK-RIb"/>
+                        <constraint firstItem="yrL-SC-ZNI" firstAttribute="top" secondItem="fIT-Sz-cnT" secondAttribute="top" constant="80" id="l1E-wx-6ff"/>
+                        <constraint firstItem="xSi-vz-cA1" firstAttribute="top" secondItem="CeG-0T-Rt1" secondAttribute="bottom" constant="20" id="ne5-Ep-tMq"/>
+                        <constraint firstItem="xSi-vz-cA1" firstAttribute="leading" secondItem="fIT-Sz-cnT" secondAttribute="leading" constant="25" id="skS-jw-EGr"/>
+                        <constraint firstAttribute="trailing" secondItem="uJw-Nc-1F4" secondAttribute="trailing" constant="25" id="zdC-Ap-Ex8"/>
+                        <constraint firstItem="9ZI-GI-4nU" firstAttribute="top" secondItem="fIT-Sz-cnT" secondAttribute="top" constant="28" id="zfq-GL-IpZ"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="VQc-DM-FEp">
+                    <rect key="frame" x="20" y="40" width="110" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="110" id="852-ii-HR5"/>
+                        <constraint firstAttribute="height" constant="40" id="xbk-S8-x9I"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fIT-Sz-cnT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="-1" id="AMF-bt-swv"/>
+                <constraint firstItem="VQc-DM-FEp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="40" id="Jvk-h5-nF9"/>
+                <constraint firstItem="VQc-DM-FEp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="NMg-bJ-o4G"/>
+                <constraint firstAttribute="bottom" secondItem="fIT-Sz-cnT" secondAttribute="bottom" id="SiL-hj-6px"/>
+                <constraint firstAttribute="trailing" secondItem="fIT-Sz-cnT" secondAttribute="trailing" id="oea-VB-4nx"/>
+            </constraints>
+            <point key="canvasLocation" x="34.5" y="-237.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="bj_top" width="375" height="302"/>
+        <image name="changjianwenti" width="160" height="60"/>
+        <image name="duniuguanli" width="155" height="61"/>
+        <image name="gerenzhongxin" width="49" height="49"/>
+        <image name="jibing" width="160" height="61"/>
+        <image name="jinbenxinxi" width="155" height="57"/>
+        <image name="logo" width="126" height="43"/>
+        <image name="siyang" width="160" height="60"/>
+    </resources>
 </document>

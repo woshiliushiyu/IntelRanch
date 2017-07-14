@@ -192,7 +192,7 @@ static const char popAnimation;
 
 /* 判断手机号是否正确 */
 +(BOOL)CheckPhoneNumInput:(NSString *)text{
-    NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0-9])|(17[0-9]))\\d{8}$";
+    NSString *regex = @"^((13[0-9])|(15[^4,\\D])|(18[0-9])|(14[57])|(17[013678]))\\d{9}$";
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
     return  [pred evaluateWithObject:text];
 }

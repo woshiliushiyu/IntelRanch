@@ -24,11 +24,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>IQKeyboardManager.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>JSONModel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -69,6 +64,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TPKeyboardAvoiding.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UICountingLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -92,6 +92,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0103AD0ED72B2037B61ADE83C27F6D5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0BE2D2174D38C4D86F7072B7DF0A6DD4</key>
 		<dict>
 			<key>primary</key>
@@ -107,11 +112,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>31054F96D8D366476EE0723BB51026F0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>41FA54D12162DAD51D02FC58A2CD5034</key>
 		<dict>
 			<key>primary</key>
@@ -122,12 +122,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>85792B64A978DAE59E9B01BE06757DFB</key>
+		<key>674D48DA3A79418E0CF77E92C3DD4751</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A88D92404837682A0B0C7918BA19D304</key>
+		<key>773B55E04774A79D4F5345888AB87D70</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A5140DB6B2A1684C7D2EF109D4832D3A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -137,12 +142,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B9496A0B4C8AA9485342650135E00968</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C36CB2CB977A4E7D954935096D00A1ED</key>
+		<key>B2AD31FA290070B1B631FDB9A2CC0533</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -167,7 +167,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F79DAA05BA46EC1179A3D684ABEAC8BD</key>
+		<key>F63424912073FE20B095A9FDEE74A4B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -8,6 +8,7 @@
 
 #import "JHGridView.h"
 @interface JHGridView()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
+
 @property (nonatomic) NSArray *titles;
 @property (nonatomic) NSArray *tags;
 @property (nonatomic) NSArray *objects;
@@ -102,7 +103,7 @@
             offsetX += gridWidth;
             UIView *titleView = [[UIView alloc] initWithFrame:frame];
             titleView.layer.borderWidth = 0.5;
-            titleView.layer.borderColor = [[UIColor groupTableViewBackgroundColor] CGColor];
+            titleView.layer.borderColor = [UIColor whiteColor].CGColor;//[[UIColor groupTableViewBackgroundColor] CGColor];
             titleView.backgroundColor = [self backgroundColorForTitleAtIndex:i];
             UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
             titleLbl.text = [_titles objectAtIndex:i];
@@ -128,12 +129,15 @@
         offsetX += gridWidth;
         UITableView *tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
         tableView.layer.borderWidth = 0.5;
-        tableView.layer.borderColor = [[UIColor groupTableViewBackgroundColor] CGColor];
+        tableView.layer.borderColor = [UIColor whiteColor].CGColor;//[[UIColor groupTableViewBackgroundColor] CGColor];
         tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
         tableView.scrollEnabled = NO;
         tableView.tag = i;
         tableView.delegate = self;
         tableView.dataSource = self;
+        tableView.showsVerticalScrollIndicator = NO;
+        tableView.showsHorizontalScrollIndicator = NO;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_backScrollView addSubview:tableView];
     }
     
@@ -142,7 +146,6 @@
     float contentHeight = [self isTitleFixed]?tableHeight:tableHeight + [self heightForTitles];
     [_backScrollView setContentSize:CGSizeMake(contentWidth, [self isTitleFixed]?tableHeight:contentHeight)];
 }
-
 #pragma mark --Set Up Methods
 - (void)applyAlignmentTypeFor:(UILabel *)label{
     switch ([self gridViewAlignmentType]) {
@@ -173,12 +176,17 @@
     
     //setup content of cells
     long index = indexPath.row;
+    cell.textLabel.numberOfLines = 0;
     cell.textLabel.text = [[_objects objectAtIndex:index] valueForKey:[_tags objectAtIndex:tableView.tag]];
     [self applyAlignmentTypeFor:cell.textLabel];
     
     GridIndex gridIndex;
     gridIndex.col = tableView.tag;
     gridIndex.row = indexPath.row;
+    
+    cell.layer.borderWidth = 0.5;
+    cell.layer.borderColor = [UIColor whiteColor].CGColor;
+    
     cell.backgroundColor = [self backgroundColorForGridAtGridIndex:gridIndex];
     cell.textLabel.textColor = [self textColorForGridAtGridIndex:gridIndex];
     [cell.textLabel setFont:[self fontSizeForGridAtGridIndex:gridIndex]];

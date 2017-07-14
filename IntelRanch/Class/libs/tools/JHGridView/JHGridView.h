@@ -61,6 +61,7 @@ typedef enum{
 
 @interface JHGridView : UIView
 @property (nonatomic) id<JHGridViewDelegate> delegate;
+@property(nonatomic,assign)BOOL isRefresh;
 - (instancetype)initWithFrame:(CGRect)frame;
 - (void)setTitles:(NSArray *)titles andObjects:(NSArray *)objects withTags:(NSArray *)tags;
 @end

@@ -10,7 +10,7 @@
 #import "SudokuView.h"
 @interface OtherAdjunctCell ()
 {
-    CGFloat cellHeight;
+    CGFloat cellHeights;
 }
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (strong, nonatomic) IBOutlet UIButton *addBtn;
@@ -39,6 +39,7 @@
     if (self=  [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self=  [[NSBundle mainBundle] loadNibNamed:[NSString stringWithString:NSStringFromClass([self class])] owner:self options:nil].firstObject;
+        self.backgroundColor = BGCOLOR;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.userInteractionEnabled = YES;
         [self addShadowToCell:_bgView];
@@ -53,7 +54,7 @@
         self.videoView.layer.contents = (__bridge id _Nullable)(image.CGImage);
         self.videoView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
         
-        self.cellHeight =  cellHeight+(self.videoView.layer.contents==nil?20:180.0f);
+        self.cellHeight =  cellHeights+(self.videoView.layer.contents==nil?20:180.0f);
     }
     return self;
 }
@@ -96,6 +97,8 @@
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(cellX, cellY, cellW, cellW)];
         imageView.image = [UIImage imageNamed:tempArray[i]];
         imageView.backgroundColor = [UIColor grayColor];
+        imageView.layer.cornerRadius = 5;
+        imageView.layer.masksToBounds = YES;
         imageView.userInteractionEnabled = YES;
         imageView.tag = 100+i;
         
@@ -108,11 +111,11 @@
         
         if (i==tempArray.count-1) {
             
-           cellHeight = CGRectGetMaxY(imageView.frame)+10;
+           cellHeights = CGRectGetMaxY(imageView.frame)+10;
             
-            NSLog(@"高度为%f",cellHeight);
+            NSLog(@"高度为%f",cellHeights);
             
-            _photoHeight.constant = cellHeight;
+            _photoHeight.constant = cellHeights;
         }
     }
 }

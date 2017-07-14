@@ -12,7 +12,7 @@ pod 'MJRefresh'
 pod 'BlocksKit'
 pod 'JSONModel'
 pod 'FMDB'
-pod 'IQKeyboardManager'
+pod 'TPKeyboardAvoiding'
 pod 'YYWebImage'
 pod 'SDWebImage'
 end

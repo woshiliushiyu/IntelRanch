@@ -29,7 +29,8 @@
 #import <YYImage/YYImage.h>
 #import <YYCache/YYCache.h>
 #import <SDWebImage/SDImageCache.h>
-#import <IQKeyboardManager/IQKeyboardManager.h>
+#import <TPKeyboardAvoiding/TPKeyboardAvoidingTableView.h>
+#import <TPKeyboardAvoiding/TPKeyboardAvoidingScrollView.h>
 #import <HYBMasonryAutoCellHeight/UITableView+HYBCacheHeight.h>
 #import <HYBMasonryAutoCellHeight/UITableViewCell+HYBMasonryAutoCellHeight.h>
 
@@ -38,7 +39,13 @@
 #import "MPFileManager.h"
 #import "LCProgressHUD.h"
 #import "JHGridView.h"
+#import "ZYInputAlertView.h"
 #import "NSArray+Sudoku.h"
 #import "YYPhotoBrowseView.h"
+#import "YTKKeyValueStore.h"
+#import "RequestTool.h"
+#import "LoginInfoModel.h"
+#import "AppDelegate.h"
+#import "LocalDataTool.h"
 #import "Macros.h"
 #endif /* IntelRanchHeader_pch */

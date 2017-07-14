@@ -67,6 +67,14 @@
 {
     return [UIColor grayColor];
 }
+-(UIColor *)backgroundColorForTitleAtIndex:(long)index
+{
+    return BGCOLOR;
+}
+-(UIColor *)backgroundColorForGridAtGridIndex:(GridIndex)gridIndex
+{
+    return BGCOLOR;
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

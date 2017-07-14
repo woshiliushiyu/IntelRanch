@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface RanchInfoCell : UITableViewCell
+@property(nonatomic,copy)void (^SelectRanchInfoBlock)();
+@property(nonatomic,strong)NSMutableArray * dataArray;
+@property (strong, nonatomic) IBOutlet UILabel *headerLabel;
 
 @end

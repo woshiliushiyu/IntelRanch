@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface HerdInfoCell : UITableViewCell
-
+@property(nonatomic,copy)void (^SelectSetBlock)();
 @end

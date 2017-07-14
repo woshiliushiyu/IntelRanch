@@ -23,6 +23,7 @@
     if (self =[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self=[[NSBundle mainBundle] loadNibNamed:[NSString stringWithString:NSStringFromClass([self class])] owner:self options:nil].firstObject;
+        self.backgroundColor = BGCOLOR;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self addShadowToCell:self.bgView];
         
@@ -37,7 +38,11 @@
 }
 -(void)touchSetting
 {
-    NSLog(@"点击设置了");
+    NSLog(@"进入犊牛样本");
+    if (self.PushCalfSampleViewBlock) {
+        self.PushCalfSampleViewBlock();
+    }
+    
 }
 -(void)addShadowToCell:(UIView*)bgView
 {

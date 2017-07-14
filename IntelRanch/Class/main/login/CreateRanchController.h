@@ -1,0 +1,13 @@
+//
+//  CreateRanchController.h
+//  IntelRanch
+//
+//  Created by 流诗语 on 2017/7/12.
+//  Copyright © 2017年 刘世玉. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface CreateRanchController : UIViewController
+@property(nonatomic,strong)NSArray * dataArray;
+@end

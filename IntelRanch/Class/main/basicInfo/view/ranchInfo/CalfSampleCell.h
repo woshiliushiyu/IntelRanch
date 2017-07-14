@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CalfSampleCell : UITableViewCell
-
+@property(nonatomic,copy)void (^PushCalfSampleViewBlock)();
 @end

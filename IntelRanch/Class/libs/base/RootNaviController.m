@@ -29,9 +29,9 @@
     
     // 设置导航栏的标题颜色，字体
     NSDictionary* textAttrs = @{NSForegroundColorAttributeName:
-                                    [UIColor blackColor],
+                                    [UIColor whiteColor],
                                 NSFontAttributeName:
-                                    [UIFont fontWithName:@"Helvetica"size:18.0],
+                                    [UIFont fontWithName:@"Helvetica"size:21.0],
                                 };
     [self.navigationBar setTitleTextAttributes:textAttrs];
     
@@ -60,7 +60,7 @@
 {
     if (self.viewControllers.count >= 1) {
         viewController.hidesBottomBarWhenPushed = YES;
-        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back2_pgnews"] style:UIBarButtonItemStylePlain target:self action:@selector(navGoBack)];
+        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"backarrow"] style:UIBarButtonItemStylePlain target:self action:@selector(navGoBack)];
     }
     [super pushViewController:viewController animated:animated];
 }

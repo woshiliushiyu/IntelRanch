@@ -49,11 +49,15 @@
 #define kPathCache [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
 
 //AppDelegate对象
-#define AppDelegateInstance [[UIApplication sharedApplication] delegate]
+#define AppDelegateMain [[UIApplication sharedApplication] delegate]
 
 
-#define GRAY RGBColor(203, 203, 203)
+#define GRAY RGBColor(22, 141, 205)
+#define BGCOLOR RGBColor(239, 239, 246)
+#define FONTCOL RGBColor(176,177,180)
+#define BIGCOL RGBColor(100,100,100)
 
+#define CHARCOLOR RGBColor(106,106,106)
 
 //打印
 #ifdef DEBUG

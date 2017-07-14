@@ -24,6 +24,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self=[[NSBundle mainBundle] loadNibNamed:[NSString stringWithString:NSStringFromClass([self class])] owner:self options:nil].firstObject;
+        self.backgroundColor = BGCOLOR;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self addShadowToCell:self.bgView];
         [self.settBtn addTarget:self action:@selector(touchSetting) forControlEvents:UIControlEventTouchUpInside];
@@ -57,6 +58,9 @@
 -(void)touchSetting
 {
     NSLog(@"点击设置了");
+    if (self.SelectSetBlock) {
+        self.SelectSetBlock();
+    }
 }
 -(void)addShadowToCell:(UIView*)bgView
 {

@@ -1,0 +1,139 @@
+//
+//  SelectRanchController.m
+//  IntelRanch
+//
+//  Created by 流诗语 on 2017/7/10.
+//  Copyright © 2017年 刘世玉. All rights reserved.
+//
+
+#import "SelectRanchController.h"
+#import "MainViewController.h"
+#import "SelectRanchCell.h"
+#import "RootNaviController.h"
+#import "MyRanchInfoModel.h"
+@interface SelectRanchController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    NSInteger _isSelectRow;
+    SelectRanchCell * tempCell;
+}
+@property (strong, nonatomic) IBOutlet UIImageView *titleView;
+@property(nonatomic,strong)UITableView * tableView;
+@end
+
+@implementation SelectRanchController
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@0 forKey:@"selectRanch"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    self.navigationItem.title = @"登    录";
+    
+    UIImage *image = [UIImage imageNamed:@"bj_login"];
+    self.view.layer.contents = (__bridge id _Nullable)(image.CGImage);
+    self.view.layer.contentsRect = CGRectMake(0, 0, 1, 1);
+    
+    [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.titleView.mas_bottom).offset(40);
+        make.left.right.bottom.mas_equalTo(self.view);
+    }];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(didNavBtnClick)];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+}
+
+- (void)didNavBtnClick {
+    
+    MyRanchInfoModel * model = self.dataArray[_isSelectRow];
+    
+    MainViewController * mainView = [[MainViewController alloc] init];
+    
+    mainView.ranchID = model.id;
+    
+    AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:mainView];
+    
+    [LocalDataTool putDataToTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])] Data:model];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:[model.id integerValue]] forKey:@"selectRanch"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+#pragma mark === delegate
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.dataArray.count;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    SelectRanchCell * cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithString:NSStringFromClass([SelectRanchCell class])]];
+    
+    if (!cell) {
+        cell = [[SelectRanchCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithString:NSStringFromClass([SelectRanchCell class])]];
+    }
+    MyRanchInfoModel * model = self.dataArray[indexPath.row];
+    
+    cell.nameString = model.name;
+    
+    return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60.0f;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SelectRanchCell * cell = (SelectRanchCell*)[tableView cellForRowAtIndexPath:indexPath];
+
+    if (tempCell == cell) {
+        
+        return;
+    }
+    
+    UIImage * bgImage = GetImage(@"dianjizhuangtai");
+    cell.bgView.layer.contents = (__bridge id _Nullable)(bgImage.CGImage);
+    cell.bgView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
+    
+    UIImage * nomalImg = GetImage(@"weidianji");
+    tempCell.bgView.layer.contents = (__bridge id _Nullable)(nomalImg.CGImage);
+    tempCell.bgView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
+    
+    tempCell = cell;
+    
+    _isSelectRow = indexPath.row;
+    
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+-(UITableView *)tableView
+{
+    if (!_tableView) {
+        
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.delegate  =  self;
+        _tableView.dataSource = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.tableFooterView = [UIView new];
+        _tableView.backgroundColor = [UIColor clearColor];
+        _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.showsHorizontalScrollIndicator = NO;
+    }
+    return _tableView;
+}
+-(void)setDataArray:(NSArray *)dataArray
+{
+    _dataArray = dataArray;
+    
+}
+@end
