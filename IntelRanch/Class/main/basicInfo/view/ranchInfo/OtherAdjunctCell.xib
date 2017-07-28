@@ -15,19 +15,18 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="299.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lXI-Cx-vsT">
                         <rect key="frame" x="20" y="20" width="280" height="255"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7w-Zw-cAu">
-                                <rect key="frame" x="242" y="10" width="30" height="18"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7w-Zw-cAu">
+                                <rect key="frame" x="253" y="10" width="19" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="7FR-zu-TcS"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                <state key="normal" title="新增">
+                                <state key="normal" image="bianji">
                                     <color key="titleColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
@@ -47,14 +46,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.牧场的基本信息照片" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r10-B6-JWg">
-                                <rect key="frame" x="10" y="49" width="110" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r10-B6-JWg">
+                                <rect key="frame" x="10" y="49" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                 <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sLp-H6-XB3">
-                                <rect key="frame" x="10" y="75" width="260" height="1"/>
+                                <rect key="frame" x="10" y="61" width="260" height="1"/>
                                 <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="aHU-13-afU"/>
@@ -64,21 +63,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D1f-J8-M0u">
-                                <rect key="frame" x="10" y="64" width="228" height="1"/>
+                                <rect key="frame" x="10" y="50" width="228" height="1"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="gh0-Zl-z2V"/>
                                     <constraint firstAttribute="height" constant="1" id="sL3-bP-v5i"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.牧场的视频" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFk-af-DEy">
-                                <rect key="frame" x="10" y="86" width="67" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFk-af-DEy">
+                                <rect key="frame" x="10" y="72" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                 <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SjE-r6-tTB">
-                                <rect key="frame" x="248" y="53" width="27" height="17"/>
+                                <rect key="frame" x="248" y="39" width="27" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="eHX-lg-znT"/>
                                     <constraint firstAttribute="width" constant="27" id="eJl-7e-7Nj"/>
@@ -89,11 +88,26 @@
                                 </state>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5C6-HL-Lzj">
-                                <rect key="frame" x="10" y="110" width="228" height="150"/>
+                                <rect key="frame" x="10" y="82" width="228" height="150"/>
+                                <subviews>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bofang" translatesAutoresizingMaskIntoConstraints="NO" id="QJp-lH-pva">
+                                        <rect key="frame" x="94.5" y="55.5" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="KDb-ke-ZFb"/>
+                                            <constraint firstAttribute="width" constant="40" id="ibS-xV-FaK"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="Qff-0l-2ic"/>
+                                    <constraint firstItem="QJp-lH-pva" firstAttribute="centerX" secondItem="5C6-HL-Lzj" secondAttribute="centerX" id="bBu-2C-1gW"/>
+                                    <constraint firstItem="QJp-lH-pva" firstAttribute="centerY" secondItem="5C6-HL-Lzj" secondAttribute="centerY" id="tMW-1P-YFh"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="YpD-y9-8V6" appends="YES" id="o7l-OW-U40"/>
+                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f04-6N-3f5">
                                 <rect key="frame" x="248" y="233" width="27" height="17"/>
@@ -148,14 +162,26 @@
             <connections>
                 <outlet property="addBtn" destination="k7w-Zw-cAu" id="43r-5j-A7s"/>
                 <outlet property="bgView" destination="lXI-Cx-vsT" id="bTf-mh-4lP"/>
+                <outlet property="bofangImage" destination="QJp-lH-pva" id="XFx-iu-mYW"/>
+                <outlet property="imgTitle" destination="r10-B6-JWg" id="1Wa-uc-kqR"/>
                 <outlet property="photoDelectBtn" destination="SjE-r6-tTB" id="Np5-E5-hhM"/>
                 <outlet property="photoHeight" destination="sL3-bP-v5i" id="grr-Ug-31S"/>
                 <outlet property="photoView" destination="D1f-J8-M0u" id="cBg-8K-a9k"/>
                 <outlet property="videoDelectBtn" destination="f04-6N-3f5" id="Oau-9q-cK5"/>
                 <outlet property="videoHeight" destination="Qff-0l-2ic" id="nbk-II-fVL"/>
+                <outlet property="videoTitle" destination="QFk-af-DEy" id="KvA-AP-Amo"/>
                 <outlet property="videoView" destination="5C6-HL-Lzj" id="Hel-ps-whz"/>
             </connections>
-            <point key="canvasLocation" x="34" y="15.5"/>
+            <point key="canvasLocation" x="34" y="15"/>
         </tableViewCell>
+        <tapGestureRecognizer id="YpD-y9-8V6">
+            <connections>
+                <action selector="touchVideo:" destination="KGk-i7-Jjw" id="uJt-24-Cyr"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
+    <resources>
+        <image name="bianji" width="19" height="19"/>
+        <image name="bofang" width="58" height="58"/>
+    </resources>
 </document>

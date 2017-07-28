@@ -9,19 +9,13 @@
 #import "RanchInfoController.h"
 #import "TopHalfInfoCell.h"
 #import "BottomHalfInfoCell.h"
-
+#import "ModifierInfoTool.h"
 @interface RanchInfoController ()<UITableViewDelegate,UITableViewDataSource>
-{
-    NSInteger num;
-    NSInteger m;
-}
 @property(nonatomic,strong)UITableView * tableView;
 @property(nonatomic,strong)UIView * fileView;
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 
 @property(nonatomic,strong)NSMutableArray * finishArray;
-@property(nonatomic,strong)NSMutableArray * selectArray;
-
 @end
 
 @implementation RanchInfoController
@@ -29,7 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"牧场信息";
     self.bgView.backgroundColor = BGCOLOR;
     [self.bgView addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -37,41 +30,59 @@
         make.right.mas_equalTo(_bgView).offset(-20);
         make.bottom.top.mas_equalTo(_bgView);
     }];
-    
+
+    self.finishArray = [[NSMutableArray alloc] init];
+
+    [self.dataArray enumerateObjectsUsingBlock:^(LayoutInfoModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (![obj.editor.type isEqualToString:@"checkbox"] && ![obj.editor.type isEqualToString:@"select"] ) {
+            
+            if ([Str(self.dataDict[obj.name]) isEqualToString:@""] | (self.dataDict[obj.name] == nil)) {
+                
+                [self.finishArray addObject:@""];
+                
+            }else{
+                
+                [self.finishArray addObject:Str(self.dataDict[obj.name])];
+            }
+            
+        }else{
+            
+//            if ([Str(self.dataDict[obj.name]) isEqualToString:@""]) {
+            
+                [self.finishArray addObject:@[]];
+//            }else{
+//                
+//                if ([self.dataDict[obj.name] rangeOfString:@","].location == NSNotFound) {
+//                    
+//                    [self.finishArray addObject:@[Str(self.dataDict[obj.name])]];
+//                }else{
+//                    
+//                    NSArray * array = [self.dataDict[obj.name] componentsSeparatedByString:@","];
+//                    
+//                    NSMutableArray * tempArr = [[NSMutableArray alloc] init];
+//                    
+//                    [array enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                        
+//                        [tempArr addObject:obj];
+//                    }];
+//                    [self.finishArray addObject:tempArr];
+//                }
+//            }
+        }
+    }];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(didNavBtnClick)];
 }
 - (void)didNavBtnClick {
     
-    NSLog(@"上传 这些数据");
-    
-    NSMutableDictionary * dataDict = [[NSMutableDictionary alloc] init];
-    
-    for (NSInteger i=0; i<self.dataArray.count;i++) {
-    
-        LayoutInfoModel * model = self.dataArray[i];
+    [[ModifierInfoTool sharedModifierInfoTool] requestModifierRanchInfoData:self.finishArray LayoutArray:self.dataArray Type:[self.typeString integerValue] isCreate:self.idString ModifierFinishedBlock:^{
+       
+        self.navigationItem.rightBarButtonItem.enabled = NO;
         
-        NSDictionary * dic;
-        
-        if (i >= m) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
-            dic = @{model.name:self.selectArray[i-m]};
-            
-        }else{
-            
-            if (self.finishArray.count<4) {
-                
-                [LCProgressHUD showFailure:@"请完善牧场信息"];
-                
-                return;
-            }
-            
-           dic  = @{model.name:self.finishArray[i]};
-        }
-        
-        [dataDict addEntriesFromDictionary:dic];
-    }
-    [[RequestTool sharedRequestTool] requestWithRanchInfoToServer:dataDict FinishedBlock:^(id result, NSError *error) {
-        
+            [self.navigationController popViewControllerAnimated:YES];
+        });
     }];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -86,40 +97,35 @@
 {
     LayoutInfoModel * model = self.dataArray[indexPath.row];
     
-    if ([model.editor.type isEqualToString:@"checkbox"]) {
+    if ([model.editor.type isEqualToString:@"checkbox"] | [model.editor.type isEqualToString:@"select"]) {
         
-        BottomHalfInfoCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-        if (!cell) {
-            cell = [[BottomHalfInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithString:NSStringFromClass([BottomHalfInfoCell class])]];
+        BottomHalfInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"cell%lu",indexPath.row]  forIndexPath:indexPath];
+        cell.dataDict = self.dataDict;
+        cell.isFold = [self.typeString isEqualToString:@"4"];
+        
+        if (cell.model == nil) {
+            
+            cell.model = self.dataArray[indexPath.row];
         }
-        cell.model = self.dataArray[indexPath.row];
         
         cell.index = indexPath.row;
-        
+    
         cell.FinishedBlock = ^(NSMutableArray *finishArray,NSInteger index) {
             
-            [self.selectArray replaceObjectAtIndex:index-m withObject:finishArray];
-            
-            NSLog(@"选取的数据===>%@",self.selectArray);
+            [self.finishArray replaceObjectAtIndex:index withObject:finishArray];
         };
         return cell;
     }
-    TopHalfInfoCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    if (!cell) {
-        
-        cell = [[TopHalfInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithString:NSStringFromClass([TopHalfInfoCell class])]];
-    }
+    TopHalfInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"cell%ld",(long)indexPath.row] forIndexPath:indexPath];
+    cell.dataDict = self.dataDict;
     cell.indexPath = indexPath;
     cell.model = self.dataArray[indexPath.row];
-    cell.FinishedBlock = ^(NSString *finishString) {
+
+    cell.FinishedBlock = ^(NSString *finishString,NSInteger index) {
         
         if (finishString) {
-            
-            if (![finishString isEqualToString:@""]) {
-                
-                [self.finishArray addObject:finishString];
-            }
+
+            [self.finishArray replaceObjectAtIndex:index withObject:finishString];
         }
     };
     return cell;
@@ -128,8 +134,13 @@
 {
     LayoutInfoModel * model = self.dataArray[indexPath.row];
 
-    if ([model.editor.type isEqualToString:@"checkbox"]) {
+    if ([model.editor.type isEqualToString:@"checkbox"] | [model.editor.type isEqualToString:@"select"]) {
     
+        if ([self.typeString isEqualToString:@"4"]) {
+            
+            return (model.editor.options.count*60)+50;
+        }
+        
         return (model.editor.options.count*30)+50;
     }
     return indexPath.row==0?90.0f:80.0f;
@@ -137,6 +148,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self setEditing:NO];
+}
+-(void)setDataDict:(NSDictionary *)dataDict
+{
+    _dataDict = dataDict;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -146,32 +161,6 @@
 -(void)setDataArray:(NSMutableArray<LayoutInfoModel *> *)dataArray
 {
     _dataArray = dataArray;
-}
--(NSMutableArray *)finishArray
-{
-    if (!_finishArray) {
-        
-        _finishArray = [[NSMutableArray alloc] init];
-    }
-    return _finishArray;
-}
--(NSMutableArray *)selectArray
-{
-    if (!_selectArray) {
-        
-        _selectArray = [[NSMutableArray alloc] init];
-        
-        for (LayoutInfoModel * model in self.dataArray) {
-            
-            if ([model.editor.type isEqualToString:@"checkbox"]) {
-                
-                [_selectArray addObject:@[]];
-            }else{
-                m++;
-            }
-        }
-    }
-    return _selectArray;
 }
 -(UITableView *)tableView
 {
@@ -186,6 +175,17 @@
         _tableView.backgroundColor = BGCOLOR;
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
+        [self.dataArray enumerateObjectsUsingBlock:^(LayoutInfoModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (![obj.editor.type isEqualToString:@"checkbox"] && ![obj.editor.type isEqualToString:@"select"] ) {
+                
+                [_tableView registerClass:[TopHalfInfoCell class] forCellReuseIdentifier:[NSString stringWithFormat:@"cell%lu",(unsigned long)idx]];
+            }else{
+                
+                [_tableView registerClass:[BottomHalfInfoCell class] forCellReuseIdentifier:[NSString stringWithFormat:@"cell%lu",(unsigned long)idx]];
+            }
+        }];
+
         [self addShadowToCell:_tableView];
     }
     return _tableView;
@@ -198,6 +198,10 @@
         _fileView.backgroundColor = BGCOLOR;
     }
     return _fileView;
+}
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 -(void)addShadowToCell:(UIView*)bgView
 {

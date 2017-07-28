@@ -28,20 +28,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jyM-EB-ygC">
-                                <rect key="frame" x="10" y="41" width="260" height="90"/>
+                                <rect key="frame" x="10" y="41" width="260" height="98.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="BtK-in-Rno"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="glB-wZ-CPA" firstAttribute="top" secondItem="whQ-3K-VUt" secondAttribute="top" constant="10" id="6M4-Ug-Eml"/>
+                            <constraint firstItem="jyM-EB-ygC" firstAttribute="leading" secondItem="whQ-3K-VUt" secondAttribute="leading" constant="10" id="C9P-bM-6Bl"/>
+                            <constraint firstAttribute="bottom" secondItem="jyM-EB-ygC" secondAttribute="bottom" constant="10" id="EjZ-Gm-mxi"/>
                             <constraint firstItem="glB-wZ-CPA" firstAttribute="leading" secondItem="whQ-3K-VUt" secondAttribute="leading" constant="10" id="FMd-I9-GAQ"/>
-                            <constraint firstAttribute="trailing" secondItem="jyM-EB-ygC" secondAttribute="trailing" constant="10" id="q33-UE-lHB"/>
-                            <constraint firstItem="jyM-EB-ygC" firstAttribute="top" secondItem="glB-wZ-CPA" secondAttribute="bottom" constant="10" id="qno-D6-iPH"/>
-                            <constraint firstItem="jyM-EB-ygC" firstAttribute="leading" secondItem="whQ-3K-VUt" secondAttribute="leading" constant="10" id="uOQ-6o-owC"/>
+                            <constraint firstAttribute="trailing" secondItem="jyM-EB-ygC" secondAttribute="trailing" constant="10" id="lMR-2J-oqV"/>
+                            <constraint firstItem="jyM-EB-ygC" firstAttribute="top" secondItem="glB-wZ-CPA" secondAttribute="bottom" constant="10" id="wbf-d3-fnz"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -56,8 +54,7 @@
             <connections>
                 <outlet property="bgTableView" destination="jyM-EB-ygC" id="cNQ-Bl-FgF"/>
                 <outlet property="bgView" destination="whQ-3K-VUt" id="auP-z5-zWl"/>
-                <outlet property="nameLabel" destination="glB-wZ-CPA" id="Q2l-rl-Fkj"/>
-                <outlet property="tableHeight" destination="BtK-in-Rno" id="q2g-0m-pOh"/>
+                <outlet property="nameLabel" destination="glB-wZ-CPA" id="zA3-lB-fia"/>
             </connections>
         </tableViewCell>
     </objects>

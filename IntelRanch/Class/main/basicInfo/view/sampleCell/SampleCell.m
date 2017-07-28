@@ -26,21 +26,65 @@
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        JHGridView * table = [[JHGridView alloc] initWithFrame:CGRectMake(0, 0, (Width-70), self.frame.size.height)];
-        
-        table.delegate = self;
-        
-        NSArray * array =@[ [[TableViewModel alloc] initWithAge:@"20" Weight:@"30cm" Heights:@"85cm" Length:@"160cm" Chest:@"120cm"]];
-        
-        [table setTitles:@[@"平均日龄",@"平均体重",@"平均体高",@"平均斜体长",@"平均胸围"] andObjects:array withTags:@[@"age",@"weight",@"height",@"length",@"chest"]];
-        
-        [_bgTableView addSubview:table];
-        
-        [table mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(_bgTableView);
-        }];
+
     }
     return self;
+}
+-(void)setModel:(CalfSampleModel *)model
+{
+    _model = model;
+    
+    JHGridView * table = [[JHGridView alloc] initWithFrame:CGRectMake(0, 0, (Width-70), self.frame.size.height)];
+    
+    table.delegate = self;
+    
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    
+    [array addObject:model];
+    
+    [table setTitles:@[@"日龄",@"体重",@"体高",@"斜体长",@"胸围"] andObjects:array withTags:@[@"days",@"weight",@"height",@"italic",@"bust"]];
+    
+    [_bgTableView addSubview:table];
+    
+    [table mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_bgTableView);
+    }];
+}
+-(void)setAssessModel:(AssessmentModel *)assessModel
+{
+    _assessModel = assessModel;
+    
+    JHGridView * table = [[JHGridView alloc] initWithFrame:CGRectMake(0, 0, (Width-70), self.frame.size.height)];
+    
+    table.delegate = self;
+    
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    
+    [array addObject:assessModel];
+    
+    [table setTitles:@[@"序号",@"气味",@"颜色"] andObjects:array withTags:@[@"serial",@"smell",@"color"]];
+    
+    [_bgTableView addSubview:table];
+    
+    [table mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_bgTableView);
+    }];
+}
+-(void)setAssessArray:(NSMutableArray *)assessArray
+{
+    _assessArray = assessArray;
+    
+    JHGridView * table = [[JHGridView alloc] initWithFrame:CGRectMake(0, 0, (Width-70), self.frame.size.height)];
+    
+    table.delegate = self;
+    
+    [table setTitles:@[@"序号",@"气味",@"颜色"] andObjects:assessArray withTags:@[@"serial",@"smell",@"color"]];
+    
+    [_bgTableView addSubview:table];
+    
+    [table mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(_bgTableView);
+    }];
 }
 #pragma mark====deleage===
 -(UIFont *)fontForTitleAtIndex:(long)index

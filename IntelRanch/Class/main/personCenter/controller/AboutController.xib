@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16D30" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutController">
+            <connections>
+                <outlet property="descriptText" destination="I2L-u5-Rzc" id="DYJ-TA-ET1"/>
+                <outlet property="newestLabel" destination="WXk-eP-qLk" id="NNe-4e-C0D"/>
+                <outlet property="presentLabel" destination="kbh-ti-x54" id="6fK-U9-vIe"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前版本为: 1.0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kbh-ti-x54">
+                    <rect key="frame" x="122" y="233" width="131" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="highlightedColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最新版本为: 1.0.1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXk-eP-qLk">
+                    <rect key="frame" x="123" y="268" width="128.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zi" translatesAutoresizingMaskIntoConstraints="NO" id="wnn-A4-HTJ">
+                    <rect key="frame" x="87" y="25" width="200" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="0wE-iI-Taw"/>
+                        <constraint firstAttribute="height" constant="35" id="TIW-El-C9v"/>
+                    </constraints>
+                </imageView>
+                <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="I2L-u5-Rzc">
+                    <rect key="frame" x="10" y="85" width="355" height="527"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="I2L-u5-Rzc" secondAttribute="trailing" constant="10" id="2sr-zr-yHU"/>
+                <constraint firstAttribute="bottom" secondItem="I2L-u5-Rzc" secondAttribute="bottom" constant="55" id="6Jp-cK-ctH"/>
+                <constraint firstItem="I2L-u5-Rzc" firstAttribute="top" secondItem="wnn-A4-HTJ" secondAttribute="bottom" constant="25" id="6uX-hg-Fdd"/>
+                <constraint firstItem="wnn-A4-HTJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="25" id="9Tu-IA-DoZ"/>
+                <constraint firstItem="kbh-ti-x54" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-90" id="VTx-j8-3DJ"/>
+                <constraint firstItem="I2L-u5-Rzc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="eOe-D6-a3v"/>
+                <constraint firstItem="WXk-eP-qLk" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-55" id="faO-9H-7LW"/>
+                <constraint firstItem="wnn-A4-HTJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fnI-GL-Xyf"/>
+                <constraint firstItem="WXk-eP-qLk" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="hGP-os-dHA"/>
+                <constraint firstItem="kbh-ti-x54" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ztK-vt-4LQ"/>
+            </constraints>
+            <point key="canvasLocation" x="34.5" y="53.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="zi" width="180" height="37"/>
+    </resources>
+</document>

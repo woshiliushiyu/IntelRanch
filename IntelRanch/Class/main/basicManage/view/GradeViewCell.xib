@@ -21,18 +21,17 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9k-fa-fVU">
                         <rect key="frame" x="20" y="20" width="280" height="154.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="直肠检测体温评分表" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TtK-YO-FTZ">
-                                <rect key="frame" x="10" y="10" width="129" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TtK-YO-FTZ">
+                                <rect key="frame" x="10" y="10" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSQ-qT-F1T">
-                                <rect key="frame" x="239" y="10" width="31" height="15"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSQ-qT-F1T">
+                                <rect key="frame" x="251" y="10" width="19" height="19"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="15" id="Z1b-YI-RcI"/>
+                                    <constraint firstAttribute="height" constant="19" id="Z1b-YI-RcI"/>
                                 </constraints>
-                                <state key="normal" title="设置">
+                                <state key="normal" image="bianji">
                                     <color key="titleColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -40,7 +39,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hs4-UC-ZMf">
-                                <rect key="frame" x="0.0" y="37" width="280" height="1"/>
+                                <rect key="frame" x="0.0" y="20" width="280" height="1"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="U4j-hZ-h7u"/>
@@ -50,7 +49,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Io-If-pOj">
-                                <rect key="frame" x="10" y="48" width="260" height="96.5"/>
+                                <rect key="frame" x="10" y="31" width="260" height="113.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -81,7 +80,11 @@
             <connections>
                 <outlet property="bgRootView" destination="c9k-fa-fVU" id="Ub4-qg-pJl"/>
                 <outlet property="bgView" destination="3Io-If-pOj" id="YTq-2x-J2t"/>
+                <outlet property="nameLabel" destination="TtK-YO-FTZ" id="7fZ-33-LZ6"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="bianji" width="19" height="19"/>
+    </resources>
 </document>

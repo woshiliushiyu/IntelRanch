@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CalfSampleModel.h"
 @interface CalfSampleCell : UITableViewCell
+@property(nonatomic,strong)NSMutableArray * models;
 @property(nonatomic,copy)void (^PushCalfSampleViewBlock)();
 @end

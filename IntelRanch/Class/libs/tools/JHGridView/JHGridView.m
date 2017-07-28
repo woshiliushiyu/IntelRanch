@@ -177,7 +177,15 @@
     //setup content of cells
     long index = indexPath.row;
     cell.textLabel.numberOfLines = 0;
-    cell.textLabel.text = [[_objects objectAtIndex:index] valueForKey:[_tags objectAtIndex:tableView.tag]];
+    NSString * title = [[_objects objectAtIndex:index] valueForKey:[_tags objectAtIndex:tableView.tag]];
+    
+    if (![title isEqualToString:@""] && ![title isEqualToString:@"1"]) {
+        
+        cell.textLabel.text = title;
+    }else{
+        cell.imageView.image = [title isEqualToString:@""]?nil:GetImage(@"duihao");
+    }
+    
     [self applyAlignmentTypeFor:cell.textLabel];
     
     GridIndex gridIndex;

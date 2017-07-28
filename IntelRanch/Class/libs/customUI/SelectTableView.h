@@ -19,9 +19,15 @@
  @param select 是否能选择
  @param footerView 底图
  */
-- (instancetype)initWithTitles:(NSArray*)titles SubTitles:(NSArray*)subTitles TableBody:(NSArray*)bodys Select:(BOOL)select FooterView:(UIView *)footerView;
+- (instancetype)initWithTitles:(NSArray*)titles SubTitles:(NSArray*)subTitles TableBody:(NSArray*)bodys Select:(BOOL)select FooterView:(NSArray *)footerView;
 
-@property(nonatomic,copy)void (^SelectRowBlock)(NSInteger line,NSInteger row);
+@property(nonatomic,copy)BOOL (^SelectRowBlock)(NSInteger line,NSInteger row);
+
+@property(nonatomic,copy)void (^BackHeightBlock)();
 
 @property(nonatomic,copy)void (^SelectAddBlock)();
+
+@property(nonatomic,strong)NSArray * bodyArray;
+
+@property(nonatomic,strong)NSArray * subTitleArray;
 @end

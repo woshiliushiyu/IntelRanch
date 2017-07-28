@@ -27,14 +27,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEQ-mM-8gS">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEQ-mM-8gS">
                                 <rect key="frame" x="243" y="10" width="30" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="RO3-ng-VbJ"/>
                                     <constraint firstAttribute="height" constant="18" id="h6K-3s-e2M"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                <state key="normal" title="设置">
+                                <state key="normal" image="bianji">
                                     <color key="titleColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
@@ -48,20 +47,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="牛群品种:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFa-pe-LIf">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="牛群品种:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFa-pe-LIf">
                                 <rect key="frame" x="10" y="49" width="61.5" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="夏洛莱牛" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQA-1I-MUD">
-                                <rect key="frame" x="81.5" y="49" width="57.5" height="17"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQA-1I-MUD">
+                                <rect key="frame" x="81.5" y="49" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.47450980392156861" green="0.47450980392156861" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y8X-i8-i1u">
-                                <rect key="frame" x="0.0" y="66" width="280" height="181"/>
+                                <rect key="frame" x="0.0" y="49" width="280" height="198"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -95,10 +94,14 @@
             <connections>
                 <outlet property="bgView" destination="9AA-SD-4zt" id="2dL-G0-ID6"/>
                 <outlet property="breedLabel" destination="VQA-1I-MUD" id="oaF-Tj-MR2"/>
+                <outlet property="calfVary" destination="wFa-pe-LIf" id="OA6-9k-l7F"/>
                 <outlet property="pngView" destination="Y8X-i8-i1u" id="hG8-4T-0Cg"/>
                 <outlet property="settBtn" destination="hEQ-mM-8gS" id="eHz-9P-LKJ"/>
             </connections>
             <point key="canvasLocation" x="34" y="54.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="bianji" width="19" height="19"/>
+    </resources>
 </document>

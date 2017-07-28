@@ -34,6 +34,10 @@ static NSString * _tableName;
 {
     return [[LoginInfoModel alloc] initWithDictionary:[_store getObjectById:@"login" fromTable:_tableName] error:nil];
 }
++(void)clearnLoginInfo
+{
+    [_store clearTable:@"loginInfo"];
+}
 +(BOOL)isLogin
 {
     if ([_store getObjectById:@"login" fromTable:_tableName] == nil) {

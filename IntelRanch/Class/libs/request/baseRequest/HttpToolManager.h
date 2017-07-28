@@ -38,4 +38,17 @@ typedef void(^RequestFinishedBlock)(id result, NSError *error);
 
 - (void)requestWithMethod:(HTTPMethod)method URLString:(NSString *)URLString parameters:(id)patameters Upload:(BOOL)upload option:(BcRequestCenterCachePolicy)option finished:(RequestFinishedBlock)finishedBlock;
 
+/**
+ 图片上传需要的接口
+
+ @param URLString 链接地址
+ @param patameters 参数
+ @param finishedBlock 回调
+ */
+- (void)uploadWithURLString:(NSString *)URLString parameters:(id)patameters finished:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 清除缓存
+ */
+-(void)clearLocalData;
 @end

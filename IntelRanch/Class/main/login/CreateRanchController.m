@@ -78,8 +78,6 @@
         return;
     }
     [[RequestTool sharedRequestTool] requestWithCreateRanchName:self.nameText.text Address:self.addressText.text Time:self.timeText.text Area:self.AreaText.text FinishedBlock:^(id result, NSError *error) {
-       
-        NSLog(@"创建牧场返回数据%@",result);
         
         if ([result[@"status_code"] integerValue] == 200) {
             
@@ -157,7 +155,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 
 
 @end

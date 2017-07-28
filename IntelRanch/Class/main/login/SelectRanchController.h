@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SelectRanchController : UIViewController
-@property(nonatomic,strong)NSArray * dataArray;
+@property(nonatomic,strong)NSMutableArray * dataArray;
 @end

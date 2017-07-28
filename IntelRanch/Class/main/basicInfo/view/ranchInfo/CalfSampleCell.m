@@ -28,11 +28,6 @@
         [self addShadowToCell:self.bgView];
         
         [self.settBtn addTarget:self action:@selector(touchSetting) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.bgTableView addSubview:self.subTableView];
-        [self.subTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(self.bgTableView);
-        }];
     }
     return self;
 }
@@ -63,7 +58,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return self.models.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -71,6 +66,8 @@
     if (!cell) {
         cell = [[SampleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithString:NSStringFromClass([SampleCell class])]];
     }
+
+    cell.model = self.models[indexPath.row];
     
     return cell;
 }
@@ -78,7 +75,15 @@
 {
     return 95;
 }
-
+-(void)setModels:(NSMutableArray *)models
+{
+    _models = models;
+    self.settBtn.hidden = NO;
+    [self.bgTableView addSubview:self.subTableView];
+    [self.subTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(self.bgTableView);
+    }];
+}
 #pragma lazy=====
 -(UITableView *)subTableView
 {

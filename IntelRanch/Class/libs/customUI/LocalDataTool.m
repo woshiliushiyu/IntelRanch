@@ -32,11 +32,14 @@ static NSString * _dataName;
 }
 +(id)getDataToDataName:(NSString *)name
 {
-    return [_store getObjectById:_dataName fromTable:_dataName];
+    return  [_store getObjectById:name fromTable:name];
 }
 +(void)cleanForTableName:(NSString *)name
 {
     [_store deleteObjectById:name fromTable:_dataName];
 }
-
++(void)clearDataTableName:(NSString *)tableName
+{
+    [_store clearTable:tableName];
+}
 @end

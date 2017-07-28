@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CalfSampleModel.h"
+#import "AssessmentModel.h"
 @interface SampleCell : UITableViewCell
+@property(nonatomic,strong)CalfSampleModel * model;
+@property(nonatomic,strong)AssessmentModel * assessModel;
 
+@property(nonatomic,strong)NSMutableArray * assessArray;
 @end

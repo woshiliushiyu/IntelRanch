@@ -36,6 +36,7 @@ return _instance; \
 }
 
 
+
 @interface RequestTool : NSObject
 singleton_interface(RequestTool);
 
@@ -87,9 +88,10 @@ singleton_interface(RequestTool);
 /**
  牧场基本信息界面布局
 
+ @param layout  模型 id
  @param finishedBlock 回调
  */
--(void)requestWithRanchBasicLayoutFinishedBlock:(RequestFinishedBlock)finishedBlock;
+-(void)requestWithRanchBasicLayoutTo:(NSInteger)layout FinishedBlock:(RequestFinishedBlock)finishedBlock;
 
 /**
  获取牧场基本信息
@@ -99,19 +101,157 @@ singleton_interface(RequestTool);
 -(void)requestWithRanchBasicInfoFinishedBlock:(RequestFinishedBlock)finishedBlock;
 
 /**
- 创建牧场
+ 创建信息接口
 
  @param finishedBlock 回调
  */
 -(void)requestWithCreateRanchName:(NSString *)name Address:(NSString*)address Time:(NSString*)time Area:(NSString*)area FinishedBlock:(RequestFinishedBlock)finishedBlock;
 
 /**
- 修改牧场信息
+ 修改信息接口
 
  @param body 牧场参数
  @param finishedBlock 回调
  */
--(void)requestWithRanchInfoToServer:(NSDictionary *)body FinishedBlock:(RequestFinishedBlock)finishedBlock;
+-(void)requestWithRanchInfoToServerPort:(NSString*)port InfoId:(NSString*)infoid Body:(NSDictionary *)body FinishedBlock:(RequestFinishedBlock)finishedBlock;
 
+/**
+ 多媒体上传
 
+ @param type 上传类型
+ @param finishedBlock 回调
+ */
+-(void)uploadWithMediaType:(NSString*)type Media:(id)media FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 获取犊牛样本平均值
+
+ @param finishedBlock 回调
+ */
+-(void)requestWithSampleForServerFinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 上传犊牛样本表格界面数据
+
+ @param parameter 索引
+ @param finishedblock 回调
+ */
+-(void)uploadWithCalfSampleParameter:(NSMutableDictionary *)parameter FinishedBlock:(RequestFinishedBlock)finishedblock;
+
+/**
+ 获取牧场信息
+
+ @param finishedBlock 回调
+ */
+-(void)requestWithRanchInfoForServerFinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 上传图片列表
+
+ @param imgs 图片集合
+ @param type 所在类型 1 牧场类型
+ @param finishedBlock 回调
+ */
+-(void)uploadWithImgList:(NSMutableArray *)imgs Summery:(NSString*)summery Type:(NSInteger)type ModelId:(NSString *)modelId FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 获取图片列表
+
+ @param type 模型对象
+ @param finishedBlock 回调 
+ */
+-(void)requestWithImageListType:(NSInteger)type ModelId:(NSString *)modelId FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 获取视频列表
+
+ @param type 模型对象
+ @param finishedBlock 回调
+ */
+-(void)requestWithVideosListType:(NSInteger)type ModelId:(NSString *)modelId FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 上传视频列表
+
+ @param video 图片
+ @param type 模型对象
+ @param finishedBlock  回调
+ */
+-(void)uploadWithVideosList:(NSString *)video Summery:(NSString*)summery Type:(NSInteger)type ModelId:(NSString *)modelId FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 获取砖家信息
+
+ @param finishedBlock 回调
+ */
+-(void)requestWithTeamInfoListForServerFinished:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 上传问题
+
+ @param descript 问题描述
+ @param type 问题类型
+ @param teamId 砖家 ID
+ @param finishedBlock  回调
+ */
+-(void)uploadWithProblemDescript:(NSString*)descript Tpye:(NSString*)type TeamId:(NSString*)teamId Finished:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 获取问题列表
+
+ @param finishedBlock 回调
+ */
+-(void)requestWithProblemForServerListPage:(NSInteger)page FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 获取常见问题列表
+
+ @param page 页数
+ @param finishedBlock 回调
+ */
+-(void)requestWithCommonProblemForServerListPage:(NSInteger)page FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**************************************获取新生犊牛,饲养,疾病数据***************************************/
+/**
+ 获取日志列表
+
+ @param finishedBlock 回调
+ */
+-(void)requestWithCalfManagerListToserverId:(NSInteger)type FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 获取日志
+
+ @param idString 日志 ID
+ @param finishedBlock  回调
+ */
+-(void)requestWithCalfManagerForId:(NSString *)idString Type:(NSInteger)type FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 获取疾病列表
+
+ @param idString 疾病 id
+ @param finishedBlock 回调
+ */
+-(void)requestWithIcknessForId:(NSString *)idString FinishedBlock:(RequestFinishedBlock)finishedBlock;
+
+/**
+ 获取犊牛样本列表
+ 
+ @param finishedBlock 回调
+ */
+-(void)requestWithSamplesListForServerFinishedBlock:(RequestFinishedBlock)finishedBlock;
+/***************************************上传评分************************************/
+
+/**
+ 上传评分
+
+ @param score 评分
+ @param code 识别码
+ @param type 类型
+ @param value1 value
+ @param value2 value
+ @param finishedBlock 回调
+ */
+-(void)requestWithScoreForServer:(NSString*)score Sickness:(NSString *)sicknessId Code:(NSString*)code Type:(NSInteger)type Value1:(NSString*)value1 Value2:(NSString*)value2 FinishedBlock:(RequestFinishedBlock)finishedBlock;
 @end

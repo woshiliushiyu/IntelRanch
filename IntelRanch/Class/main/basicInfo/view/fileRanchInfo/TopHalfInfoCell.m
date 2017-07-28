@@ -41,21 +41,56 @@
     
     _nameLabel.text = model.title;
     
+    if (![_model.editor.type isEqualToString:@"datetime"]) {
+        
+        if ([Str(_dataDict[model.name]) isEqualToString:@""] | [Str(_dataDict[model.name]) isEqualToString:@"0"]) {
+            
+            self.nameText.placeholder = [NSString stringWithFormat:@"请输入%@",model.title];
+        }else{
+            
+            self.nameText.text = Str(_dataDict[model.name]);
+        }
+        [self addSubview:self.nameText];
+        [self.nameText mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.nameLabel.mas_bottom).offset(10);
+            make.left.mas_equalTo(self).offset(10);
+            make.right.mas_equalTo(self).offset(-10);
+            make.height.mas_equalTo(30);
+        }];
+    }else{
+        
+        if (![Str(_dataDict[model.name]) isEqualToString:@"0000-00-00 00:00:00"] && ![Str(_dataDict[model.name]) isEqualToString:@""] && _dataDict[model.name] !=nil) {
+            
+            [self.nameBtn setTitle:[Str(_dataDict[model.name]) componentsSeparatedByString:@" "][0] forState:UIControlStateNormal];
+        }else{
+            
+            [self.nameBtn setTitle:@"请输入日期" forState:UIControlStateNormal];
+        }
+        
+        [self addSubview:self.nameBtn];
+        [self.nameBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(self.nameLabel.mas_bottom).offset(10);
+            make.left.mas_equalTo(self).offset(10);
+            make.right.mas_equalTo(self).offset(-10);
+            make.height.mas_equalTo(30);
+        }];
+    }
     if ([model.editor.type isEqualToString:@"number"]) {
         
         _nameText.keyboardType = UIKeyboardTypePhonePad;
     }
-    _nameText.placeholder = [NSString stringWithFormat:@"请输入%@",model.title];
+}
+-(void)setDataDict:(NSDictionary *)dataDict
+{
+    _dataDict = dataDict;
 }
 -(void)setIndexPath:(NSIndexPath *)indexPath
 {
     _indexPath = indexPath;
     
     [self addSubview:self.nameLabel];
-    [self addSubview:self.nameText];
     
     self.nameText.delegate = self;
-    
     self.nameText.backgroundColor = BGCOLOR;
     
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -69,51 +104,6 @@
             make.top.mas_equalTo(self);
         }
     }];
-    
-    [self.nameText mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.nameLabel.mas_bottom).offset(10);
-        make.left.mas_equalTo(self).offset(10);
-        make.right.mas_equalTo(self).offset(-10);
-        make.height.mas_equalTo(30);
-    }];
-}
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if ([textField.text isEqualToString:@""]) {
-        
-        return;
-    }
-    
-    self.FinishedBlock(textField.text);
-}
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    
-    if ([_model.editor.type isEqualToString:@"datetime"]) {
-        
-        [textField resignFirstResponder];
-        
-        [self endEditing:YES];
-        
-        NSDateFormatter *df = [NSDateFormatter new];
-        
-        df.dateFormat = @"yyyy-MM-dd";
-        
-        [[MOFSPickerManager shareManger] showDatePickerWithTag:1 commitBlock:^(NSDate *date) {
-            
-            self.nameText.text = [df stringFromDate:date];
-            
-            self.FinishedBlock([df stringFromDate:date]);
-            
-        } cancelBlock:^{}];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoBoardHidden:) name:UIKeyboardWillShowNotification object:nil];
-    }
-    return YES;
-}
-
-- (void)keyBoBoardHidden:(NSNotification *)Notification{
-    
-    [self.nameText resignFirstResponder];
 }
 -(UITextField *)nameText
 {
@@ -121,7 +111,7 @@
         
         _nameText = TextField.insets(0,5,0,0).color(FONTCOL).fnt(15).onChange(^(NSString *text, UITextField *textField){
             
-
+            self.FinishedBlock(textField.text,_indexPath.row);
             
         }).nextRetrunKey.borderRadius(5).onFinish(^(NSString *text){
             
@@ -135,8 +125,33 @@
     if (!_nameLabel) {
         
         _nameLabel = Label.fnt(18).color(BIGCOL);
-        
     }
     return _nameLabel;
+}
+-(UIButton *)nameBtn
+{
+    if (!_nameBtn) {
+        
+        _nameBtn = Button.insets(0,5,0,0).bgColor(BGCOLOR).str(@"请输入日期").color(FONTCOL).fnt(15).onClick(^(UIButton * btn){
+            
+            [self.superview endEditing:YES];
+            
+            NSDateFormatter *df = [NSDateFormatter new];
+            
+            df.dateFormat = @"yyyy-MM-dd";
+            
+            [[MOFSPickerManager shareManger] showDatePickerWithTag:1 commitBlock:^(NSDate *date) {
+                
+                [_nameBtn setTitle:[df stringFromDate:date] forState:UIControlStateNormal];
+                
+                self.FinishedBlock([df stringFromDate:date],_indexPath.row);
+                
+            } cancelBlock:^{}];
+            
+        }).borderRadius(5);
+        
+        _nameBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    }
+    return _nameBtn;
 }
 @end

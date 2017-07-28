@@ -9,8 +9,20 @@
 #import "AdjunctController.h"
 #import "HXPhotoViewController.h"
 #import "HXPhotoView.h"
+#import "HXPhotoModel.h"
+#import "HXPhotoPreviewViewController.h"
+#import "HXVideoPreviewViewController.h"
 @interface AdjunctController ()<HXPhotoViewDelegate>
+{
+    NSArray * _photos;
+    NSArray * _videos;
+    NSString * _path;
+    BOOL _isImgSuccess;
+    BOOL _isVideoSuccess;
+    int i;
+}
 @property (strong, nonatomic) IBOutlet UIView *bgView;
+
 @property (strong, nonatomic) HXPhotoManager *manager;
 @property (strong, nonatomic) HXPhotoView *photoView;
 @property(nonatomic,strong)UILabel * nameLabel;
@@ -19,23 +31,30 @@
 @property(nonatomic,strong)UILabel * secondLabel;
 @property(nonatomic,strong)UITextField * markTextView;
 @property(nonatomic,strong)UITextField * persionTextView;
+
+@property(nonatomic,strong)NSMutableArray * imgsArray;
 @end
 
 @implementation AdjunctController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.bgView addSubview:self.nameLabel];
+
+    i=0;
+    
     self.navigationItem.title = @"新增附件";
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     self.automaticallyAdjustsScrollViewInsets = YES;
+    
     HXPhotoView *photoView = [HXPhotoView photoManager:self.manager];
     photoView.frame = CGRectMake(10, CGRectGetMaxY(self.nameLabel.frame)+10, Width - 60, 0);
     photoView.delegate = self;
     photoView.backgroundColor = [UIColor whiteColor];
     [self.bgView addSubview:photoView];
     self.photoView = photoView;
+    
+    
     [self addChildView];
     
     [self addShadowToCell:self.bgView];
@@ -44,27 +63,136 @@
 }
 - (void)didNavBtnClick {
     
-    NSLog(@"上传");
-}
-- (void)photoViewChangeComplete:(NSArray<HXPhotoModel *> *)allList Photos:(NSArray<HXPhotoModel *> *)photos Videos:(NSArray<HXPhotoModel *> *)videos Original:(BOOL)isOriginal
-{
-    NSLog(@"所有:%ld - 照片:%ld - 视频:%ld",allList.count,photos.count,videos.count);
-    [HXPhotoTools getImageForSelectedPhoto:photos type:HXPhotoToolsFetchHDImageType completion:^(NSArray<UIImage *> *images) {
-        NSLog(@"%@",images);
-    }];
-}
-- (void)photoViewDeleteNetworkPhoto:(NSString *)networkPhotoUrl {
-    NSLog(@"%@",networkPhotoUrl);
-}
-
-- (void)photoViewUpdateFrame:(CGRect)frame withView:(HXPhotoView *)photoView
-{
-    NSLog(@"%@===%f",NSStringFromCGRect(frame),Height);
+    [LCProgressHUD showLoading:@"正在上传..."];
     
-    if (frame.size.height>=300 && Height<=568) {
-//        self.bgScrollView.contentSize = CGSizeMake(Width, Height+200);
+    if (_videos.count>0) {
+        
+        HXPhotoModel * model = _videos[0];
+        
+        [[RequestTool sharedRequestTool] uploadWithMediaType:@"video" Media:model.videoURL==nil?[NSURL fileURLWithPath:_path]:model.videoURL FinishedBlock:^(id result, NSError *error) {
+            
+            if ([result[@"status_code"] integerValue] == 200) {
+                
+                [LCProgressHUD showSuccess:@"上传视频成功"];
+                
+                [self uploadVideo:result[@"data"]];
+                
+            }else{
+                [LCProgressHUD showInfoMsg:result[@"message"]];
+            }
+        }];
+    }
+    if (_photos.count>0){
+        
+        [[RequestTool sharedRequestTool] uploadWithMediaType:@"image" Media:UIImageJPEGRepresentation(_photos[i], 0.1) FinishedBlock:^(id result, NSError *error) {
+            
+            if ([result[@"status_code"] integerValue] == 200) {
+                
+                [self.imgsArray addObject:result[@"data"]];
+                
+                if (_photos.count==1) {
+                    
+                    [self uploadImgs];
+                }else{
+                    
+                    [self uploadImage];
+                }
+                
+            }else{
+                [LCProgressHUD showMessage:@"上传失败"];
+            }
+        }];
     }
 }
+-(void)uploadImage
+{
+    i++;
+    
+    [[RequestTool sharedRequestTool] uploadWithMediaType:@"image" Media:UIImageJPEGRepresentation(_photos[i], 0.1) FinishedBlock:^(id result, NSError *error) {
+        
+        if ([result[@"status_code"] integerValue] == 200) {
+
+            [self.imgsArray addObject:result[@"data"]];
+            
+            if (_photos.count-1 == i) {
+                
+                [self uploadImgs];
+            }else{
+                [self uploadImage];
+            }
+        }else{
+             [LCProgressHUD showFailure:@"上传失败"];
+        }
+    }];
+}
+//upload video
+-(void)uploadVideo:(NSString*)video
+{
+    [[RequestTool sharedRequestTool] uploadWithVideosList:video Summery:self.markTextView.text Type:[self.typeString integerValue] ModelId:self.idString FinishedBlock:^(id result, NSError *error) {
+        
+        if ([result[@"status_code"] integerValue] == 200) {
+            
+            _isVideoSuccess = YES;
+            
+            if ((_isVideoSuccess && _isImgSuccess) || _photos.count ==0) {
+                
+                [LCProgressHUD showSuccess:@"上传成功"];
+                
+                self.navigationItem.rightBarButtonItem.enabled = NO;
+            }
+
+        }else{
+            
+            [LCProgressHUD showInfoMsg:result[@"message"]];
+        }
+    }];
+}
+//上传图片列表
+-(void)uploadImgs
+{
+    [[RequestTool sharedRequestTool] uploadWithImgList:self.imgsArray Summery:self.markTextView.text Type:[self.typeString integerValue] ModelId:self.idString FinishedBlock:^(id result, NSError *error) {
+        
+        if ([result[@"status_code"] integerValue] == 200) {
+            
+            _isImgSuccess = YES;
+         
+            if ((_isVideoSuccess && _isImgSuccess) || _videos.count ==0) {
+                
+                [LCProgressHUD showSuccess:@"上传成功"];
+                
+                self.navigationItem.rightBarButtonItem.enabled = NO;
+            }
+        }else{
+            
+            [LCProgressHUD showInfoMsg:result[@"message"]];
+        }
+    }];
+}
+/*********************************/
+- (void)photoViewChangeComplete:(NSArray<HXPhotoModel *> *)allList Photos:(NSArray<HXPhotoModel *> *)photos Videos:(NSArray<HXPhotoModel *> *)videos Original:(BOOL)isOriginal
+{
+    _videos = videos;
+    
+    if (videos.count>0) {
+        
+        [[PHImageManager defaultManager] requestPlayerItemForVideo:videos[0].asset options:nil resultHandler:^(AVPlayerItem * _Nullable playerItem, NSDictionary * _Nullable info) {
+            
+            _path = [info[@"PHImageFileSandboxExtensionTokenKey"] componentsSeparatedByString:@";"].lastObject;
+        }];
+    }
+    [HXPhotoTools getImageForSelectedPhoto:photos type:HXPhotoToolsFetchHDImageType completion:^(NSArray<UIImage *> *images) {
+        _photos = images;
+    }];
+}
+- (void)photoViewUpdateFrame:(CGRect)frame withView:(HXPhotoView *)photoView
+{
+    NSLog(@"获取的坐标地址%@",[NSValue valueWithCGRect:frame]);
+}
+- (void)photoViewDeleteNetworkPhoto:(NSString *)networkPhotoUrl
+{
+    
+}
+/********************************/
 -(void)addShadowToCell:(UIView*)bgView
 {
     bgView.layer.shadowColor = [UIColor grayColor].CGColor;
@@ -75,30 +203,18 @@
 -(void)addChildView
 {
     [self.bgView addSubview:self.fristLabel];
-    [self.bgView addSubview:self.secondLabel];
     [self.bgView addSubview:self.markTextView];
-    [self.bgView addSubview:self.persionTextView];
     
     self.markTextView.backgroundColor = BGCOLOR;
-    self.persionTextView.backgroundColor = BGCOLOR;
     
     [self.fristLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.photoView.mas_bottom).offset(10);
+        make.top.mas_equalTo(self.photoView.mas_bottom).offset(5);
         make.left.mas_equalTo(self.bgView).offset(10);
+        make.height.mas_equalTo(10);
     }];
     [self.markTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.bgView).offset(10);
-        make.top.mas_equalTo(self.fristLabel.mas_bottom).offset(10);
-        make.right.mas_equalTo(-10);
-        make.height.mas_equalTo(30);
-    }];
-    [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.bgView).offset(10);
-        make.top.mas_equalTo(self.markTextView.mas_bottom).offset(10);
-    }];
-    [self.persionTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.bgView).offset(10);
-        make.top.mas_equalTo(self.secondLabel.mas_bottom).offset(10);
+        make.top.mas_equalTo(self.fristLabel.mas_bottom).offset(5);
         make.right.mas_equalTo(-10);
         make.height.mas_equalTo(30);
     }];
@@ -109,10 +225,11 @@
         _manager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhotoAndVideo];
         _manager.openCamera = YES;
         _manager.outerCamera = YES;
+        _manager.separate = YES;
         _manager.showFullScreenCamera = YES;
         _manager.photoMaxNum = 9;
         _manager.videoMaxNum = 1;
-        _manager.maxNum = 9;
+        _manager.maxNum = 10;
     }
     return _manager;
 }
@@ -125,11 +242,19 @@
     return _nameLabel;
 }
 #pragma mark ======lazy
+-(NSMutableArray *)imgsArray
+{
+    if (!_imgsArray) {
+        
+        _imgsArray = [[NSMutableArray alloc] init];
+    }
+    return _imgsArray;
+}
 -(UILabel *)fristLabel
 {
     if (!_fristLabel) {
         
-        _fristLabel = Label.str(@"备注说明").fnt(18).color(@"block").lineGap(10);
+        _fristLabel = Label.str(@"备注说明").fnt(13).color(@"block").lineGap(0);
     }
     return _fristLabel;
 }
@@ -171,6 +296,9 @@
     }
     return _persionTextView;
 }
-
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 
 @end

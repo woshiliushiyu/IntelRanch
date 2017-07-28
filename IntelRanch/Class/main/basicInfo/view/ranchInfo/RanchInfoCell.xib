@@ -38,10 +38,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYt-rc-ZWh">
-                                <rect key="frame" x="243" y="10" width="30" height="29"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                <state key="normal" title="设置">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYt-rc-ZWh">
+                                <rect key="frame" x="254" y="10" width="19" height="22"/>
+                                <state key="normal" image="bianji">
                                     <color key="titleColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
@@ -75,4 +74,7 @@
             <point key="canvasLocation" x="34" y="75.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="bianji" width="19" height="19"/>
+    </resources>
 </document>

@@ -34,4 +34,8 @@
  */
 +(void)cleanForTableName:(NSString*)name;
 
+/**
+ 清除数据库表
+ */
++(void)clearDataTableName:(NSString*)tableName;
 @end

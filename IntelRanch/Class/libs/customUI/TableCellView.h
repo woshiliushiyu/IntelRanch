@@ -22,5 +22,7 @@
 
 @interface TableCellView : UIView
 @property (nonatomic) id<TableCellViewDelegate> delegate;
+@property(nonatomic,strong)NSMutableArray * dataArray;
+-(void)reloadView;
 -(void)setTitles:(NSArray *)titles andObjects:(NSArray *)objects withTags:(NSArray *)tags;
 @end

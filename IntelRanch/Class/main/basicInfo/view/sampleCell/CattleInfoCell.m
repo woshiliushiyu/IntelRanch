@@ -14,13 +14,19 @@
 @interface CattleInfoCell ()<TableCellViewDelegate>
 {
     NSUInteger num;
+    NSUInteger n;
     NSArray * nameTables;
     NSArray * keys;
+    
+    TableCellView * tableView;
+    NSInteger _line;
+    NSMutableDictionary * tempDict;
 }
-@property(nonatomic,strong)NSMutableArray * dataArray;
+
+@property(nonatomic,strong)NSMutableArray * outDataArray;
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (strong, nonatomic) IBOutlet UIView *bgTableView;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *tableHeight;
+
 
 @end
 
@@ -36,46 +42,41 @@
         self.backgroundColor = BGCOLOR;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        nameTables = @[@"序号",@"日龄",@"体重",@"体高",@"斜体长",@"胸围"];
+        nameTables = @[@"序号",@"日龄(d)",@"体重(kg)",@"体高(cm)",@"斜体长(cm)",@"胸围(cm)"];
         
-        keys = @[@"number",@"dayNumber",@"weight",@"stature",@"bodyLenght",@"bush"];
+        keys = @[@"number",@"days",@"weight",@"height",@"italic",@"bust"];
+        
+        tempDict = [[NSMutableDictionary alloc] initWithDictionary:@{@"number":Str(num),@"days":@"",@"weight":@"",@"height":@"",@"italic":@"",@"bust":@""}];
         
         [self addShadowToCell:_bgView];
+
     }
     return self;
 }
--(NSMutableArray *)dataArray
+-(void)setDataArray:(NSMutableArray *)dataArray
 {
-    if (!_dataArray) {
+    _dataArray = dataArray;
+    
+    tableView = [[TableCellView alloc] initWithFrame:CGRectZero];
+    
+    tableView.delegate = self;
+    
+    [tableView setTitles:nameTables andObjects:dataArray withTags:keys];
+    
+    [_bgTableView addSubview:tableView];
+    
+    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        _dataArray = [[NSMutableArray alloc] init];
-    }
-    return _dataArray;
+        make.edges.mas_equalTo(self.bgTableView);
+    }];
+}
+-(void)setIsUpload:(BOOL)isUpload
+{
+    _isUpload = isUpload;
 }
 -(void)setIndex:(NSUInteger)index
 {
     _index = index;
-    
-    if ([TableDataTool selectTableData:Str(_index)].count>0) {
-        
-        self.dataArray = [TableDataTool selectTableData:Str(_index)];
-        
-        _tableHeight.constant = 30*[TableDataTool selectTableData:Str(_index)].count+70;
-        
-    }else{
-        
-        [self.dataArray addObjectsFromArray:@[[[Sample alloc] initWithNumber:Str(1) DayNumber:@"0" Weight:@"0" Statyre:@"0" Body:@"0" Bush:@"0"]]];
-        
-        [TableDataTool insertTableData:self.dataArray Number:Str(_index)];
-    }
-    
-    TableCellView * tableCellView = [[TableCellView alloc] initWithFrame:CGRectMake(0, 0, Width-60, ([TableDataTool selectTableData:Str(_index)].count*30)+70)];
-    
-    tableCellView.delegate = self;
-    
-    [tableCellView setTitles:nameTables andObjects:self.dataArray withTags:keys];
-    
-    [_bgTableView addSubview:tableCellView];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -91,55 +92,99 @@
 }
 -(void)selectAddBtn
 {
-    num = self.dataArray.count+1;
+    if (n != _index) {
+        
+        [LCProgressHUD showFailure:@"完成之后再次添加"];
+        
+        return;
+    }
+
+    __block BOOL _isStop;
     
-    [self.dataArray addObjectsFromArray:@[[[Sample alloc] initWithNumber:Str(num) DayNumber:@"0" Weight:@"0" Statyre:@"0" Body:@"0" Bush:@"0"]]];
+    NSDictionary * dic = self.dataArray.lastObject;
     
-    [TableDataTool insertTableData:self.dataArray Number:Str(_index)];
+    [keys enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if ([Str(dic[obj]) isEqualToString:@""]) {
+            
+            [LCProgressHUD showFailure:@"请完善信息"];
+            
+            _isStop = YES;
+            
+            return;
+        }
+    }];
     
-    _tableHeight.constant =([TableDataTool selectTableData:Str(_index)].count*30);
+    if (!_isUpload && _isStop) {
+        
+        [LCProgressHUD showInfoMsg:@"上传成功之后再次添加"];
+        
+        return;
+    }
     
-    self.ReloadDataBlcok(_index);
+    if (!_isStop) {
+    
+        num++;
+        
+        [self.dataArray addObject:@{@"number":Str(self.dataArray.count+1),@"days":@"",@"weight":@"",@"height":@"",@"italic":@"",@"bust":@""}];
+        
+        tableView.dataArray = self.dataArray;
+        
+        [tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+            
+            make.edges.mas_equalTo(self.bgTableView);
+        }];
+    
+        self.ReloadDataBlcok(_index);
+        
+        n = _index;
+    }
 }
 -(void)selectRowSection:(NSInteger)line List:(NSInteger)list
 {
-    WeakifySelf();
-    
-    NSMutableArray * tempArray = [[NSMutableArray alloc] init];
-    
-    tempArray = [TableDataTool selectTableData:Str(_index)];
-    
-    if (tempArray.count>0) {
+    if (_line != line) {
         
-        NSMutableDictionary * sample =  [[tempArray objectAtIndex:line] toDictionary].mutableCopy;
-        
-        ZYInputAlertView *alertView = [ZYInputAlertView alertView];
-        
-        [alertView.inputTextView becomeFirstResponder];
-        
-        alertView.tipLabel.text = nameTables[list-1];
-        
-        alertView.placeholder = @"请输入修改数据";
-        
-        [alertView confirmBtnClickBlock:^(NSString *inputString) {
-            
-            NSLog(@"输出的数据%@",inputString);
-            
-            [TableDataTool deleteTableData:Str(_index)];
-            
-            [tempArray removeObjectAtIndex:line];
-            
-            [sample setObject:inputString forKey:keys[list-1]];
-            
-            [tempArray insertObject:[[Sample alloc] initWithDictionary:sample error:nil] atIndex:line];
-            
-            if ([TableDataTool insertTableData:tempArray Number:Str(_index)]) {
-                
-                weakSelf.ReloadDataBlcok(_index);
-            }
-        }];
-        [alertView show];
+        tempDict = [[NSMutableDictionary alloc] initWithDictionary:@{@"number":Str(self.dataArray.count+1),@"days":@"",@"weight":@"",@"height":@"",@"italic":@"",@"bust":@""}];
     }
+    
+    [self.dataArray removeObjectAtIndex:line];
+    
+    ZYInputAlertView *alertView = [ZYInputAlertView alertView];
+    
+    [alertView.inputTextView becomeFirstResponder];
+    
+    alertView.tipLabel.text = nameTables[list-1];
+    
+    alertView.placeholder = @"请输入修改数据";
+    
+    [alertView confirmBtnClickBlock:^(NSString *inputString) {
+        
+        [tempDict setObject:Str(line+1) forKey:@"number"];
+        
+        [tempDict removeObjectForKey:keys[list-1]];
+        
+        [tempDict setObject:inputString forKey:keys[list-1]];
+        
+        [self.dataArray insertObject:tempDict atIndex:line];
+        
+        tableView.dataArray = self.dataArray;
+        
+        [tableView reloadView];
+    
+        self.PassDataBlcok(tempDict);
+    }];
+    
+    _line = line;
+    
+    [alertView show];
+}
+-(NSMutableArray *)outDataArray
+{
+    if (!_outDataArray) {
+        
+        _outDataArray = [[NSMutableArray alloc] init];
+    }
+    return _outDataArray;
 }
 -(NSInteger)fontWithRowText
 {

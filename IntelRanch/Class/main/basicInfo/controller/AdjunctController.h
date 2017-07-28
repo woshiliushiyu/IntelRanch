@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AdjunctController : UIViewController
-
+@property(nonatomic,copy)NSString * idString;
+@property(nonatomic,copy)NSString * typeString;
 @end

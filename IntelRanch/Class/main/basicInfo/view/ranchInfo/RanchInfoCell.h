@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LayoutModel.h"
 @interface RanchInfoCell : UITableViewCell
 @property(nonatomic,copy)void (^SelectRanchInfoBlock)();
-@property(nonatomic,strong)NSMutableArray * dataArray;
+@property(nonatomic,strong)LayoutModel * infoModel;
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
+
+@property(nonatomic,strong)NSDictionary * dataDict;
 
 @end

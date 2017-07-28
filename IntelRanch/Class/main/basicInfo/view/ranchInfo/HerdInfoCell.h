@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LayoutModel.h"
 @interface HerdInfoCell : UITableViewCell
 @property(nonatomic,copy)void (^SelectSetBlock)();
+@property(nonatomic,strong)LayoutModel * model;
 @end

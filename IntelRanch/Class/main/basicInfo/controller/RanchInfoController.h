@@ -10,4 +10,8 @@
 #import "LayoutInfoModel.h"
 @interface RanchInfoController : UIViewController
 @property(nonatomic,strong)NSMutableArray <LayoutInfoModel *>* dataArray;
+@property(nonatomic,copy)NSString * typeString;
+@property(nonatomic,copy)NSString * idString;
+
+@property(nonatomic,strong)NSDictionary * dataDict;
 @end

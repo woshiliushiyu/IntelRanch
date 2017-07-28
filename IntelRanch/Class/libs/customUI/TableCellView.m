@@ -33,7 +33,7 @@
     
     for (int i=0; i<tags.count; i++) {
         
-        _nameLabel = Label.str([[objects objectAtIndex:index] valueForKey:[tags objectAtIndex:i]]).xywh(i*width,0,width,heights).bgColor(BGCOLOR).centerAlignment.fnt(font).tg(100+i).border(1,@"white").onClick(^(UILabel * lab){
+        _nameLabel = Label.str([[objects objectAtIndex:index] valueForKey:[tags objectAtIndex:i]]).xywh(i*width,0,width,heights).bgColor(BGCOLOR).color(@"121,121,121").centerAlignment.fnt(font).tg(100+i).border(1,@"white").onClick(^(UILabel * lab){
             
             NSLog(@"获取位置 第%ld行  第%ld列",(long)index,lab.tag-99);
             
@@ -51,7 +51,7 @@
     
     for (int i=0; i<titles.count; i++) {
         
-        UILabel * nameLabel = Label.str(titles[i]).xywh(i*width,0,width,heights).bgColor(BGCOLOR).centerAlignment.fnt(font).border(0.5,@"white");
+        UILabel * nameLabel = Label.str(titles[i]).xywh(i*width,0,width,heights).bgColor(BGCOLOR).color(@"121,121,121").centerAlignment.fnt(font).border(0.5,@"white");
         
         [self addSubview:nameLabel];
     }
@@ -64,7 +64,6 @@
 @property(nonatomic,strong)NSArray * objects;
 @property(nonatomic,strong)NSArray * tags;
 
-@property(nonatomic,strong)NSMutableArray * dataArray;
 
 @property(nonatomic,strong)UITableView * tableView;
 @end
@@ -78,12 +77,13 @@
 }
 -(void)setTitles:(NSArray *)titles andObjects:(NSArray *)objects withTags:(NSArray *)tags
 {
+
     _titles = titles;
     self.dataArray = objects.mutableCopy;
     _tags = tags;
     
     [self addSubview:self.tableView];
-
+    
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(self);
     }];
@@ -116,6 +116,7 @@
     TableCellViewCell * cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithString:NSStringFromClass([TableCellViewCell class])]];
     
     if (!cell) {
+        
         cell = [[TableCellViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithString:NSStringFromClass([TableCellViewCell class])]];
     }
 
@@ -143,6 +144,8 @@
     if ([_delegate respondsToSelector:@selector(selectAddBtn)]) {
 
         [self.delegate selectAddBtn];
+        
+        [self.tableView reloadData];
     }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -170,14 +173,14 @@
         return 30.0f;
     }
 }
-#pragma mark === lazy  ===
--(NSMutableArray *)dataArray
+-(void)reloadView
 {
-    if (!_dataArray) {
-        
-        _dataArray = [[NSMutableArray alloc] init];
-    }
-    return _dataArray;
+    [self.tableView reloadData];
+}
+#pragma mark === lazy  ===
+-(void)setDataArray:(NSMutableArray *)dataArray
+{
+    _dataArray = dataArray;
 }
 -(UITableView *)tableView
 {

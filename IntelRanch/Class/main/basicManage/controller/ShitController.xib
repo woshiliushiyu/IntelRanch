@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16D30" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShitController">
+            <connections>
+                <outlet property="bgView" destination="7Rq-Bu-lfx" id="6Bx-9e-f5m"/>
+                <outlet property="heightCell" destination="9r4-R3-d8f" id="F1E-5X-Vsw"/>
+                <outlet property="lineLabel" destination="82w-In-Sn0" id="DXP-lN-N7N"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gU1-KK-O6b">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Rq-Bu-lfx">
+                            <rect key="frame" x="20" y="20" width="335" height="627"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="粪便评估" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZQ-Cl-f7S">
+                                    <rect key="frame" x="20" y="20" width="73.5" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82w-In-Sn0">
+                                    <rect key="frame" x="10" y="51" width="315" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="627" id="9r4-R3-d8f"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="7Rq-Bu-lfx" firstAttribute="centerX" secondItem="gU1-KK-O6b" secondAttribute="centerX" id="6kd-p6-zQZ"/>
+                        <constraint firstAttribute="trailing" secondItem="7Rq-Bu-lfx" secondAttribute="trailing" constant="20" id="8d3-Ne-grS"/>
+                        <constraint firstAttribute="bottom" secondItem="7Rq-Bu-lfx" secondAttribute="bottom" constant="20" id="TW7-dT-xgU"/>
+                        <constraint firstItem="7Rq-Bu-lfx" firstAttribute="leading" secondItem="gU1-KK-O6b" secondAttribute="leading" constant="20" id="cEj-qb-5Di"/>
+                        <constraint firstItem="7Rq-Bu-lfx" firstAttribute="top" secondItem="gU1-KK-O6b" secondAttribute="top" constant="20" id="fnt-SN-GLI"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="gU1-KK-O6b" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0wH-i3-dFG"/>
+                <constraint firstAttribute="bottom" secondItem="gU1-KK-O6b" secondAttribute="bottom" id="cmj-Je-yQL"/>
+                <constraint firstAttribute="trailing" secondItem="gU1-KK-O6b" secondAttribute="trailing" id="qgo-7t-A8K"/>
+                <constraint firstItem="gU1-KK-O6b" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yYP-fO-jEy"/>
+            </constraints>
+            <point key="canvasLocation" x="-216" y="-76"/>
+        </view>
+    </objects>
+</document>

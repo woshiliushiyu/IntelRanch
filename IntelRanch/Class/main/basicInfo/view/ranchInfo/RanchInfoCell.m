@@ -7,7 +7,8 @@
 //
 
 #import "RanchInfoCell.h"
-
+#import "LayoutInfoModel.h"
+#import "MyRanchInfoModel.h"
 @interface RanchInfoCell ()
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (strong, nonatomic) IBOutlet UILabel *lineLabel;
@@ -38,13 +39,27 @@
     }
     return self;
 }
--(void)setDataArray:(NSMutableArray *)dataArray
+-(void)setDataDict:(NSDictionary *)dataDict
 {
-    _dataArray = dataArray;
+    _dataDict = dataDict;
+}
+-(void)setInfoModel:(LayoutModel *)infoModel
+{
+    _infoModel = infoModel;
     
-    for (int i=0; i<dataArray.count; i++) {
+    self.settingBtn.hidden = NO;
+    
+//    NSDictionary * dic = [LocalDataTool getDataToDataName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]];
+    
+    NSArray * array = infoModel.fields;
+    
+    for (int i=0; i<array.count; i++) {
         
-        self.nameLabel = Label.fnt(14.0f).color(@"214,214,214").str(@"这是主键:");//.xywh(0,i*25,50,15);
+        LayoutInfoModel * model = array[i];
+        
+        NSString * nameText = [NSString stringWithFormat:@"%@:",model.title];
+        
+        self.nameLabel = Label.fnt(14.0f).color(@"214,214,214").str(nameText);//.xywh(0,i*25,50,15);
         [self.backView addSubview:self.nameLabel];
         [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self.backView);
@@ -52,7 +67,7 @@
             make.height.mas_equalTo(15);
         }];
         
-        self.detailLabel = Label.fnt(14.0f).color(@"214,214,214").str(@"这是内容详情页");//.xywh(60,i*25,50,15);
+        self.detailLabel = Label.fnt(14.0f).color(@"121,121,121").str([Str(_dataDict[model.name]) isEqualToString:@"0000-00-00 00:00:00"]?@"":_dataDict[model.name]);//.xywh(60,i*25,50,15);
         [self.backView addSubview:self.detailLabel];
         [self.detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self.nameLabel.mas_right).offset(10);
@@ -61,6 +76,7 @@
         }];
     }
 }
+
 -(void)touchSetting
 {
     NSLog(@"点击设置了");

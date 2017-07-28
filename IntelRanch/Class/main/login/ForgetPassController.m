@@ -66,7 +66,7 @@
     //请求接口发送验证码
     [self getSMSMessage];
     
-    self.timeCount = 10;
+    self.timeCount = 60;
     self.verifyBtn.enabled = NO;
     [self.timer setFireDate:[NSDate distantPast]];
     [self.phoneText resignFirstResponder];
@@ -231,6 +231,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 -(void)dealloc
 {

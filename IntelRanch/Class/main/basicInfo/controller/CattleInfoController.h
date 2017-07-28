@@ -10,4 +10,6 @@
 #import "LayoutInfoModel.h"
 @interface CattleInfoController : UIViewController
 @property(nonatomic,strong)NSMutableArray <LayoutInfoModel*> * dataArray;
+
+@property(nonatomic,strong)NSDictionary * dataDict;
 @end

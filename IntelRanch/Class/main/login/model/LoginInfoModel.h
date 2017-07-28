@@ -32,5 +32,7 @@
 
 +(LoginInfoModel*)getLoginInfoModel;
 
++(void)clearnLoginInfo;
+
 +(BOOL)isLogin;
 @end

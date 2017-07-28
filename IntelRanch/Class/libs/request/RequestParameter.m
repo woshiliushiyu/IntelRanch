@@ -27,4 +27,22 @@ NSString * const calfInfo = @"models/table";
 NSString * const createRanch = @"pastures/create";
 
 NSString * const modfiyInfo = @"pastures/modify";
+
+NSString * const uploadMedia = @"files/upload";
+
+NSString * const sampleAverge = @"samples/average";
+
+NSString * const uploadCalfSample = @"samples/create";
+
+NSString * const getRanchInfo = @"pastures/info";
+
+NSString * const images = @"images";
+
+NSString * const videos = @"videos";
+
+NSString * const experts = @"questions/experts";
+
+NSString * const create = @"questions/create";
+
+NSString * const newborn = @"newborn/logs/modify";
 @end

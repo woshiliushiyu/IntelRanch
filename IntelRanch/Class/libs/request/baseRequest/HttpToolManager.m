@@ -35,6 +35,7 @@
                                          success:(void (^)(NSURLSessionDataTask *, id))success
                                          failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
 
+
 @end
 
 @interface HttpToolManager () <HttpNetworkProxy>
@@ -72,10 +73,10 @@ static YTKKeyValueStore *_store;
     self = [super initWithBaseURL:url];
     if (self) {
         [self.reachabilityManager startMonitoring];
-        self.requestSerializer.timeoutInterval = 15;
+        self.requestSerializer.timeoutInterval = 10;
         self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/plain", @"text/html", nil];
 //        self.responseSerializer = [AFHTTPResponseSerializer serializer];
-//        [(AFJSONResponseSerializer *)self.responseSerializer setRemovesKeysWithNullValues:YES];
+        [(AFJSONResponseSerializer *)self.responseSerializer setRemovesKeysWithNullValues:YES];
         
         //https ssl 验证
 //        [self setSecurityPolicy:[self customSecurityPolicy]];
@@ -83,7 +84,10 @@ static YTKKeyValueStore *_store;
     return self;
 }
 
-
+-(void)clearLocalData
+{
+    [_store clearTable:_tableName];
+}
 - (AFSecurityPolicy*)customSecurityPolicy {
     
 #pragma mark - 先导入证书
@@ -113,14 +117,39 @@ static YTKKeyValueStore *_store;
 #pragma mark - 封装AFN method
 
 /**
- *  发起网络请求
- *
- *  @param method        GET / POST
- *  @param URLString     URLString
- *  @param patameters    请求参数（一般为字典）
- *  @param finishedBlock 完成的回调
- */
+ 数据上传
 
+ @param URLString  url
+ @param patameters 上传的数据
+ @param finishedBlock 回调
+ */
+-(void)uploadWithURLString:(NSString *)URLString parameters:(id)patameters finished:(RequestFinishedBlock)finishedBlock
+{
+    [self POST:URLString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyyMMddhhmmss"];
+        
+        if ([URLString rangeOfString:@"type=image"].location != NSNotFound) {
+            
+            [formData appendPartWithFileData:patameters name:@"file" fileName:[NSString stringWithFormat:@"%@.jpg",[formatter stringFromDate:[NSDate date] ]] mimeType:@"image/jpg"];
+            
+        }else{
+            
+            [formData appendPartWithFileData:patameters name:@"file" fileName:[NSString stringWithFormat:@"%@.mp4",[formatter stringFromDate:[NSDate date] ]] mimeType:@"video/*"];
+        }
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        finishedBlock(responseObject,nil);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        [LCProgressHUD showFailure:@"上传失败"];
+        finishedBlock(nil,error);
+    }];
+}
 /**
  发起网络请求
 
@@ -134,8 +163,6 @@ static YTKKeyValueStore *_store;
     
     NSString *methodName = (method == kGET) ? @"GET" : @"POST";
     
-    [LCProgressHUD showLoading:@"加载中..."];
-    
     if (upload) {
         
         [self uploadMessageWithmethodName:methodName URLString:URLString parameters:patameters finished:finishedBlock];
@@ -148,7 +175,7 @@ static YTKKeyValueStore *_store;
             }
                 break;
             case BcRequestCenterCachePolicyCacheAndLocal: {//缓存
-                [self cacheAndLocalWithmethodName:methodName URLString:URLString parameters:patameters finished:finishedBlock];
+                [self AFNetworkStatusCacheAndLocalWithmethodName:methodName URLString:URLString parameters:patameters finished:finishedBlock];
             }
                 break;
                 
@@ -161,13 +188,12 @@ static YTKKeyValueStore *_store;
 - (void)cachePolicyNormalWithmethodName:(NSString *)methodName URLString:(NSString *)URLString parameters:(id)patameters finished:(RequestFinishedBlock)finishedBlock{
     [[self dataTaskWithHTTPMethod:methodName URLString:URLString parameters:patameters uploadProgress:NULL downloadProgress:NULL success:^(NSURLSessionDataTask *task, id responseObject) {
         if (finishedBlock) {
-            [LCProgressHUD hide];
+
             finishedBlock(responseObject, nil);
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (finishedBlock) {
-            [LCProgressHUD hide];
-            [LCProgressHUD showFailure:@"请求失败"];
+
             finishedBlock(nil, error);
         }
     }] resume];
@@ -175,7 +201,7 @@ static YTKKeyValueStore *_store;
 //上传
 - (void)uploadMessageWithmethodName:(NSString *)methodName URLString:(NSString *)URLString parameters:(id)patameters finished:(RequestFinishedBlock)finishedBlock
 {
-    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:methodName URLString:[NSString stringWithFormat:BaseURL@"%@",URLString]  parameters:patameters error:nil];
+    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:methodName URLString:[NSString stringWithFormat:BaseURL@"%@",URLString] parameters:patameters error:nil];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
         
@@ -184,32 +210,46 @@ static YTKKeyValueStore *_store;
             NSDictionary * dic = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
             finishedBlock(dic,nil);
-            [LCProgressHUD hide];
             
         }else{
-            [LCProgressHUD hide];
-            [LCProgressHUD showFailure:@"请求失败"];
+            
             finishedBlock(nil,connectionError);
         }
-        [LCProgressHUD hide];
     }];
 }
+
 //缓存
-- (void)cacheAndLocalWithmethodName:(NSString *)methodName URLString:(NSString *)URLString parameters:(id)patameters finished:(RequestFinishedBlock)finishedBlock{
+- (void)cacheAndLocalWithmethodName:(NSString *)methodName URLString:(NSString *)URLString NetStatus:(BOOL)status parameters:(id)patameters finished:(RequestFinishedBlock)finishedBlock{
     
     NSString *URL = [NSString stringWithFormat:@"%@%@",URLString,patameters];
-    if ([self judgeNet]) {
+    
+    if (status) {
+        
         [[self dataTaskWithHTTPMethod:methodName URLString:URLString parameters:patameters uploadProgress:NULL downloadProgress:NULL success:^(NSURLSessionDataTask *task, id responseObject) {
             
             if (finishedBlock) {
-                [LCProgressHUD hide];
+                
                 [_store putObject:responseObject withId:URL intoTable:_tableName];
+                
                 finishedBlock(responseObject, nil);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
             if (finishedBlock) {
-                [LCProgressHUD showFailure:@"请求失败"];
-                finishedBlock(nil, error);
+                
+//                [LCProgressHUD showFailure:@"请求失败"];
+                
+                id responseObject = [_store getObjectById:URL fromTable:_tableName];
+                
+                if (responseObject) {
+                    NSLog(@"系统有缓存 ");
+                    finishedBlock(responseObject,nil);
+                } else {
+                    NSLog(@"系统无有缓存 ");
+                    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"No Cache"                                                                      forKey:NSLocalizedDescriptionKey];
+                    NSError *error = [NSError errorWithDomain:@"com.storyBoard.test" code:-1000 userInfo:userInfo];
+                    finishedBlock(nil, error);
+                }
             }
         }] resume];
     } else {
@@ -226,57 +266,20 @@ static YTKKeyValueStore *_store;
         }
     }
 }
-// 判断网络
-- (BOOL)judgeNet {
-        BOOL _isNetworkStatue = true;
-        
-        NSArray *children = [[[[UIApplication sharedApplication] valueForKeyPath:@"statusBar"]valueForKeyPath:@"foregroundView"]subviews];
-        NSString * state;
-        
-        for (id child in children) {
-            if ([child isKindOfClass:NSClassFromString(@"UIStatusBarDataNetworkItemView")]) {
-                //获取到状态栏
-                int netType = [[child valueForKeyPath:@"dataNetworkType"] intValue];
-                
-                switch (netType) {
-                    case 0:
-                        state = @"无网络";
-                        _isNetworkStatue = false;
-                        //无网模式
-                        break;
-                    case 1:
-                        state =  @"2G";
-                        _isNetworkStatue = true;
-                        break;
-                    case 2:
-                        state =  @"3G";
-                        _isNetworkStatue = true;
-                        break;
-                    case 3:
-                        state =   @"4G";
-                        _isNetworkStatue = true;
-                        break;
-                    case 5:
-                    {
-                        state =  @"wifi";
-                        _isNetworkStatue = true;
-                        break;
-                    default:
-                        break;
-                    }
-                }
-            }else{
-                _isNetworkStatue = NO;
-            }
-            //根据状态选择
-        }
-    
-    
-        return _isNetworkStatue;
-    
-    
-}
+- (void)AFNetworkStatusCacheAndLocalWithmethodName:(NSString *)methodName URLString:(NSString *)URLString parameters:(id)patameters finished:(RequestFinishedBlock)finishedBlock{
 
+//    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+//        
+//        if (status == AFNetworkReachabilityStatusUnknown || status == AFNetworkReachabilityStatusNotReachable) {
+//            
+//            [self cacheAndLocalWithmethodName:methodName URLString:URLString NetStatus:NO parameters:patameters finished:finishedBlock];
+//            
+//        }else{
+    
+            [self cacheAndLocalWithmethodName:methodName URLString:URLString NetStatus:YES parameters:patameters finished:finishedBlock];
+//        }
+//    }] ;
+}
 
 
 @end

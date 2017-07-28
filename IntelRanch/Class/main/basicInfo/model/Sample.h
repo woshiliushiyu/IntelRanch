@@ -9,6 +9,7 @@
 #import <JSONModel/JSONModel.h>
 
 @interface Sample : JSONModel
+
 @property(nonatomic,copy)NSString <Optional>* number;
 @property(nonatomic,copy)NSString <Optional>* dayNumber;
 @property(nonatomic,copy)NSString <Optional>* weight;

@@ -9,13 +9,23 @@
 #import "MainViewController.h"
 #import "InfoController.h"
 #import "MyRanchInfoModel.h"
-#import "CalfManageController.h"
+#import "CalfManagerListController.h"
+#import "ProblemController.h"
+#import "MineController.h"
+#import "FoodListController.h"
+#import "DiseaseListController.h"
+
+
+#import "SelectTableView.h"
 @interface MainViewController ()
 @property (strong, nonatomic) IBOutlet UIView *bgBottemView;
 
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *top;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *right;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *rHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *rWidth;
+
 
 @end
 
@@ -48,10 +58,13 @@
 }
 -(void)setupPersonCenter
 {
-    if (Width == 415) {
+    
+    if (Width == 414) {
         
-        _top.constant = 20.0f;
-        _right.constant = 18.0f;
+        _top.constant = 23.0f;
+        _right.constant = 14.0f;
+        _rHeight.constant = 60.0f;
+        _rWidth.constant = 60.0f;
         
     }else if (Width == 375){
         
@@ -67,7 +80,7 @@
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
-    return UIStatusBarStyleDefault;
+    return UIStatusBarStyleLightContent;
 }
 //牧场基本信息
 - (IBAction)basicInfoBtn:(id)sender {
@@ -76,19 +89,27 @@
 //新生犊牛管理
 - (IBAction)calfManagerBtn:(id)sender {
     
-    [self.navigationController pushViewController:[[CalfManageController alloc] init] animated:YES];
+    [self.navigationController pushViewController:[[CalfManagerListController alloc] init] animated:YES];
 }
 //犊牛饲料管理
 - (IBAction)raisingManagerBtn:(id)sender {
+    
+    [self.navigationController pushViewController:[[FoodListController alloc] init] animated:YES];
 }
 //个人中心
 - (IBAction)personInfoBtn:(id)sender {
+    
+    [self.navigationController pushViewController:[[MineController alloc] init] animated:YES];
 }
 //犊牛疾病管理
 - (IBAction)basicManagerBtn:(id)sender {
+    
+    [self.navigationController pushViewController:[[DiseaseListController alloc] init] animated:YES];
 }
 //常见问题解答
 - (IBAction)problemanageBtn:(id)sender {
+    
+    [self.navigationController pushViewController:[[ProblemController alloc] init] animated:YES];
 }
 
 

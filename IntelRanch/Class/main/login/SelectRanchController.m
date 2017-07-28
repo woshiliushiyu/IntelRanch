@@ -15,6 +15,8 @@
 {
     NSInteger _isSelectRow;
     SelectRanchCell * tempCell;
+    
+    SelectRanchCell * otherCell;
 }
 @property (strong, nonatomic) IBOutlet UIImageView *titleView;
 @property(nonatomic,strong)UITableView * tableView;
@@ -33,6 +35,8 @@
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.title = @"登    录";
     
+    _isSelectRow = 1000000;
+    
     UIImage *image = [UIImage imageNamed:@"bj_login"];
     self.view.layer.contents = (__bridge id _Nullable)(image.CGImage);
     self.view.layer.contentsRect = CGRectMake(0, 0, 1, 1);
@@ -43,10 +47,36 @@
         make.left.right.bottom.mas_equalTo(self.view);
     }];
     
+    if (self.dataArray.count==0) {
+        
+        [self requestData];
+    }
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(didNavBtnClick)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
 }
-
+-(void)requestData
+{
+    [[RequestTool sharedRequestTool] requestWithPasturesForOwnsFinishedBlock:^(id result, NSError *error) {
+    
+        if ([result[@"status_code"] integerValue] == 200) {
+            
+            self.dataArray = [[NSMutableArray alloc] init];
+            
+            for (NSDictionary * entity in result[@"data"]) {
+                
+                MyRanchInfoModel * model = [[MyRanchInfoModel alloc] initWithDictionary:entity error:nil];
+                
+                [self.dataArray addObject:model];
+            }
+            
+            [self.tableView reloadData];
+            
+        }else{
+            [LCProgressHUD showMessage:result[@"message"]];
+        }
+    }];
+}
 - (void)didNavBtnClick {
     
     MyRanchInfoModel * model = self.dataArray[_isSelectRow];
@@ -83,6 +113,14 @@
     
     cell.nameString = model.name;
     
+    if (_isSelectRow == indexPath.row) {
+        
+        UIImage * bgImage = GetImage(@"dianjizhuangtai");
+        cell.bgView.layer.contents = (__bridge id _Nullable)(bgImage.CGImage);
+        cell.bgView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
+        otherCell = cell;
+    }
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -96,6 +134,13 @@
     if (tempCell == cell) {
         
         return;
+    }
+    
+    if (otherCell != nil) {
+        
+        UIImage * nomalImg = GetImage(@"weidianji");
+        otherCell.bgView.layer.contents = (__bridge id _Nullable)(nomalImg.CGImage);
+        otherCell.bgView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
     }
     
     UIImage * bgImage = GetImage(@"dianjizhuangtai");
@@ -131,7 +176,11 @@
     }
     return _tableView;
 }
--(void)setDataArray:(NSArray *)dataArray
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+-(void)setDataArray:(NSMutableArray *)dataArray
 {
     _dataArray = dataArray;
     

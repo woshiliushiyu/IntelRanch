@@ -69,6 +69,9 @@ self.passText.text = @"123456";
     
     
 }
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (IBAction)registBtn:(id)sender {
     
     [self.navigationController pushViewController:[[RegistController alloc] init] animated:YES];
@@ -150,34 +153,34 @@ self.passText.text = @"123456";
                 [dataArray addObject:model];
             }
             
-//            if (dataArray.count>1) {
-//                
-//                SelectRanchController * selectRanchView = [[SelectRanchController alloc] init];
-//                
-//                selectRanchView.dataArray = dataArray;
-//                
-//                AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:selectRanchView];
-//                
-//            }else{
-//                
-//                if (dataArray.count ==1) {
-//                    
-//                    [LocalDataTool putDataToTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])] Data:dataArray[0]];
-//                    
-//                    AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:[[MainViewController alloc] init]];
-//                    
-//                    return;
-//                }
+            if (dataArray.count>1) {
+                
+                SelectRanchController * selectRanchView = [[SelectRanchController alloc] init];
+                
+                selectRanchView.dataArray = dataArray;
+                
+                AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:selectRanchView];
+                
+            }else{
+                
+                if (dataArray.count ==1) {
+                    
+                    [LocalDataTool putDataToTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])] Data:dataArray[0]];
+                    
+                    AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+                    
+                    return;
+                }
             
                 CreateRanchController * createRanchView = [[CreateRanchController alloc] init];
                 
                 createRanchView.dataArray = dataArray;
                 
                 AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:createRanchView];
-//            }
+            }
         }else{
             
-            [LCProgressHUD showFailure:result[@"data"]];
+            [LCProgressHUD showFailure:result[@"message"]];
         }
     }];
 }
