@@ -13,7 +13,6 @@
 #import "TableCellView.h"
 @interface CattleInfoCell ()<TableCellViewDelegate>
 {
-    NSUInteger num;
     NSUInteger n;
     NSArray * nameTables;
     NSArray * keys;
@@ -36,8 +35,6 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        num = 1;
-        
         self = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithString:NSStringFromClass([self class])] owner:self options:nil].firstObject;
         self.backgroundColor = BGCOLOR;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -46,7 +43,7 @@
         
         keys = @[@"number",@"days",@"weight",@"height",@"italic",@"bust"];
         
-        tempDict = [[NSMutableDictionary alloc] initWithDictionary:@{@"number":Str(num),@"days":@"",@"weight":@"",@"height":@"",@"italic":@"",@"bust":@""}];
+        tempDict = [[NSMutableDictionary alloc] initWithDictionary:@{@"number":Str(_index),@"days":@"",@"weight":@"",@"height":@"",@"italic":@"",@"bust":@""}];
         
         [self addShadowToCell:_bgView];
 
@@ -92,7 +89,9 @@
 }
 -(void)selectAddBtn
 {
-    if (n != _index) {
+    NSUInteger num = [[[NSUserDefaults standardUserDefaults] objectForKey:@"isAdd"] integerValue];
+    
+    if ((num-1) != _index && num != 0) {
         
         [LCProgressHUD showFailure:@"完成之后再次添加"];
         
@@ -123,8 +122,6 @@
     }
     
     if (!_isStop) {
-    
-        num++;
         
         [self.dataArray addObject:@{@"number":Str(self.dataArray.count+1),@"days":@"",@"weight":@"",@"height":@"",@"italic":@"",@"bust":@""}];
         
@@ -137,7 +134,8 @@
     
         self.ReloadDataBlcok(_index);
         
-        n = _index;
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedInteger:_index+1] forKey:@"isAdd"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 -(void)selectRowSection:(NSInteger)line List:(NSInteger)list
@@ -146,8 +144,6 @@
         
         tempDict = [[NSMutableDictionary alloc] initWithDictionary:@{@"number":Str(self.dataArray.count+1),@"days":@"",@"weight":@"",@"height":@"",@"italic":@"",@"bust":@""}];
     }
-    
-    [self.dataArray removeObjectAtIndex:line];
     
     ZYInputAlertView *alertView = [ZYInputAlertView alertView];
     
@@ -158,6 +154,8 @@
     alertView.placeholder = @"请输入修改数据";
     
     [alertView confirmBtnClickBlock:^(NSString *inputString) {
+        
+        [self.dataArray removeObjectAtIndex:line];
         
         [tempDict setObject:Str(line+1) forKey:@"number"];
         

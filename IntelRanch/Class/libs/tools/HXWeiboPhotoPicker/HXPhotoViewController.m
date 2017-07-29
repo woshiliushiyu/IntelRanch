@@ -919,9 +919,9 @@ static NSString *PhotoViewCellId = @"PhotoViewCellId";
  cell选中代理
  */
 - (void)cellDidSelectedBtnClick:(HXPhotoViewCell *)cell Model:(HXPhotoModel *)model {
-    if (!cell.selectBtn.selected) { // 弹簧果冻动画效果
-        if (self.manager.selectedList.count == self.manager.maxNum) {
-            [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld个",self.manager.maxNum]];
+    if (!cell.selectBtn.selected) { // 弹簧果冻动画效果   self.manager.selectedList.count +
+        if (self.photoNum+self.manager.selectedList.count == self.manager.maxNum) {
+            [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld个图片,%ld个视频",self.manager.photoMaxNum,self.manager.videoMaxNum]];
             // 已经达到最大选择数
             return;
         }
@@ -936,8 +936,9 @@ static NSString *PhotoViewCellId = @"PhotoViewCellId";
                         }
                     }
                 }
-                if (self.manager.selectedPhotos.count == self.manager.photoMaxNum) {
-                    [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld张图片",self.manager.photoMaxNum]];
+//                self.manager.selectedPhotos.count +
+                if (self.photoNum+self.manager.selectedPhotos.count == self.manager.photoMaxNum) {
+                    [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld个图片,%ld个视频",self.manager.photoMaxNum,self.manager.videoMaxNum]];
                     // 已经达到图片最大选择数
                     return;
                 }
@@ -951,21 +952,22 @@ static NSString *PhotoViewCellId = @"PhotoViewCellId";
                         }
                     }
                 }
-                if (self.manager.selectedVideos.count == self.manager.videoMaxNum) {
-                    [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld个视频",self.manager.videoMaxNum]];
+                if (self.videoNum == self.manager.videoMaxNum) {
+                    [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld个图片,%ld个视频",self.manager.photoMaxNum,self.manager.videoMaxNum]];
                     // 已经达到视频最大选择数
                     return;
                 }
             }
         }else if (self.manager.type == HXPhotoManagerSelectedTypePhoto) {
-            if (self.manager.selectedPhotos.count == self.manager.photoMaxNum) {
-                [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld张图片",self.manager.photoMaxNum]];
+            if (self.manager.selectedPhotos.count + self.photoNum == self.manager.photoMaxNum) {
+                [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld个图片,%ld个视频",self.manager.photoMaxNum,self.manager.videoMaxNum]];
                 // 已经达到图片最大选择数
                 return;
             }
         }else if (self.manager.type == HXPhotoManagerSelectedTypeVideo) {
-            if (self.manager.selectedVideos.count == self.manager.videoMaxNum) {
-                [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld个视频",self.manager.videoMaxNum]];
+//            manager.selectedVideos.count
+            if (self.videoNum == self.manager.videoMaxNum) {
+                [self.view showImageHUDText:[NSString stringWithFormat:@"最多只能选择%ld个图片,%ld个视频",self.manager.photoMaxNum,self.manager.videoMaxNum]];
                 // 已经达到视频最大选择数
                 return;
             }
@@ -976,7 +978,6 @@ static NSString *PhotoViewCellId = @"PhotoViewCellId";
                 return;
             }
         }
-        
         cell.maskView.hidden = NO;
         CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
         anim.duration = 0.25;

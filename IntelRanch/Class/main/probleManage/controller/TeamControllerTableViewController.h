@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface TeamControllerTableViewController : UITableViewController
-@property(nonatomic,copy)void (^SelectRowsBlock)(NSString * teamId,NSString * name);
+@property(nonatomic,copy)void (^SelectRowsBlock)(NSString * teamId,NSString * name,NSInteger idx);
+@property(nonatomic,assign)NSInteger index;
 @end

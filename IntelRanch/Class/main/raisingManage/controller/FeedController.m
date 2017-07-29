@@ -279,6 +279,10 @@
         VC.typeString = Str(3);
         
         VC.idString = self.idString;
+        
+        VC.imagesArray = self.getImages;
+        
+        VC.videoString = _videoPath;
     }
     
     [self.navigationController pushViewController:vc animated:YES];

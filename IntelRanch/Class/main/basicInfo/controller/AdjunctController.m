@@ -32,6 +32,7 @@
 @property(nonatomic,strong)UITextField * markTextView;
 @property(nonatomic,strong)UITextField * persionTextView;
 
+@property(nonatomic,strong)NSMutableArray * tempArray;
 @property(nonatomic,strong)NSMutableArray * imgsArray;
 @end
 
@@ -47,7 +48,22 @@
     self.navigationController.navigationBar.translucent = NO;
     self.automaticallyAdjustsScrollViewInsets = YES;
     
-    HXPhotoView *photoView = [HXPhotoView photoManager:self.manager];
+    if (self.videoString.length>0) {
+        HXPhotoModel * model = [[HXPhotoModel alloc] init];
+        model.type = HXPhotoModelMediaTypeCameraVideo;
+        model.videoURL = [NSURL URLWithString:self.videoString];
+        model.thumbPhoto = [self getThumbnailImage:self.videoString];
+        [self.tempArray addObject:model];
+    }
+    
+    for (NSString * urlString in self.imagesArray) {
+        HXPhotoModel * model = [[HXPhotoModel alloc] init];
+        model.type = HXPhotoModelMediaTypePhoto;
+        model.networkPhotoUrl = urlString;
+        [self.tempArray addObject:model];
+    }
+
+    HXPhotoView *photoView = [HXPhotoView photoManager:self.manager SelectData:[[self.tempArray reverseObjectEnumerator] allObjects].mutableCopy];
     photoView.frame = CGRectMake(10, CGRectGetMaxY(self.nameLabel.frame)+10, Width - 60, 0);
     photoView.delegate = self;
     photoView.backgroundColor = [UIColor whiteColor];
@@ -102,6 +118,9 @@
                 [LCProgressHUD showMessage:@"上传失败"];
             }
         }];
+    }else if (self.imagesArray.count>0) {
+        
+        [self uploadImgs];
     }
 }
 -(void)uploadImage
@@ -134,11 +153,17 @@
             
             _isVideoSuccess = YES;
             
-            if ((_isVideoSuccess && _isImgSuccess) || _photos.count ==0) {
+            NSArray * array = result[@"data"];
+            
+            if ((_isVideoSuccess && _isImgSuccess) || _photos.count ==0  || array.count==0) {
                 
-                [LCProgressHUD showSuccess:@"上传成功"];
+                [LCProgressHUD showSuccess:@"视频上传成功"];
                 
                 self.navigationItem.rightBarButtonItem.enabled = NO;
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
             }
 
         }else{
@@ -155,12 +180,18 @@
         if ([result[@"status_code"] integerValue] == 200) {
             
             _isImgSuccess = YES;
+            
+            NSArray * array = result[@"data"];
          
-            if ((_isVideoSuccess && _isImgSuccess) || _videos.count ==0) {
+            if ((_isVideoSuccess && _isImgSuccess) || _videos.count ==0 || array.count==0) {
                 
-                [LCProgressHUD showSuccess:@"上传成功"];
+                [LCProgressHUD showSuccess:@"图片上传成功"];
                 
                 self.navigationItem.rightBarButtonItem.enabled = NO;
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
             }
         }else{
             
@@ -172,6 +203,15 @@
 - (void)photoViewChangeComplete:(NSArray<HXPhotoModel *> *)allList Photos:(NSArray<HXPhotoModel *> *)photos Videos:(NSArray<HXPhotoModel *> *)videos Original:(BOOL)isOriginal
 {
     _videos = videos;
+    if (videos.count ==0 && photos.count == 0) {
+        
+        self.navigationItem.rightBarButtonItem = nil;
+    }else{
+        
+        self.navigationItem.rightBarButtonItem = nil;
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(didNavBtnClick)];
+    }
     
     if (videos.count>0) {
         
@@ -180,7 +220,22 @@
             _path = [info[@"PHImageFileSandboxExtensionTokenKey"] componentsSeparatedByString:@";"].lastObject;
         }];
     }
-    [HXPhotoTools getImageForSelectedPhoto:photos type:HXPhotoToolsFetchHDImageType completion:^(NSArray<UIImage *> *images) {
+    NSMutableArray * tempPhotos = [[NSMutableArray alloc] init];
+    
+    [self.imgsArray removeAllObjects];
+    
+    [photos enumerateObjectsUsingBlock:^(HXPhotoModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (obj.networkPhotoUrl.length==0) {
+            
+            [tempPhotos addObject:obj];
+        }else{
+            
+            [self.imgsArray addObject:obj.networkPhotoUrl];
+        }
+    }];
+    
+    [HXPhotoTools getImageForSelectedPhoto:tempPhotos type:HXPhotoToolsFetchHDImageType completion:^(NSArray<UIImage *> *images) {
         _photos = images;
     }];
 }
@@ -250,6 +305,18 @@
     }
     return _imgsArray;
 }
+-(NSMutableArray *)tempArray
+{
+    if (!_tempArray) {
+        
+        _tempArray = [[NSMutableArray alloc] init];
+    }
+    return _tempArray;
+}
+-(void)setImagesArray:(NSArray *)imagesArray
+{
+    _imagesArray = imagesArray;
+}
 -(UILabel *)fristLabel
 {
     if (!_fristLabel) {
@@ -295,6 +362,34 @@
         });
     }
     return _persionTextView;
+}
+- (UIImage *)getThumbnailImage:(NSString *)videoURL
+{
+    UIImage *shotImage;
+    
+    NSURL *fileURL = [NSURL URLWithString:videoURL];
+    
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:fileURL options:nil];
+    
+    AVAssetImageGenerator *gen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    
+    gen.appliesPreferredTrackTransform = YES;
+    
+    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
+    
+    NSError *error = nil;
+    
+    CMTime actualTime;
+    
+    CGImageRef image = [gen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    
+    shotImage = [[UIImage alloc] initWithCGImage:image];
+    
+    NSLog(@"获取的图片===>%@",error);
+    
+    CGImageRelease(image);
+    
+    return shotImage;
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {

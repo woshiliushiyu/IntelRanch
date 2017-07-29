@@ -63,7 +63,7 @@
             self.mBtn.titleLabel.lines(0);
         }
         
-        if ([self.dataDict[_model.name] rangeOfString:@","].location == NSNotFound) {
+        if (([self.dataDict[_model.name] rangeOfString:@","].location == NSNotFound) | self.isFold) {
             
             if ([names[i] isEqualToString:Str(self.dataDict[self.model.name])]) {
                 

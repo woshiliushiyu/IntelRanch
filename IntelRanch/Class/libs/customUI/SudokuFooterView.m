@@ -19,7 +19,7 @@
 
 @implementation SudokuFooterView
 
-- (instancetype)initWithImgs:(NSArray *)imgs
+- (instancetype)initWithImgs:(NSArray *)imgs Titles:(NSArray *)titles
 {
     self = [super init];
     if (self) {
@@ -35,10 +35,11 @@
             int row = i / totalColumns;
             int col = i % totalColumns;
             CGFloat cellW = ((Width-50)-(2*margin))/2;
+            CGFloat cellH  = 150;
             CGFloat cellX = col*(margin + cellW);
-            CGFloat cellY = row * (cellW+margin+10)+10;
+            CGFloat cellY = row * (cellH+margin+10)+10;
             
-            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(cellX, cellY, cellW, cellW-20)];
+            UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(cellX, cellY, cellW, cellH-30)];
             
             imageView.image = GetImage(imgs[i]);
             imageView.backgroundColor = [UIColor grayColor];
@@ -47,7 +48,8 @@
             imageView.userInteractionEnabled = YES;
             imageView.tag = 100+i;
             
-            UILabel * lab = Label.str(@"1.牛眼睛有病,看到了吗").fnt(10.0f).color(@"186,186,188").lines(0).xywh(cellX+5,cellY+(cellW-15),cellW-10,15);
+            UILabel * lab = Label.str(titles.count==0?@"":titles[i]).fnt(10.0f).color(@"186,186,188").lines(0).xywh(cellX+5,cellY+(cellH-25),cellW-10,25);
+            lab.textAlignment = NSTextAlignmentCenter;
             [self addSubview:lab];
             
             UITapGestureRecognizer * tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchSmallImage:)];

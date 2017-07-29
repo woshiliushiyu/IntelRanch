@@ -41,7 +41,7 @@
     
     [keys enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
-        if ([_parameterDic[obj] isEqualToString:@""]) {
+        if ([_parameterDic[obj] isEqualToString:@""] | (_parameterDic == nil)) {
             
             [LCProgressHUD showInfoMsg:@"请完善信息之后上传"];
             
@@ -165,6 +165,12 @@
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"isAdd"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -15,6 +15,9 @@
 #import "CreateRanchController.h"
 #import "MyRanchInfoModel.h"
 @interface LoginController ()
+{
+    LoginInfoModel * _model;
+}
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (strong, nonatomic) IBOutlet UIView *usernameBgView;
 @property (strong, nonatomic) IBOutlet UIView *passwordBgView;
@@ -66,6 +69,8 @@ self.passText.text = @"123456";
     self.casualLoginBtn.layer.borderWidth = 1;
     self.casualLoginBtn.layer.borderColor = RGBColor(180, 180, 180).CGColor;
     self.casualLoginBtn.titleEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     
     
 }
@@ -122,14 +127,14 @@ self.passText.text = @"123456";
         
         if ([result[@"status_code"] integerValue] == 200) {
             
-//            2 牧场  1 管理员
+//            2==>是多个    1==>是一个
             
-//            LoginInfoModel * model = [[LoginInfoModel alloc] initWithDictionary:result[@"data"] error:nil];
+            _model = [[LoginInfoModel alloc] initWithDictionary:result[@"data"] error:nil];
             
             [LoginInfoModel saveLoginInfo:result[@"data"]];
             
             [self requestMyRanchData];
-            
+
         }else{
             
             [LCProgressHUD showFailure:result[@"message"]];
@@ -153,7 +158,7 @@ self.passText.text = @"123456";
                 [dataArray addObject:model];
             }
             
-            if (dataArray.count>1) {
+            if ([_model.type isEqualToString:@"2"]) {
                 
                 SelectRanchController * selectRanchView = [[SelectRanchController alloc] init];
                 
@@ -163,7 +168,12 @@ self.passText.text = @"123456";
                 
             }else{
                 
-                if (dataArray.count ==1) {
+                if (dataArray.count >0) {
+                    
+                    MyRanchInfoModel * models = dataArray[0];
+                    
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:[models.id integerValue]] forKey:@"selectRanch"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
                     
                     [LocalDataTool putDataToTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])] Data:dataArray[0]];
                     

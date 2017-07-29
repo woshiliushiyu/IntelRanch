@@ -84,9 +84,16 @@
                 
                 return;
             }
+            
+            self.pngView.layer.contents = nil;
+            
         }else{
             
             self.breedLabel.text = dic[model.name];
+            
+            UIImage * image = GetImage(@"Slice_new");
+            self.pngView.layer.contents = (__bridge id _Nullable)(image.CGImage);
+            self.pngView.layer.contentsRect = CGRectMake(0, 0, 1, 1);
         }
     }
     [self setupPnPig:itemsArray];

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SudokuFooterView : UIView
-- (instancetype)initWithImgs:(NSArray *)imgs;
+- (instancetype)initWithImgs:(NSArray *)imgs Titles:(NSArray *)titles;
 @end

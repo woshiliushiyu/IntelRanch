@@ -14,6 +14,7 @@
     NSArray * _dataArray;
     NSUInteger _sum;
     NSString * _teamId;
+    NSInteger _index;
 }
 @property (strong, nonatomic) IBOutlet UITextView *problemTextView;
 @property (strong, nonatomic) IBOutlet UIButton *ranchTypeBtn;
@@ -54,12 +55,15 @@
     
     TeamControllerTableViewController * teamView = [[TeamControllerTableViewController alloc] init];
     
-    teamView.SelectRowsBlock = ^(NSString *teamId, NSString *name) {
+    teamView.SelectRowsBlock = ^(NSString *teamId, NSString *name,NSInteger idx) {
         
         _teamId = teamId;
         
+        _index = idx;
+        
         self.teamNameLabel.text = name;
     };
+    teamView.index = _index;
     
     [self.navigationController pushViewController:teamView animated:YES];
 }

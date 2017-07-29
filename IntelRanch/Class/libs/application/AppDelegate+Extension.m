@@ -50,4 +50,12 @@
     [self.window makeKeyAndVisible];
     
 }
+-(void)popViewConteoller
+{
+    [[HttpToolManager sharedManager] clearLocalData];
+    [LocalDataTool clearDataTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]];
+    [LoginInfoModel clearnLoginInfo];
+    
+    AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:[[LoginController alloc] init]];
+}
 @end

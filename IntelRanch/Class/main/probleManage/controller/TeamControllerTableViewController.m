@@ -77,6 +77,11 @@
     }
     TeamInfoModel * model=  self.dataArray[indexPath.row];
     
+    if (self.index == indexPath.row+1 && self.index !=0) {
+        
+        cell.selectImg.hidden = NO;
+    }
+    
     [cell.iconView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https:%@",model.avatar_url]] placeholderImage:[UIImage imageNamed:@"ywjf"]];
     cell.nameLabel.text = model.name;
     cell.describeLabel.text = model.summary;
@@ -85,7 +90,8 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    TeamInfoModel * model=  self.dataArray[indexPath.row];
+    return [self heightForString:model.summary fontSize:12 andWidth:Width-140.0f] + 50;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -95,17 +101,27 @@
     
     if (self.SelectRowsBlock) {
         
-        self.SelectRowsBlock(model.id,model.name);
+        self.SelectRowsBlock(model.id,model.name,indexPath.row+1);
     }
     
     cell.selectImg.hidden = NO;
     
     self.tableView.userInteractionEnabled = NO;
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         [self.navigationController popViewControllerAnimated:YES];
     });
+}
+-(CGFloat) heightForString:(NSString *)value fontSize:(float)fontSize andWidth:(float)width
+{
+    UIColor  *backgroundColor=[UIColor blackColor];
+//    UIFont *font=[UIFont boldSystemFontOfSize:12.0];
+    CGRect sizeToFit = [value boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{
+                                                                                                                                             NSForegroundColorAttributeName:backgroundColor
+//                                                                                                                                             NSFontAttributeName:font
+                                                                                                                                             } context:nil];
+    return sizeToFit.size.height;
 }
 -(NSMutableArray *)dataArray
 {

@@ -11,4 +11,7 @@
 @interface AdjunctController : UIViewController
 @property(nonatomic,copy)NSString * idString;
 @property(nonatomic,copy)NSString * typeString;
+
+@property(nonatomic,strong)NSArray * imagesArray;
+@property(nonatomic,copy)NSString * videoString;
 @end

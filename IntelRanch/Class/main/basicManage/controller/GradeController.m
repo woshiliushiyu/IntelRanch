@@ -10,6 +10,7 @@
 #import "SelectTableView.h"
 #import "GradeDataTool.h"
 #import "TableDataTool.h"
+#import "SicknessModel.h"
 @interface GradeController ()
 {
     int i;
@@ -26,6 +27,9 @@
 
 @property(nonatomic,strong)NSMutableArray * dataArray;
 @property(nonatomic,strong)NSMutableArray * array;
+
+@property(nonatomic,strong)NSMutableArray * oneArray;
+
 @property(nonatomic)NSUInteger  scroe;
 
 @property(nonatomic,strong)SelectTableView * mView;;
@@ -50,22 +54,31 @@
 {
     _titles = titles;
 }
+-(void)setDescriptArray:(NSArray *)descriptArray
+{
+    _descriptArray = descriptArray;
+}
+-(void)setLabels:(NSArray *)labels
+{
+    _labels = labels;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
     i=0;
-    
     _isSelect = YES;
     __weak GradeController *weakSelf = self;
     
+    weakSelf.heightContent.constant = (self.images.count==4?480:150)+(self.oneArray.count*30);
+    
     self.tempArray = [[NSMutableArray alloc] init];
     
-    _mView = [[SelectTableView alloc] initWithTitles:self.titles SubTitles:self.subTitles TableBody:self.titles.count==5?@[]:nil Select:YES FooterView:self.images];
+    _mView = [[SelectTableView alloc] initWithTitles:self.titles SubTitles:self.subTitles TableBody:self.titles.count==5?self.oneArray:nil Select:YES FooterView:self.images Titles:self.labels];
     
     _mView.SelectRowBlock = ^(NSInteger line, NSInteger row) {
         
-        if (_stopLine >= line) {
+        if (_stopLine >= line  | (line-(self.subTitles.count==0?0:1)) <= self.oneArray.count+self.subTitles.count) {
             
             return NO;
         }
@@ -122,10 +135,6 @@
             }
         }
         
-        NSLog(@"点击了第%ld行,第%ld列",(long)line,(long)row);
-        
-        NSLog(@"现在数据源是===>%@",weakSelf.tempArray);
-        
         return YES;
     };
     _mView.SelectAddBlock = ^{
@@ -147,6 +156,8 @@
         }
         
         if (self.titles.count == 5) {
+            
+            [weakSelf.dataArray addObjectsFromArray:weakSelf.oneArray];
             
             [weakSelf.dataArray addObject:@[[NSString stringWithFormat:@"样本%d",i],@"",@"",@"",@""]];
         }else{
@@ -173,9 +184,6 @@
         make.left.mas_equalTo(self.bgView).offset(10);
         make.bottom.right.mas_equalTo(self.bgView).offset(-10);
     }];
-    
-    
-    weakSelf.heightContent.constant = self.images.count==4?510:150;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -185,6 +193,19 @@
     self.nameLabel.text = self.navigationItem.title;
     
     [self addShadowToCell:self.bgView];
+    
+    
+    [self.descriptArray enumerateObjectsUsingBlock:^(SicknessModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if ([model.type integerValue] == [self.typeString integerValue]) {
+            
+            NSMutableArray * array = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"样本"],@"",@"",@"",@""]];
+            
+            [array replaceObjectAtIndex:[model.score integerValue]+1 withObject:@"1"];
+            
+            [self.oneArray addObject:array];
+        }
+    }];
     
      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(didNavBtnClick)];
 }
@@ -227,6 +248,14 @@
         _dataArray = [[NSMutableArray alloc] init];
     }
     return _dataArray;
+}
+-(NSMutableArray *)oneArray
+{
+    if (!_oneArray) {
+        
+        _oneArray = [[NSMutableArray alloc] init];
+    }
+    return _oneArray;
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {

@@ -12,7 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="DOs-xv-1KV" customClass="ZYInputAlertView">
-            <rect key="frame" x="0.0" y="0.0" width="280" height="200"/>
+            <rect key="frame" x="0.0" y="0.0" width="280" height="120"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXs-D8-47q">
@@ -27,7 +27,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZe-oh-mWc">
-                    <rect key="frame" x="10" y="150" width="260" height="40"/>
+                    <rect key="frame" x="10" y="70" width="260" height="40"/>
                     <color key="backgroundColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="lZM-dG-27i"/>
@@ -40,14 +40,14 @@
                         <action selector="confirmBtnClick:" destination="DOs-xv-1KV" eventType="touchUpInside" id="yeT-sl-Wga"/>
                     </connections>
                 </button>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="R1y-Kr-pZt">
-                    <rect key="frame" x="10" y="30" width="260" height="110"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="R1y-Kr-pZt">
+                    <rect key="frame" x="10" y="40" width="260" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ffff" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rrl-Gn-5rl">
-                    <rect key="frame" x="128" y="1" width="25.5" height="19.5"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                    <rect key="frame" x="125" y="10" width="30.5" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -61,9 +61,9 @@
                 <constraint firstItem="WZe-oh-mWc" firstAttribute="leading" secondItem="DOs-xv-1KV" secondAttribute="leading" constant="10" id="Ov4-50-RTR"/>
                 <constraint firstItem="R1y-Kr-pZt" firstAttribute="leading" secondItem="DOs-xv-1KV" secondAttribute="leading" constant="10" id="Pbq-h5-2lp"/>
                 <constraint firstItem="WZe-oh-mWc" firstAttribute="top" secondItem="R1y-Kr-pZt" secondAttribute="bottom" constant="10" id="Vef-c6-I3c"/>
-                <constraint firstItem="R1y-Kr-pZt" firstAttribute="top" secondItem="GXs-D8-47q" secondAttribute="bottom" id="qU9-l0-PBO"/>
+                <constraint firstItem="R1y-Kr-pZt" firstAttribute="top" secondItem="GXs-D8-47q" secondAttribute="bottom" constant="10" id="qU9-l0-PBO"/>
                 <constraint firstItem="Rrl-Gn-5rl" firstAttribute="centerX" secondItem="DOs-xv-1KV" secondAttribute="centerX" id="qsk-n4-HgS"/>
-                <constraint firstItem="Rrl-Gn-5rl" firstAttribute="top" secondItem="DOs-xv-1KV" secondAttribute="top" constant="1" id="x2H-38-X2m"/>
+                <constraint firstItem="Rrl-Gn-5rl" firstAttribute="top" secondItem="DOs-xv-1KV" secondAttribute="top" constant="10" id="x2H-38-X2m"/>
                 <constraint firstAttribute="trailing" secondItem="WZe-oh-mWc" secondAttribute="trailing" constant="10" id="ynq-xb-IKe"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -77,6 +77,6 @@
         </view>
     </objects>
     <resources>
-        <image name="shop_close" width="10" height="10"/>
+        <image name="shop_close" width="60" height="60"/>
     </resources>
 </document>

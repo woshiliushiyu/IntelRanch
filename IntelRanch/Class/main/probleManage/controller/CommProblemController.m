@@ -116,7 +116,7 @@
         
         NSDictionary * dic = self.dataArray[indexPath.row];
         
-        return 70+ [self heightForString:dic[@"summary"] fontSize:14 andWidth:Width-40.0f];
+        return 70+ [self heightForString:dic[@"summary"] fontSize:19 andWidth:Width-40.0f];
     }
     
     return 60.0f;
@@ -150,7 +150,7 @@
 -(CGFloat) heightForString:(NSString *)value fontSize:(float)fontSize andWidth:(float)width
 {
     UIColor  *backgroundColor=[UIColor blackColor];
-    UIFont *font=[UIFont boldSystemFontOfSize:16.0];
+    UIFont *font=[UIFont boldSystemFontOfSize:15.0];
     CGRect sizeToFit = [value boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{
                                                                                                                                              NSForegroundColorAttributeName:backgroundColor,
                                                                                                                                              NSFontAttributeName:font

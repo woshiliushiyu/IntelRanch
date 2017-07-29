@@ -54,6 +54,8 @@
     
     
     NSLog(@"获取的数据 %@",[LocalDataTool getDataToDataName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]]);
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 
 }
 -(void)setupPersonCenter

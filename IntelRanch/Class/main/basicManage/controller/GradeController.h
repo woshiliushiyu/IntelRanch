@@ -12,6 +12,8 @@
 @property(nonatomic,copy)NSString * idString;
 @property(nonatomic,copy)NSString * typeString;
 @property(nonatomic,strong)NSArray * images;
+@property(nonatomic,strong)NSArray * labels;
 @property(nonatomic,strong)NSArray * subTitles;
 @property(nonatomic,strong)NSArray * titles;
+@property(nonatomic,strong)NSArray * descriptArray;
 @end

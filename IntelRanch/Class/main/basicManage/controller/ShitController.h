@@ -10,4 +10,5 @@
 
 @interface ShitController : UIViewController
 @property(nonatomic,copy)NSString * idString;
+@property(nonatomic,strong)NSMutableArray * descriptArray;
 @end

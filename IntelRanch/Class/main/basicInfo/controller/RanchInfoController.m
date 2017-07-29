@@ -199,10 +199,10 @@
     }
     return _fileView;
 }
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
+//-(UIStatusBarStyle)preferredStatusBarStyle
+//{
+//    return UIStatusBarStyleLightContent;
+//}
 -(void)addShadowToCell:(UIView*)bgView
 {
     bgView.layer.shadowColor = [UIColor grayColor].CGColor;

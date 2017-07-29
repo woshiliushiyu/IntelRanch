@@ -40,6 +40,8 @@
 @property (strong, nonatomic) UICollectionView *collectionView;
 @property (strong, nonatomic, readonly) NSIndexPath *currentIndexPath;
 @property (assign, nonatomic) BOOL isPreview;
+@property (assign, nonatomic) NSUInteger photoNum;
+@property (assign, nonatomic) NSUInteger videoNum;
 @property (strong, nonatomic, readonly) HXAlbumModel *albumModel;
 @end
 

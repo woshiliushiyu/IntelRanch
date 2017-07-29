@@ -46,7 +46,7 @@
         [self getLayoutView];
     }];
 
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -54,10 +54,6 @@
     
     [self.tableView.mj_header beginRefreshing];
 
-}
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -414,6 +410,10 @@
         VC.idString = nil;
         
         VC.typeString = Str(1);
+        
+        VC.imagesArray = self.getImages;
+        
+        VC.videoString = _videoPath;
     }
 
     [self.navigationController pushViewController:vc animated:YES];

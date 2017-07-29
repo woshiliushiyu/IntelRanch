@@ -118,7 +118,7 @@
 {
     if ([_type isEqualToString:@"2"]) {
         
-        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"评分",@"0分",@"1分",@"2分",@"3分"] SubTitles:@[@[@"温度范围",@"37.8~38.3",@"38.3~38.9",@"38.8~39.4",@">39.4"]] TableBody:[[self.tempArray reverseObjectEnumerator] allObjects] Select:NO FooterView:nil];
+        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"评分",@"0分",@"1分",@"2分",@"3分"] SubTitles:@[@[@"温度范围",@"37.8~38.3",@"38.3~38.9",@"38.8~39.4",@">39.4"]] TableBody:[[self.tempArray reverseObjectEnumerator] allObjects] Select:NO FooterView:nil Titles:nil];
         
         mView.SelectRowBlock = ^(NSInteger line, NSInteger row) {
             return YES;
@@ -131,7 +131,7 @@
     }
     if ([_type isEqualToString:@"6"]) {
         
-        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"评分",@"0分",@"1分",@"2分",@"3分"] SubTitles:@[@[@"症状",@"无咳嗽",@"触捏喉头单",@"触捏喉头反",@"无需触捏喉头"]] TableBody:[[self.bexArray reverseObjectEnumerator] allObjects]  Select:NO FooterView:nil];
+        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"评分",@"0分",@"1分",@"2分",@"3分"] SubTitles:@[@[@"症状",@"无咳嗽",@"触捏喉头单",@"触捏喉头反",@"无需触捏喉头"]] TableBody:[[self.bexArray reverseObjectEnumerator] allObjects]  Select:NO FooterView:nil Titles:nil];
         
         mView.SelectRowBlock = ^(NSInteger line, NSInteger row) {
             return YES;
@@ -145,10 +145,12 @@
     if ([_type isEqualToString:@"5"]) {
         
         NSArray * imgs = @[@[@"bja_s",@"bjb_s",@"bjc_s",@"bjd_s"],@[@"bjaa_s",@"bjbb_s",@"bjcc_s",@"bjdd_s"],@[@"bjaaa_s",@"bjbbb_s",@"bjccc_s",@"bjddd_s"]];
+        NSArray * lables = @[@[@"0分,正常水样分泌物",@"1分,单侧鼻孔少量白色分泌物",@"2分,双侧鼻孔少量白色分泌物",@"3分,双侧鼻孔大量白色分泌物"],@[@"0分,耳朵状况正常",@"1分,不断晃动耳朵",@"2分,单侧耳朵耷拉",@"3分,头歪斜或双侧耳朵耷拉"],@[@"0分,明亮无任何分泌物",@"1分,眼少量分泌物",@"2分,眼多量分泌物",@"3分,双眼大量分泌物"]];
         
         NSArray * imags = imgs[[_type isEqualToString:@"5"]?0:[_type isEqualToString:@"7"]?1:2];
+        NSArray * label = lables[[_type isEqualToString:@"5"]?0:[_type isEqualToString:@"7"]?1:2];
         
-        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"犊牛评估",@"0分",@"1分",@"2分",@"3分"] SubTitles:nil TableBody:[[self.noseArray reverseObjectEnumerator] allObjects] Select:NO FooterView:imags];
+        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"犊牛评估",@"0分",@"1分",@"2分",@"3分"] SubTitles:nil TableBody:[[self.noseArray reverseObjectEnumerator] allObjects] Select:NO FooterView:imags Titles:label];
         
         mView.SelectRowBlock = ^(NSInteger line, NSInteger row) {
             return YES;
@@ -162,10 +164,12 @@
     if ([_type isEqualToString:@"7"]) {
         
         NSArray * imgs = @[@[@"bja_s",@"bjb_s",@"bjc_s",@"bjd_s"],@[@"bjaa_s",@"bjbb_s",@"bjcc_s",@"bjdd_s"],@[@"bjaaa_s",@"bjbbb_s",@"bjccc_s",@"bjddd_s"]];
+        NSArray * lables = @[@[@"0分,正常水样分泌物",@"1分,单侧鼻孔少量白色分泌物",@"2分,双侧鼻孔少量白色分泌物",@"3分,双侧鼻孔大量白色分泌物"],@[@"0分,明亮无任何分泌物",@"1分,眼少量分泌物",@"2分,眼多量分泌物",@"3分,双眼大量分泌物"],@[@"0分,耳朵状况正常",@"1分,不断晃动耳朵",@"2分,单侧耳朵耷拉",@"3分,头歪斜或双侧耳朵耷拉"]];
         
         NSArray * imags = imgs[[_type isEqualToString:@"5"]?0:[_type isEqualToString:@"7"]?1:2];
+        NSArray * label = lables[[_type isEqualToString:@"5"]?0:[_type isEqualToString:@"7"]?1:2];
         
-        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"犊牛评估",@"0分",@"1分",@"2分",@"3分"] SubTitles:nil TableBody:[[self.eyeArray reverseObjectEnumerator] allObjects] Select:NO FooterView:imags];
+        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"犊牛评估",@"0分",@"1分",@"2分",@"3分"] SubTitles:nil TableBody:[[self.eyeArray reverseObjectEnumerator] allObjects] Select:NO FooterView:imags Titles:label];
         
         mView.SelectRowBlock = ^(NSInteger line, NSInteger row) {
             return YES;
@@ -179,10 +183,12 @@
     if ([_type isEqualToString:@"8"]) {
         
         NSArray * imgs = @[@[@"bja_s",@"bjb_s",@"bjc_s",@"bjd_s"],@[@"bjaa_s",@"bjbb_s",@"bjcc_s",@"bjdd_s"],@[@"bjaaa_s",@"bjbbb_s",@"bjccc_s",@"bjddd_s"]];
+        NSArray * lables = @[@[@"0分,正常水样分泌物",@"1分,单侧鼻孔少量白色分泌物",@"2分,双侧鼻孔少量白色分泌物",@"3分,双侧鼻孔大量白色分泌物"],@[@"0分,明亮无任何分泌物",@"1分,眼少量分泌物",@"2分,眼多量分泌物",@"3分,双眼大量分泌物"],@[@"0分,耳朵状况正常",@"1分,不断晃动耳朵",@"2分,单侧耳朵耷拉",@"3分,头歪斜或双侧耳朵耷拉"]];
         
         NSArray * imags = imgs[[_type isEqualToString:@"5"]?0:[_type isEqualToString:@"7"]?1:2];
+        NSArray * label = lables[[_type isEqualToString:@"5"]?0:[_type isEqualToString:@"7"]?1:2];
         
-        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"犊牛评估",@"0分",@"1分",@"2分",@"3分"] SubTitles:nil TableBody:[[self.earArray reverseObjectEnumerator] allObjects] Select:NO FooterView:imags];
+        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"犊牛评估",@"0分",@"1分",@"2分",@"3分"] SubTitles:nil TableBody:[[self.earArray reverseObjectEnumerator] allObjects] Select:NO FooterView:imags Titles:label];
         
         mView.SelectRowBlock = ^(NSInteger line, NSInteger row) {
             return YES;
@@ -195,7 +201,7 @@
     }
     if ([_type isEqualToString:@"3"]) {
         
-        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"序号",@"气味",@"颜色"] SubTitles:[[self.shitArray reverseObjectEnumerator] allObjects] TableBody:nil Select:NO FooterView:nil];
+        SelectTableView * mView = [[SelectTableView alloc] initWithTitles:@[@"序号",@"气味",@"颜色"] SubTitles:[[self.shitArray reverseObjectEnumerator] allObjects] TableBody:nil Select:NO FooterView:nil Titles:nil];
         
         mView.SelectRowBlock = ^(NSInteger line, NSInteger row) {
             return YES;

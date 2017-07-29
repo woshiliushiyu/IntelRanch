@@ -101,7 +101,7 @@
         
         UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(cellX, cellY, cellW, cellW)];
         
-        [imageView sd_setImageWithURL:[NSURL URLWithString:imgs[i]] placeholderImage:[UIImage imageNamed:@"ywjf"]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imgs[i]] placeholderImage:[UIImage imageNamed:@"defult_img"]];
         imageView.backgroundColor = [UIColor grayColor];
         imageView.layer.cornerRadius = 5;
         imageView.layer.masksToBounds = YES;

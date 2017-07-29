@@ -10,6 +10,7 @@
 #import "TableCellView.h"
 #import "AssessmentModel.h"
 #import "TableDataTool.h"
+#import "SicknessModel.h"
 @interface ShitController ()<TableCellViewDelegate>
 {
     TableCellView * tableView;
@@ -20,6 +21,7 @@
 }
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @property (nonatomic,strong)NSMutableArray * dataArray;
+@property(nonatomic,strong)NSMutableArray * shitArray;
 @property (strong, nonatomic) IBOutlet UILabel *lineLabel;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *heightCell;
 
@@ -37,11 +39,27 @@
     
     num = 1;
     
-    [self.dataArray addObject:@{@"serial":Str(num),@"small":@"",@"color":@""}];
+    [self.descriptArray enumerateObjectsUsingBlock:^(SicknessModel *  _Nonnull model, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        if ([model.type integerValue] == 2) {
+            
+            NSMutableDictionary * tempDicts = [[NSMutableDictionary alloc] init];
+            
+            [tempDicts setValue:Str(idx+1) forKey:@"serial"];
+            [tempDicts setValue:model.value1 forKey:@"small"];
+            [tempDicts setValue:model.value2 forKey:@"color"];
+            
+            [self.shitArray addObject:tempDicts];
+        }
+    }];
     
-    tableView = [[TableCellView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.lineLabel.frame)+10, Width-60, 90)];
+    [self.dataArray addObjectsFromArray:self.shitArray];
+//    Str(self.shitArray.count+1)
+    [self.dataArray addObject:@{@"serial":@"样本",@"small":@"",@"color":@""}];
     
-    _heightCell.constant = 170.0f;
+    tableView = [[TableCellView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.lineLabel.frame)+10, Width-60, 90+(self.shitArray.count*30))];
+    
+    _heightCell.constant = 170.0f+(self.shitArray.count*30);
     
     [tableView setTitles:@[@"序号",@"气味",@"颜色"] andObjects:self.dataArray withTags:@[@"serial",@"small",@"color"]];
     
@@ -108,7 +126,7 @@
     }
     num++;
     
-    [self.dataArray addObject:@{@"serial":Str(num),@"small":@"",@"color":@""}];
+    [self.dataArray addObject:@{@"serial":@"样本",@"small":@"",@"color":@""}];
     
     tableView.dataArray = self.dataArray;
     
@@ -125,8 +143,6 @@
         tempDict = [[NSMutableDictionary alloc] init];
     }
     
-    [self.dataArray removeObjectAtIndex:line];
-    
     ZYInputAlertView *alertView = [ZYInputAlertView alertView];
     
     [alertView.inputTextView becomeFirstResponder];
@@ -137,7 +153,7 @@
     
     [alertView confirmBtnClickBlock:^(NSString *inputString) {
         
-        NSLog(@"输入的数据====>%@",inputString);
+        [self.dataArray removeObjectAtIndex:line];
         
         [tempDict setObject:Str(line+1) forKey:@"serial"];
         
@@ -161,7 +177,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)setDescriptArray:(NSMutableArray *)descriptArray
+{
+    _descriptArray = descriptArray;
+}
 -(void)addShadowToCell:(UIView*)bgView
 {
     bgView.layer.shadowColor = [UIColor grayColor].CGColor;
@@ -177,5 +196,12 @@
     }
     return _dataArray;
 }
-
+-(NSMutableArray *)shitArray
+{
+    if (!_shitArray) {
+        
+        _shitArray = [[NSMutableArray alloc] init];
+    }
+    return _shitArray;
+}
 @end

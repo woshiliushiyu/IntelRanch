@@ -35,11 +35,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = BGCOLOR;
     self.navigationItem.title = @"新生牛犊管理";
     self.tableView.backgroundColor = BGCOLOR;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self getVideoData];
+//    [self getVideoData];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
@@ -47,6 +48,11 @@
     }];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(didNavBtnClick)];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.tableView.mj_header endRefreshing];
 }
 - (void)didNavBtnClick {
     
@@ -179,7 +185,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return self.layoutArray.count-1;
+    return _calfDict==nil?0:self.layoutArray.count-1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -290,6 +296,10 @@
         VC.typeString = Str(2);
         
         VC.idString = self.idString;
+        
+        VC.imagesArray = self.getImages;
+        
+        VC.videoString = _videoPath;
     }
     
     [self.navigationController pushViewController:vc animated:YES];

@@ -19,7 +19,7 @@
  @param select 是否能选择
  @param footerView 底图
  */
-- (instancetype)initWithTitles:(NSArray*)titles SubTitles:(NSArray*)subTitles TableBody:(NSArray*)bodys Select:(BOOL)select FooterView:(NSArray *)footerView;
+- (instancetype)initWithTitles:(NSArray*)titles SubTitles:(NSArray*)subTitles TableBody:(NSArray*)bodys Select:(BOOL)select FooterView:(NSArray *)footerView Titles:(NSArray *)titles;
 
 @property(nonatomic,copy)BOOL (^SelectRowBlock)(NSInteger line,NSInteger row);
 

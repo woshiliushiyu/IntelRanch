@@ -36,7 +36,7 @@
 @property (strong, nonatomic) NSIndexPath *currentIndexPath; // 自定义转场动画时用到的属性
 @property (weak, nonatomic) HXCollectionView *collectionView;
 - (instancetype)initWithFrame:(CGRect)frame WithManager:(HXPhotoManager *)manager;
-- (instancetype)initWithManager:(HXPhotoManager *)manager;
-+ (instancetype)photoManager:(HXPhotoManager *)manager;
+- (instancetype)initWithManager:(HXPhotoManager *)manager SelectData:(NSMutableArray*)selectData;
++ (instancetype)photoManager:(HXPhotoManager *)manager SelectData:(NSMutableArray*)selectData;
 - (void)goPhotoViewController;
 @end

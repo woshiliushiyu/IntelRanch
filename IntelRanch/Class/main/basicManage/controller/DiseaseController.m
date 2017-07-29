@@ -48,7 +48,7 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self getVideoData];
+//    [self getVideoData];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
@@ -206,7 +206,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.layoutArray.count-1;
+    return _calfDict==nil?0:self.layoutArray.count-1;
 }
 
 
@@ -261,6 +261,7 @@
             RanchInfoController * ranchInfoView = [[RanchInfoController alloc] init];
             ranchInfoView.idString = self.idString;
             ranchInfoView.typeString = Str(4);
+            ranchInfoView.dataDict = _calfDict;
             ranchInfoView.navigationItem.title = model.title;
             ranchInfoView.dataArray = model.fields.mutableCopy;
             [weakSelf.navigationController pushViewController:ranchInfoView animated:YES];
@@ -295,6 +296,7 @@
         return cell;
     }
     NSArray * imgs = @[@[],@[],@[@"bja_s",@"bjb_s",@"bjc_s",@"bjd_s"],@[],@[@"bjaa_s",@"bjbb_s",@"bjcc_s",@"bjdd_s"],@[@"bjaaa_s",@"bjbbb_s",@"bjccc_s",@"bjddd_s"]];
+    NSArray * lables = @[@[],@[],@[@"0分,正常水样分泌物",@"1分,单侧鼻孔少量白色分泌物",@"2分,双侧鼻孔少量白色分泌物",@"3分,双侧鼻孔大量白色分泌物"],@[],@[@"0分,耳朵状况正常",@"1分,不断晃动耳朵",@"2分,单侧耳朵耷拉",@"3分,头歪斜或双侧耳朵耷拉"],@[@"0分,明亮无任何分泌物",@"1分,眼少量分泌物",@"2分,眼多量分泌物",@"3分,双眼大量分泌物"]];
     NSArray * subTitles = @[@[@[@"温度范围",@"37.8~38.3",@"38.3~38.9",@"38.8~39.4",@">39.4"]],@[],@[],@[@[@"症状",@"无咳嗽",@"触捏喉头单",@"触捏喉头反",@"无需触捏喉头"]],@[],@[]];
     
     GradeViewCell * cell = [GradeViewCell setTableViewCustomCell:tableView IndexPath:indexPath];
@@ -307,6 +309,8 @@
             
             ShitController * shitView = [[ShitController alloc] init];
             shitView.idString = self.idString;
+            shitView.descriptArray = self.descriptArray;
+            shitView.navigationItem.title = model.title;
             [self.navigationController pushViewController:shitView animated:YES];
             return;
         }
@@ -315,6 +319,8 @@
         gradeView.idString = self.idString;
         gradeView.typeString = Str(num+1);
         gradeView.images = imgs[num];
+        gradeView.labels = lables[num];
+        gradeView.descriptArray = self.descriptArray;
         gradeView.titles = @[@"评分",@"0分",@"1分",@"2分",@"3分"];
         gradeView.subTitles = subTitles[num];
         gradeView.navigationItem.title = model.title;
@@ -354,7 +360,7 @@
             }
         }];
         
-        return 540+30*n;
+        return 500+30*n;
     }
     if (indexPath.row == 7) {
         
@@ -368,7 +374,7 @@
             }
         }];
         
-        return 540+30*n;
+        return 500+30*n;
     }
     if (indexPath.row == 5) {
         
@@ -383,7 +389,7 @@
             }
         }];
         
-        return 540+30*n;
+        return 500+30*n;
     }
     if (indexPath.row == 2) {
         
@@ -456,6 +462,10 @@
         VC.typeString = Str(4);
         
         VC.idString = self.idString;
+        
+        VC.imagesArray = self.getImages;
+        
+        VC.videoString = _videoPath;
     }
     
     [self.navigationController pushViewController:vc animated:YES];

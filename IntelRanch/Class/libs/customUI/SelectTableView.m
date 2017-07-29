@@ -32,7 +32,7 @@
 {
     if (addBtn && self.addActionBtn ==nil) {
         
-       self.addActionBtn = Button.bgColor(@"white").xywh(0,(titles.count?30:0)+30+(bodys.count?30:0)+(subTitles.count-1)*30,Width-60,30).str(@"+ 添加样本").color(@"252,207,134").fnt(15).onClick(^(UIButton * btn){
+        self.addActionBtn = Button.bgColor(@"white").xywh(0,(titles.count?30:0)+(bodys.count?0:30)+(bodys.count?30:0)+subTitles.count*30+(bodys.count-1)*30,Width-60,30).str(@"+ 添加样本").color(@"252,207,134").fnt(15).onClick(^(UIButton * btn){
         
             self.SelectAddBlock();
         });
@@ -87,7 +87,7 @@
                     
                     if (select) {
                         
-                        if (!self.SelectRowBlock(j+1, i+1)) {
+                        if (!self.SelectRowBlock(j+bodys.count, i+1)) {
                             
                             return;
                         }
@@ -133,6 +133,7 @@
     BOOL _select;
     BOOL _showAddBtn;
     NSArray * _footerView;
+    NSArray * _titlesArray;
 }
 @property(nonatomic,strong)NSMutableArray * subTitles;
 @property(nonatomic,strong)NSMutableArray * bodys;
@@ -141,7 +142,7 @@
 
 @implementation SelectTableView
 
-- (instancetype)initWithTitles:(NSArray*)titles SubTitles:(NSArray*)subTitles TableBody:(NSArray*)bodys Select:(BOOL)select FooterView:(NSArray *)footerView
+- (instancetype)initWithTitles:(NSArray*)titles SubTitles:(NSArray*)subTitles TableBody:(NSArray*)bodys Select:(BOOL)select FooterView:(NSArray *)footerView Titles:(NSArray *)titlesArray
 {
     self = [super init];
     if (self) {
@@ -149,6 +150,7 @@
         _titles = titles;
         self.subTitles = subTitles.mutableCopy;
         self.bodys = bodys.mutableCopy;
+        _titlesArray = titlesArray.mutableCopy;
         _select = select;
         _showAddBtn = YES;
         _footerView = footerView;
@@ -177,6 +179,7 @@
     
     [self.subTitles addObjectsFromArray:subTitleArray];
 }
+
 -(NSMutableArray *)bodys
 {
     if (!_bodys) {
@@ -237,11 +240,11 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return _footerView.count>0?300:0;
+    return _footerView.count>0?250:0;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    return [[SudokuFooterView alloc] initWithImgs:_footerView];
+    return [[SudokuFooterView alloc] initWithImgs:_footerView Titles:_titlesArray];
 }
 #pragma mark ======  lazy
 -(UITableView *)tableView

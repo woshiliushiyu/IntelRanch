@@ -9,6 +9,8 @@
 #import "HttpToolManager.h"
 #import "YTKKeyValueStore.h"
 #import "AppDelegate.h"
+#import "RootNaviController.h"
+#import "LoginController.h"
 #define BaseURL @"https://ymzx.asia-cloud.com/api/"
 
 @protocol HttpNetworkProxy <NSObject>
@@ -73,7 +75,7 @@ static YTKKeyValueStore *_store;
     self = [super initWithBaseURL:url];
     if (self) {
         [self.reachabilityManager startMonitoring];
-        self.requestSerializer.timeoutInterval = 10;
+        self.requestSerializer.timeoutInterval = 5;
         self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/plain", @"text/html", nil];
 //        self.responseSerializer = [AFHTTPResponseSerializer serializer];
         [(AFJSONResponseSerializer *)self.responseSerializer setRemovesKeysWithNullValues:YES];
@@ -190,6 +192,17 @@ static YTKKeyValueStore *_store;
         if (finishedBlock) {
 
             finishedBlock(responseObject, nil);
+            
+            if ([responseObject[@"status_code"] integerValue] == 401) {
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [[HttpToolManager sharedManager] clearLocalData];
+                    [LocalDataTool clearDataTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]];
+                    [LoginInfoModel clearnLoginInfo];
+                    
+                    AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:[[LoginController alloc] init]];
+                });
+            }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (finishedBlock) {
@@ -211,6 +224,17 @@ static YTKKeyValueStore *_store;
             
             finishedBlock(dic,nil);
             
+            if ([dic[@"status_code"] integerValue] == 401) {
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [[HttpToolManager sharedManager] clearLocalData];
+                    [LocalDataTool clearDataTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]];
+                    [LoginInfoModel clearnLoginInfo];
+                    
+                    AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:[[LoginController alloc] init]];
+                });
+            }
+            
         }else{
             
             finishedBlock(nil,connectionError);
@@ -230,6 +254,17 @@ static YTKKeyValueStore *_store;
             if (finishedBlock) {
                 
                 [_store putObject:responseObject withId:URL intoTable:_tableName];
+                
+                if ([responseObject[@"status_code"] integerValue] == 401) {
+                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [[HttpToolManager sharedManager] clearLocalData];
+                        [LocalDataTool clearDataTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]];
+                        [LoginInfoModel clearnLoginInfo];
+                        
+                        AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:[[LoginController alloc] init]];
+                    });
+                }
                 
                 finishedBlock(responseObject, nil);
             }

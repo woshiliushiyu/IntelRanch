@@ -188,7 +188,7 @@ singleton_implementation(RequestTool);
 //获取图片列表
 -(void)requestWithVideosListType:(NSInteger)type ModelId:(NSString *)modelId FinishedBlock:(RequestFinishedBlock)finishedBlock
 {
-    [LCProgressHUD showLoading:@"请求中...."];
+//    [LCProgressHUD showLoading:@"请求中...."];
     
     NSString * URLString;
     
@@ -268,7 +268,7 @@ singleton_implementation(RequestTool);
 //获取犊牛列表
 -(void)requestWithSamplesListForServerFinishedBlock:(RequestFinishedBlock)finishedBlock
 {
-    [LCProgressHUD showLoading:@"获取中..."];
+    [LCProgressHUD showLoading:@"更新中..."];
     
     MyRanchInfoModel * model = [[MyRanchInfoModel alloc] initWithDictionary:[LocalDataTool getDataToDataName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]] error:nil];
     
