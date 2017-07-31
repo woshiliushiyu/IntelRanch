@@ -14,8 +14,9 @@
 #import "RanchInfoController.h"
 #import "CattleInfoController.h"
 #import "CalfManagerModel.h"
+#import "CalfManagerListController.h"
 #import "ImageModel.h"
-@interface CalfManagerController ()<AVPlayerViewControllerDelegate>
+@interface CalfManagerController ()<AVPlayerViewControllerDelegate,UIGestureRecognizerDelegate>
 {
     UIImage * _defaultImg;
     NSString * _videoPath;
@@ -32,6 +33,25 @@
     [super viewWillAppear:animated];
     
     [self.tableView.mj_header beginRefreshing];
+    
+    if (self._isPush) {
+     
+        RootNaviController * rootNav = (RootNaviController *) self.navigationController;
+        
+        rootNav.PopToViewController = ^BOOL{
+            
+            for (UIViewController *vc in self.navigationController.viewControllers) {
+                
+                if ([vc isKindOfClass:[CalfManagerListController class]]) {
+                    
+                    [self.navigationController popToViewController:vc animated:YES];
+                    
+                    return YES;
+                }
+            }
+            return NO;
+        };
+    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,7 +60,11 @@
     self.tableView.backgroundColor = BGCOLOR;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-//    [self getVideoData];
+    if (self._isPush) {
+        
+        self.navigationController.interactivePopGestureRecognizer.delegate  = self;
+    }
+
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
@@ -48,6 +72,19 @@
     }];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(didNavBtnClick)];
+}
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        
+        if ([vc isKindOfClass:[CalfManagerListController class]]) {
+            
+            [self.navigationController popToViewController:vc animated:YES];
+            
+            return NO;
+        }
+    }
+    return YES;
 }
 -(void)viewDidDisappear:(BOOL)animated
 {

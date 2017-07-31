@@ -18,14 +18,16 @@
 @end
 
 @implementation MyProblemController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setupData:1];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.tableView.backgroundColor = BGCOLOR;
     self.tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
-    
-    [self setupData:1];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _page =1;

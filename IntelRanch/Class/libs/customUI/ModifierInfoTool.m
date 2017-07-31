@@ -8,10 +8,13 @@
 
 #import "ModifierInfoTool.h"
 #import "LayoutInfoModel.h"
+#import "FeedInfoModel.h"
+#import "CalfManagerModel.h"
+#import "DiseaseInfoModel.h"
 @implementation ModifierInfoTool
 singleton_implementation(ModifierInfoTool);
 
--(void)requestModifierRanchInfoData:(NSMutableArray *)dataArray LayoutArray:(NSMutableArray *)layoutArray Type:(NSInteger)type isCreate:(NSString *)isCreate ModifierFinishedBlock:(ModifierFinishedBlock)modifierFinishedBlock
+-(void)requestModifierRanchInfoData:(NSMutableArray *)dataArray LayoutArray:(NSMutableArray *)layoutArray Type:(NSInteger)type isCreate:(NSString *)isCreate ModifierFinishedBlock:(ModifierFinishedBlock)modifierFinishedBlock CreateFinishedBlock:(CreateFinishedBlock)createFinishedBlock
 {
     NSMutableDictionary * dataDict = [[NSMutableDictionary alloc] init];
     
@@ -67,8 +70,24 @@ singleton_implementation(ModifierInfoTool);
             
             if ([result[@"status_code"] integerValue] == 200) {
                 
-                [LCProgressHUD showMessage:@"创建成功"];
-                
+                if (type == 3) {
+                    
+                    FeedInfoModel * model = [[FeedInfoModel alloc] initWithDictionary:result[@"data"] error:nil];
+                    
+                    createFinishedBlock(model.id);
+                }
+                if (type == 2) {
+                    
+                    CalfManagerModel * model = [[CalfManagerModel alloc] initWithDictionary:result[@"data"] error:nil];
+                    
+                    createFinishedBlock(model.id);
+                }
+                if (type == 4) {
+                    
+                    DiseaseInfoModel * model = [[DiseaseInfoModel alloc] initWithDictionary:result[@"data"] error:nil];
+                    
+                    createFinishedBlock(model.id);
+                }
                 return;
                 
             }else{

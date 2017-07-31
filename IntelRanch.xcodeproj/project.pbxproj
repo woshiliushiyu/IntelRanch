@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		950808EF1F2C6AB300320530 /* UIButton+TouchAreaInsets.m in Sources */ = {isa = PBXBuildFile; fileRef = 950808EE1F2C6AB300320530 /* UIButton+TouchAreaInsets.m */; };
+		950808F21F2C6D0200320530 /* RequestFeedObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 950808F11F2C6D0200320530 /* RequestFeedObj.m */; };
 		950B2EF41F0DCA7900DF46E0 /* TableViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 950B2EF31F0DCA7900DF46E0 /* TableViewModel.m */; };
 		950F5BDC1F270BEA005A66FA /* CommProblemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 950F5BDB1F270BEA005A66FA /* CommProblemController.m */; };
 		950F5BE01F2712EC005A66FA /* CommProblemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 950F5BDE1F2712EC005A66FA /* CommProblemCell.m */; };
@@ -205,6 +207,10 @@
 /* Begin PBXFileReference section */
 		6ED1C9C9020E62C960834E14 /* Pods_IntelRanch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IntelRanch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8252E019FF0CC89D2333BCB0 /* Pods-IntelRanch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntelRanch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IntelRanch/Pods-IntelRanch.debug.xcconfig"; sourceTree = "<group>"; };
+		950808ED1F2C6AB300320530 /* UIButton+TouchAreaInsets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+TouchAreaInsets.h"; sourceTree = "<group>"; };
+		950808EE1F2C6AB300320530 /* UIButton+TouchAreaInsets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+TouchAreaInsets.m"; sourceTree = "<group>"; };
+		950808F01F2C6D0200320530 /* RequestFeedObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestFeedObj.h; sourceTree = "<group>"; };
+		950808F11F2C6D0200320530 /* RequestFeedObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestFeedObj.m; sourceTree = "<group>"; };
 		950B2EF21F0DCA7900DF46E0 /* TableViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewModel.h; sourceTree = "<group>"; };
 		950B2EF31F0DCA7900DF46E0 /* TableViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewModel.m; sourceTree = "<group>"; };
 		950F5BDA1F270BEA005A66FA /* CommProblemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommProblemController.h; sourceTree = "<group>"; };
@@ -603,6 +609,8 @@
 		9519CE761F0E0B930066765F /* hud */ = {
 			isa = PBXGroup;
 			children = (
+				950808ED1F2C6AB300320530 /* UIButton+TouchAreaInsets.h */,
+				950808EE1F2C6AB300320530 /* UIButton+TouchAreaInsets.m */,
 				9519CE771F0E0B930066765F /* cameraHelper.h */,
 				9519CE781F0E0B930066765F /* cameraHelper.m */,
 				9519CE791F0E0B930066765F /* HUDHelper.h */,
@@ -1195,6 +1203,8 @@
 			children = (
 				9539C52D1F21E9E90034C9AF /* FeedInfoModel.h */,
 				9539C52E1F21E9E90034C9AF /* FeedInfoModel.m */,
+				950808F01F2C6D0200320530 /* RequestFeedObj.h */,
+				950808F11F2C6D0200320530 /* RequestFeedObj.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1659,6 +1669,7 @@
 				95FF76331F0CCB36004DA3FB /* CalfSampleCell.m in Sources */,
 				9519CFC41F0E34DF0066765F /* HXPhotoViewCell.m in Sources */,
 				9519CFB11F0E34DF0066765F /* HXAlbumListView.m in Sources */,
+				950808EF1F2C6AB300320530 /* UIButton+TouchAreaInsets.m in Sources */,
 				95FF76411F0CF993004DA3FB /* JHGridView.m in Sources */,
 				9521F5771F14CD1F00920094 /* MOFSPickerManager.m in Sources */,
 				95A652C21F0F6C1D001180A3 /* RanchInfoController.m in Sources */,
@@ -1759,6 +1770,7 @@
 				9519CE721F0DF03A0066765F /* SudokuView.m in Sources */,
 				9595D4A51F0CA8BF00267B61 /* ViewController.m in Sources */,
 				958E97961F287AEF00515F80 /* ShitController.m in Sources */,
+				950808F21F2C6D0200320530 /* RequestFeedObj.m in Sources */,
 				95FF763D1F0CE5C8004DA3FB /* CoustomPieView.m in Sources */,
 				955351F81F204F9D001D9214 /* AccountController.m in Sources */,
 				9519CFC31F0E34DF0066765F /* HXPhotoView.m in Sources */,

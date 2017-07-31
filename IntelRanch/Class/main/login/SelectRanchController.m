@@ -11,7 +11,7 @@
 #import "SelectRanchCell.h"
 #import "RootNaviController.h"
 #import "MyRanchInfoModel.h"
-@interface SelectRanchController ()<UITableViewDelegate,UITableViewDataSource>
+@interface SelectRanchController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 {
     NSInteger _isSelectRow;
     SelectRanchCell * tempCell;
@@ -27,13 +27,23 @@
 {
     [super viewWillAppear:animated];
     
-    [[NSUserDefaults standardUserDefaults] setObject:@0 forKey:@"selectRanch"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (self.dataArray.count == 0) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@0 forKey:@"selectRanch"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    RootNaviController * rootNav = (RootNaviController *) self.navigationController;
+    
+    rootNav.PopToViewController = ^BOOL{
+        [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"selectRanch"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return NO;
+    };
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"登    录";
+    self.navigationItem.title = @"选择牧场";
     
     _isSelectRow = 1000000;
     
@@ -52,8 +62,16 @@
         [self requestData];
     }
     
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(didNavBtnClick)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
+}
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"selectRanch"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    return YES;
 }
 -(void)requestData
 {
@@ -85,8 +103,15 @@
     
     mainView.ranchID = model.id;
     
-    AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:mainView];
-    
+    if (self.dataArray.count !=0) {
+        
+        AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:mainView];
+        
+    }else{
+        
+        [self.navigationController pushViewController:mainView animated:YES];
+    }
+
     [LocalDataTool putDataToTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])] Data:model];
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:[model.id integerValue]] forKey:@"selectRanch"];
@@ -184,5 +209,9 @@
 {
     _dataArray = dataArray;
     
+}
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end

@@ -35,6 +35,7 @@ return _instance; \
 }
 
 typedef void(^ModifierFinishedBlock)();
+typedef void(^CreateFinishedBlock)(NSString * idString);
 
 @interface ModifierInfoTool : NSObject
 singleton_interface(ModifierInfoTool);
@@ -46,5 +47,5 @@ singleton_interface(ModifierInfoTool);
  @param type 类型(1:牧场基本信息, 2:新生犊牛管理, 3:犊牛饲喂管理, 4:犊牛疾病管理)
  @param modifierFinishedBlock 回调
  */
--(void)requestModifierRanchInfoData:(NSMutableArray*)dataArray LayoutArray:(NSMutableArray*)layoutArray Type:(NSInteger)type isCreate:(NSString *)isCreate ModifierFinishedBlock:(ModifierFinishedBlock)modifierFinishedBlock;
+-(void)requestModifierRanchInfoData:(NSMutableArray*)dataArray LayoutArray:(NSMutableArray*)layoutArray Type:(NSInteger)type isCreate:(NSString *)isCreate ModifierFinishedBlock:(ModifierFinishedBlock)modifierFinishedBlock CreateFinishedBlock:(CreateFinishedBlock)createFinishedBlock;
 @end

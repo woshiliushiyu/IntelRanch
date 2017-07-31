@@ -10,6 +10,7 @@
 #import "AssessmentModel.h"
 @interface GradeTableCell ()<JHGridViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *bgTableView;
+@property (strong, nonatomic) IBOutlet UIButton *setBtn;
 
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 @end
@@ -34,7 +35,7 @@
         
         self = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithString:NSStringFromClass([self class])] owner:self options:nil].firstObject;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        self.setBtn.touchAreaInsets = UIEdgeInsetsMake(10, 70, 10, 50);
         [self addShadowToCell:self.bgTableView];
     }
     return self;

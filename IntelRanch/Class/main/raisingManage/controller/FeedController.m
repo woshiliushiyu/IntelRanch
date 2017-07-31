@@ -11,9 +11,10 @@
 #import "RanchInfoCell.h"
 #import "RanchInfoController.h"
 #import "OtherAdjunctCell.h"
+#import "FoodListController.h"
 #import "ImageModel.h"
 #import "AdjunctController.h"
-@interface FeedController ()<AVPlayerViewControllerDelegate>
+@interface FeedController ()<AVPlayerViewControllerDelegate,UIGestureRecognizerDelegate>
 {
     UIImage * _defaultImg;
     NSString * _videoPath;
@@ -30,7 +31,27 @@
     [super viewWillAppear:animated];
     
     [self.tableView.mj_header beginRefreshing];
+    
+    if (self._isPush) {
+        
+        RootNaviController * rootNav = (RootNaviController *) self.navigationController;
+        
+        rootNav.PopToViewController = ^BOOL{
+            
+            for (UIViewController *vc in self.navigationController.viewControllers) {
+                
+                if ([vc isKindOfClass:[FoodListController class]]) {
+                    
+                    [self.navigationController popToViewController:vc animated:YES];
+                    
+                    return YES;
+                }
+            }
+            return NO;
+        };
+    }
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -39,12 +60,28 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = BGCOLOR;
     
-     [self getVideoData];
+    if (self._isPush) {
+        
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    }
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         [self getVideoData];
     }];
+}
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        
+        if ([vc isKindOfClass:[FoodListController class]]) {
+            
+            [self.navigationController popToViewController:vc animated:YES];
+            
+            return NO;
+        }
+    }
+    return YES;
 }
 -(void)requestData
 {
@@ -166,7 +203,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return self.layoutArray.count-1;
+    return _calfDict==nil?0:self.layoutArray.count-1;
 }
 
 
@@ -249,7 +286,6 @@
     }
     return 75;
 }
-
 #pragma mark =======私有
 -(UIStatusBarStyle)preferredStatusBarStyle
 {

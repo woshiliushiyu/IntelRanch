@@ -28,6 +28,7 @@
         self=[[NSBundle mainBundle] loadNibNamed:[NSString stringWithString:NSStringFromClass([self class])] owner:self options:nil].firstObject;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self addShadowToCell:self.bgView];
+        self.settingBtn.touchAreaInsets = UIEdgeInsetsMake(10, 70, 10, 50);
         [self.settingBtn addTarget:self action:@selector(touchSetting) forControlEvents:UIControlEventTouchUpInside];
         
         [self.bgView addSubview:self.backView];

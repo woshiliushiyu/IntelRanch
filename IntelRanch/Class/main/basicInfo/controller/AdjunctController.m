@@ -94,6 +94,7 @@
                 [self uploadVideo:result[@"data"]];
                 
             }else{
+                
                 [LCProgressHUD showInfoMsg:result[@"message"]];
             }
         }];

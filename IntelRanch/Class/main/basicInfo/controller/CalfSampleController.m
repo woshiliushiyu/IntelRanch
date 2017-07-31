@@ -16,6 +16,7 @@
     NSInteger _index;
     NSDictionary * _parameterDic;
 }
+@property(nonatomic,strong)NSMutableArray * dataListArray;
 @property(nonatomic,strong)NSMutableArray * dataArray;
 @end
 
@@ -161,6 +162,14 @@
         _dataArray = [[NSMutableArray alloc] init];
     }
     return _dataArray;
+}
+-(NSMutableArray *)dataListArray
+{
+    if (!_dataListArray) {
+        
+        _dataListArray =[[NSMutableArray alloc] init];
+    }
+    return _dataListArray;
 }
 -(UIStatusBarStyle)preferredStatusBarStyle
 {

@@ -10,4 +10,5 @@
 
 @interface RootNaviController : UINavigationController
 @property (nonatomic, assign) BOOL enableRightGesture; // default YES
+@property (nonatomic, copy) BOOL (^PopToViewController)();
 @end

@@ -13,11 +13,16 @@
 #import "LoginController.h"
 #import "RootNaviController.h"
 #import "AboutController.h"
+#import "SelectRanchController.h"
 @interface MineController ()
 {
     SDWebImageManager *web;
 }
 @property (strong, nonatomic) IBOutlet UILabel *memoryLabel;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
+
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *ranchListHeight;
+@property (strong, nonatomic) IBOutlet UILabel *ranchLabel;
 
 @end
 
@@ -28,6 +33,11 @@
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.title = @"个人中心";
     
+    if ([[LoginInfoModel getLoginInfoModel].type integerValue] == 1) {
+        self.topHeight.constant = 0;
+        self.ranchListHeight.constant = 0;
+        self.ranchLabel.hidden = YES;
+    }
 
     CGFloat cacheSize = web.imageCache.getSize;
     self.memoryLabel.text = [NSString stringWithFormat:@"%.2fM", cacheSize/1024.f/1024.f];
@@ -79,6 +89,11 @@
 {
     return UIStatusBarStyleLightContent;
 }
+- (IBAction)pushRanchList:(id)sender {
+    
+    [self.navigationController pushViewController:[[SelectRanchController alloc] init] animated:YES];
+}
+
 - (IBAction)loginOutAction:(id)sender {
         
     Alert.title(@"确认退出?").action(@"确认", ^{

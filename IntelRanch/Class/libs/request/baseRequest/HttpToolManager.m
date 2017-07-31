@@ -75,7 +75,7 @@ static YTKKeyValueStore *_store;
     self = [super initWithBaseURL:url];
     if (self) {
         [self.reachabilityManager startMonitoring];
-        self.requestSerializer.timeoutInterval = 5;
+        self.requestSerializer.timeoutInterval = 8;
         self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/plain", @"text/html", nil];
 //        self.responseSerializer = [AFHTTPResponseSerializer serializer];
         [(AFJSONResponseSerializer *)self.responseSerializer setRemovesKeysWithNullValues:YES];
@@ -208,6 +208,13 @@ static YTKKeyValueStore *_store;
         if (finishedBlock) {
 
             finishedBlock(nil, error);
+            
+            if (error != nil) {
+                
+                [LCProgressHUD showFailure:@"网络错误"];
+                
+                return;
+            }
         }
     }] resume];
 }
@@ -270,9 +277,14 @@ static YTKKeyValueStore *_store;
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
-            if (finishedBlock) {
+            if (error != nil) {
                 
-//                [LCProgressHUD showFailure:@"请求失败"];
+                [LCProgressHUD showFailure:@"网络错误"];
+                
+                return;
+            }
+            
+            if (finishedBlock) {
                 
                 id responseObject = [_store getObjectById:URL fromTable:_tableName];
                 

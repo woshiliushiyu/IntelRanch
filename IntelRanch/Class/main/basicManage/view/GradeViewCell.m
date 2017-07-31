@@ -18,6 +18,7 @@
 @property(nonatomic,strong)NSMutableArray * earArray;
 @property(nonatomic,strong)NSMutableArray * shitArray;
 @property (strong, nonatomic) IBOutlet UIView *bgView;
+@property (strong, nonatomic) IBOutlet UIButton *setBtn;
 @end
 
 @implementation GradeViewCell
@@ -38,6 +39,7 @@
         
         self = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithString:NSStringFromClass([self class])] owner:self options:nil].firstObject;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.setBtn.touchAreaInsets = UIEdgeInsetsMake(10, 70, 10, 50);
         [self addShadowToCell:self.bgRootView];
     }
     return self;

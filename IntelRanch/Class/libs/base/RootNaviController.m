@@ -19,9 +19,8 @@
     
     self.enableRightGesture = YES;
     self.interactivePopGestureRecognizer.delegate = self;
-    
+
     [self configureNavBarTheme];
-    
 }
 - (void)configureNavBarTheme
 {
@@ -50,6 +49,7 @@
     if (self.viewControllers.count <= 1) {
         return NO;
     }
+    
     return self.enableRightGesture;
 }
 
@@ -68,8 +68,20 @@
 #pragma mark - action
 
 - (void)navGoBack
-{
-    [self popViewControllerAnimated:YES];
+{    
+    if (self.PopToViewController == nil) {
+        
+        [self popViewControllerAnimated:YES];
+        
+        return;
+    }
+    
+    BOOL _isPush = self.PopToViewController();
+    
+    if (!_isPush) {
+        
+        [self popViewControllerAnimated:YES];
+    }
 }
 - (UIStatusBarStyle)preferredStatusBarStyle {
     

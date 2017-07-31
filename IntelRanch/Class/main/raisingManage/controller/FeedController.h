@@ -11,4 +11,6 @@
 @interface FeedController : UITableViewController
 @property(nonatomic,strong)NSMutableArray * layoutArray;
 @property(nonatomic,copy)NSString * idString;
+
+@property(nonatomic,assign)BOOL _isPush;
 @end

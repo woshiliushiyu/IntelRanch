@@ -46,6 +46,7 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.userInteractionEnabled = YES;
         [self addShadowToCell:_bgView];
+        self.addBtn.touchAreaInsets = UIEdgeInsetsMake(10, 70, 10, 50);
         
         [self.addBtn addTarget:self action:@selector(touchAddBtn) forControlEvents:UIControlEventTouchUpInside];
         [self.photoDelectBtn addTarget:self action:@selector(touchImgDelect) forControlEvents:UIControlEventTouchUpInside];

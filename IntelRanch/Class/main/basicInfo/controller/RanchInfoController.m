@@ -10,12 +10,20 @@
 #import "TopHalfInfoCell.h"
 #import "BottomHalfInfoCell.h"
 #import "ModifierInfoTool.h"
+#import "FeedController.h"
+#import "DiseaseController.h"
+#import "LayoutModel.h"
+#import "CalfManagerController.h"
 @interface RanchInfoController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    NSString * _tempString;
+}
 @property(nonatomic,strong)UITableView * tableView;
 @property(nonatomic,strong)UIView * fileView;
 @property (strong, nonatomic) IBOutlet UIView *bgView;
 
 @property(nonatomic,strong)NSMutableArray * finishArray;
+@property(nonatomic,strong)NSMutableArray * layoutArray;
 @end
 
 @implementation RanchInfoController
@@ -76,14 +84,74 @@
 - (void)didNavBtnClick {
     
     [[ModifierInfoTool sharedModifierInfoTool] requestModifierRanchInfoData:self.finishArray LayoutArray:self.dataArray Type:[self.typeString integerValue] isCreate:self.idString ModifierFinishedBlock:^{
-       
+        
         self.navigationItem.rightBarButtonItem.enabled = NO;
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
             [self.navigationController popViewControllerAnimated:YES];
         });
+        
+    } CreateFinishedBlock:^(NSString * idString) {
+        
+        _tempString = idString;
+        
+        [self requestLayoutData];
     }];
+}
+-(void)requestLayoutData
+{
+    [[RequestTool sharedRequestTool] requestWithRanchBasicLayoutTo:[self.typeString integerValue] FinishedBlock:^(id result, NSError *error) {
+        
+        [self.layoutArray removeAllObjects];
+        
+        if ([result[@"status_code"] integerValue] == 200) {
+            
+            for (NSDictionary * entity in result[@"data"][@"groups"]) {
+                
+                LayoutModel * model = [[LayoutModel alloc] initWithDictionary:entity error:nil];
+                
+                [self.layoutArray addObject:model];
+            }
+            [LCProgressHUD showMessage:@"创建成功"];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [self backRequestView];
+            });
+            
+        }else{
+            
+            [LCProgressHUD showMessage:result[@"message"]];
+        }
+    }];
+}
+-(void)backRequestView
+{
+    if ([self.typeString integerValue] == 2) {
+        
+        CalfManagerController *  vc = [[CalfManagerController alloc] init];
+        vc.layoutArray = self.layoutArray;
+        vc.idString = _tempString;
+        vc._isPush = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if ([self.typeString integerValue] == 3) {
+        
+        FeedController *  vc = [[FeedController alloc] init];
+        vc.layoutArray = self.layoutArray;
+        vc.idString = _tempString;
+        vc._isPush = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    if ([self.typeString integerValue] == 4) {
+        
+        DiseaseController *  vc = [[DiseaseController alloc] init];
+        vc.layoutArray = self.layoutArray;
+        vc.idString = _tempString;
+        vc._isPush = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -199,10 +267,14 @@
     }
     return _fileView;
 }
-//-(UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleLightContent;
-//}
+-(NSMutableArray *)layoutArray
+{
+    if (!_layoutArray) {
+        
+        _layoutArray = [[NSMutableArray alloc] init];
+    }
+    return _layoutArray;
+}
 -(void)addShadowToCell:(UIView*)bgView
 {
     bgView.layer.shadowColor = [UIColor grayColor].CGColor;

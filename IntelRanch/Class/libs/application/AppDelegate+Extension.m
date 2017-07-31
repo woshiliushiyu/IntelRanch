@@ -32,7 +32,7 @@
             
         }else{
             
-            if ([[LoginInfoModel getLoginInfoModel].type integerValue] == 1) {
+            if ([[LoginInfoModel getLoginInfoModel].type integerValue] == 2) {
                 
                 rootView = [[RootNaviController alloc] initWithRootViewController:[[SelectRanchController alloc] init]];
             }else{

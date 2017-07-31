@@ -83,6 +83,7 @@
                 <outlet property="bgTableView" destination="iLb-VO-UYb" id="c3S-gX-E5V"/>
                 <outlet property="bgView" destination="W6J-ls-YZQ" id="QyP-DM-sVc"/>
                 <outlet property="nameLabel" destination="FWo-Ns-MfE" id="o1z-Um-dAk"/>
+                <outlet property="setBtn" destination="w3L-cY-FLn" id="9uc-HW-hg3"/>
             </connections>
         </tableViewCell>
     </objects>

@@ -21,7 +21,8 @@
 #import "SicknessModel.h"
 #import "ShitController.h"
 #import "RanchInfoController.h"
-@interface DiseaseController ()<AVPlayerViewControllerDelegate>
+#import "DiseaseListController.h"
+@interface DiseaseController ()<AVPlayerViewControllerDelegate,UIGestureRecognizerDelegate>
 {
     UIImage * _defaultImg;
     NSString * _videoPath;
@@ -39,6 +40,25 @@
     [super viewWillAppear:animated];
     
     [self.tableView.mj_header beginRefreshing];
+    
+    if (self._isPush) {
+        
+        RootNaviController * rootNav = (RootNaviController *) self.navigationController;
+        
+        rootNav.PopToViewController = ^BOOL{
+            
+            for (UIViewController *vc in self.navigationController.viewControllers) {
+                
+                if ([vc isKindOfClass:[DiseaseListController class]]) {
+                    
+                    [self.navigationController popToViewController:vc animated:YES];
+                    
+                    return YES;
+                }
+            }
+            return NO;
+        };
+    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,14 +68,30 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-//    [self getVideoData];
+    if (self._isPush) {
+        
+        self.navigationController.interactivePopGestureRecognizer.delegate  = self;
+    }
+
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         [self getVideoData];
     }];
 }
-
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        
+        if ([vc isKindOfClass:[DiseaseListController class]]) {
+            
+            [self.navigationController popToViewController:vc animated:YES];
+            
+            return NO;
+        }
+    }
+    return YES;
+}
 -(void)rquestDescriptData
 {
     [[RequestTool sharedRequestTool] requestWithIcknessForId:self.idString FinishedBlock:^(id result, NSError *error) {

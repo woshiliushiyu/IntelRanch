@@ -29,6 +29,7 @@
         self.backgroundColor = BGCOLOR;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self addShadowToCell:self.bgView];
+        self.settBtn.touchAreaInsets = UIEdgeInsetsMake(10, 70, 10, 50);
         [self.settBtn addTarget:self action:@selector(touchSetting) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;

@@ -18,7 +18,11 @@
 @end
 
 @implementation DiseaseListController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView.mj_header beginRefreshing];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -29,7 +33,7 @@
     self.tableView.backgroundColor = BGCOLOR;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self requestLayoutData];
+//    [self requestLayoutData];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         

@@ -11,4 +11,6 @@
 @interface CalfManagerController : UITableViewController
 @property(nonatomic,strong)NSMutableArray * layoutArray;
 @property(nonatomic,strong)NSString * idString;
+
+@property(nonatomic,assign)BOOL _isPush;
 @end

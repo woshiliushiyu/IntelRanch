@@ -18,7 +18,11 @@
 @end
 
 @implementation FoodListController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView.mj_header beginRefreshing];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -29,7 +33,7 @@
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     self.tableView.backgroundColor = BGCOLOR;
     
-    [self requestLayoutData];
+//    [self requestLayoutData];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         

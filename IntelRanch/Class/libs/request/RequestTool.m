@@ -56,7 +56,7 @@ singleton_implementation(RequestTool);
 //牧场基本详情界面布局
 -(void)requestWithRanchBasicLayoutTo:(NSInteger)layout FinishedBlock:(RequestFinishedBlock)finishedBlock
 {
-    [LCProgressHUD showLoading:@"加载中..."];
+//    [LCProgressHUD showLoading:@"加载中..."];
     
     NSDictionary * parameterDic = @{@"id":Str(layout)};
     
@@ -171,7 +171,7 @@ singleton_implementation(RequestTool);
     
     URLString = [NSString stringWithFormat:@"%@?id=%@&token=%@&model_id=%ld&urls=%@&summary=%@",images,modelId==nil?model.id:modelId,[LoginInfoModel getLoginInfoModel].token,(long)type,urls,summery];
     
-    [[HttpToolManager sharedManager] requestWithMethod:kPOST URLString:URLString parameters:nil Upload:YES option:BcRequestCenterCachePolicyNormal finished:finishedBlock];
+    [[HttpToolManager sharedManager] requestWithMethod:kPOST URLString:[URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:nil Upload:YES option:BcRequestCenterCachePolicyNormal finished:finishedBlock];
     
 }
 //获取图片列表
@@ -207,7 +207,7 @@ singleton_implementation(RequestTool);
     
     URLString = [NSString stringWithFormat:@"%@?id=%@&token=%@&model_id=%ld&urls=%@&summary=%@",videos,modelId==nil?model.id:modelId,[LoginInfoModel getLoginInfoModel].token,type,video,summery];
     
-    [[HttpToolManager sharedManager] requestWithMethod:kPOST URLString:URLString parameters:nil Upload:YES option:BcRequestCenterCachePolicyNormal finished:finishedBlock];
+    [[HttpToolManager sharedManager] requestWithMethod:kPOST URLString:[URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] parameters:nil Upload:YES option:BcRequestCenterCachePolicyNormal finished:finishedBlock];
 }
 //获取砖家接口
 -(void)requestWithTeamInfoListForServerFinished:(RequestFinishedBlock)finishedBlock

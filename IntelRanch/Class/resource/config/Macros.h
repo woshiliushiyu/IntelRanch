@@ -9,6 +9,34 @@
 #ifndef Macros_h
 #define Macros_h
 
+
+// .h
+#define singleton_interface(class) + (instancetype)shared##class;
+
+// .m
+#define singleton_implementation(class) \
+static class *_instance; \
+\
++ (id)allocWithZone:(struct _NSZone *)zone \
+{ \
+static dispatch_once_t onceToken; \
+dispatch_once(&onceToken, ^{ \
+_instance = [super allocWithZone:zone]; \
+}); \
+\
+return _instance; \
+} \
+\
++ (instancetype)shared##class \
+{ \
+if (_instance == nil) { \
+_instance = [[class alloc] init]; \
+} \
+\
+return _instance; \
+}
+
+
 //color相关
 #define RGBColor(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define RGBColorAlpha(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]

@@ -78,7 +78,16 @@
     
     _mView.SelectRowBlock = ^(NSInteger line, NSInteger row) {
         
-        if (_stopLine >= line  | (line-(self.subTitles.count==0?0:1)) <= self.oneArray.count+self.subTitles.count) {
+        if (weakSelf.subTitles.count) {
+            
+            if (_stopLine >= line  | line < self.oneArray.count+1) {
+                
+                return NO;
+            }
+            
+        }
+        
+        if (_stopLine >= line  | line < self.oneArray.count) { //(line-(self.subTitles.count==0?0:1)) <= self.oneArray.count+self.subTitles.count) {
             
             return NO;
         }
@@ -213,6 +222,13 @@
     
     NSLog(@"提交的数据====>%@",self.tempArray);
     _stopLine = _line;
+    
+    if (self.tempArray.count==0) {
+        
+        [LCProgressHUD showInfoMsg:@"请完善信息之后上传"];
+        
+        return;
+    }
     
     WeakifySelf();
     [self.tempArray enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
