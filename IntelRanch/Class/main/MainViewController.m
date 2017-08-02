@@ -113,6 +113,18 @@
     
     [self.navigationController pushViewController:[[ProblemController alloc] init] animated:YES];
 }
+- (IBAction)mqq:(id)sender {
+    
+    //是否安装QQ
+    if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"mqq://"]])
+    {
+        //用来接收临时消息的客服QQ号码(注意此QQ号需开通QQ推广功能,否则陌生人向他发送消息会失败)
+        NSString *QQ = @"1010530278";//@"1099779883";
+        //调用QQ客户端,发起QQ临时会话
+        NSString *url = [NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",QQ];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    }
+}
 
 
 

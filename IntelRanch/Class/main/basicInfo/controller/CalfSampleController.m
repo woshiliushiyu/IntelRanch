@@ -36,29 +36,43 @@
 }
 - (void)didNavBtnClick {
     
-    __block BOOL _isStop;
+    __block BOOL _isStop = false;
+    
+    [LCProgressHUD showLoading:@"保存中..."];
     
     NSArray * keys = @[@"number",@"days",@"weight",@"height",@"italic",@"bust"];
     
-    [keys enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+
+    NSMutableArray * tempArr =  [[NSMutableArray alloc] init];
+    
+    for (NSMutableArray * tempArray in self.dataListArray) {
         
-        if ([_parameterDic[obj] isEqualToString:@""] | (_parameterDic == nil)) {
+        [tempArray enumerateObjectsUsingBlock:^(NSDictionary *  _Nonnull tempDic, NSUInteger idx, BOOL * _Nonnull stop) {
             
-            [LCProgressHUD showInfoMsg:@"请完善信息之后上传"];
-            
-            _isStop = YES;
-            
-            return;
-        }
-    }];
+            [keys enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if (tempDic[@"sort"] != nil && tempDic[@"id"] != nil) {
+                    
+                    [tempArray removeObject:tempDic];
+                }
+                
+                if ([Str(tempDic[obj]) isEqualToString:@""] | (tempDic == nil)) {
+                    
+                    [LCProgressHUD showInfoMsg:@"请完善信息之后上传"];
+                    
+                    _isStop = YES;
+                    
+                    return;
+                }
+            }];
+        }];
+        
+        [tempArr addObjectsFromArray:tempArray];
+    }
     
     if (!_isStop) {
-        
-        NSMutableDictionary * parameterDic = [[NSMutableDictionary alloc] initWithDictionary:_parameterDic];
-        
-        [parameterDic setObject:Str(_index) forKey:@"type"];
-        
-        [[RequestTool sharedRequestTool] uploadWithCalfSampleParameter:parameterDic FinishedBlock:^(id result, NSError *error) {
+            
+        [[RequestTool sharedRequestTool] uploadWithCalfSampleParameter:@{@"data":tempArr} FinishedBlock:^(id result, NSError *error) {
             
             if ([result[@"status_code"] integerValue] == 200) {
                 
@@ -88,7 +102,7 @@
             
             for (NSDictionary * dic in result[@"data"]) {
                 
-                if (![dic[@"type"] integerValue]) {
+                if ([dic[@"type"] integerValue] ==1) {
                     
                     [pArray addObject:dic];
                 }else{
@@ -135,9 +149,10 @@
         
         [self.tableView reloadData];
     };
-    cell.PassDataBlcok = ^(NSDictionary *dataDic) {
+    cell.PassDataBlcok = ^(NSArray * dataArray,NSUInteger index) {
         
-        _parameterDic = dataDic;
+//        [self.dataListArray addObjectsFromArray:dataArray.mutableCopy];
+        [self.dataListArray replaceObjectAtIndex:index withObject:dataArray];
     };
     
     return cell;
@@ -167,7 +182,7 @@
 {
     if (!_dataListArray) {
         
-        _dataListArray =[[NSMutableArray alloc] init];
+        _dataListArray =[[NSMutableArray alloc] initWithObjects:@[],@[], nil];
     }
     return _dataListArray;
 }

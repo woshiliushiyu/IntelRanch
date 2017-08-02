@@ -95,6 +95,12 @@ typedef NS_ENUM(NSInteger,NETWORK_STATE) {
 
 
 /**
+ *  判断整数是否正确
+ */
++(BOOL)CheckIntNumInput:(NSString *)text;
+
+
+/**
  *  计算字符串中字符个数 一个汉字占据两个字符
  */
 + (NSUInteger)lenghtWithString:(NSString *)string chineseCharCount:(NSUInteger*)chineseCharCount;

@@ -116,7 +116,7 @@
                 }
                 
             }else{
-                [LCProgressHUD showMessage:@"上传失败"];
+                [LCProgressHUD showMessage:result[@"message"]];
             }
         }];
     }else if (self.imagesArray.count>0) {
@@ -141,7 +141,7 @@
                 [self uploadImage];
             }
         }else{
-             [LCProgressHUD showFailure:@"上传失败"];
+             [LCProgressHUD showFailure:result[@"message"]];
         }
     }];
 }
@@ -156,9 +156,9 @@
             
             NSArray * array = result[@"data"];
             
-            if ((_isVideoSuccess && _isImgSuccess) || _photos.count ==0  || array.count==0) {
+            if ((_isVideoSuccess && _isImgSuccess) || (_photos.count ==0  && array.count==0)) {
                 
-                [LCProgressHUD showSuccess:@"视频上传成功"];
+                [LCProgressHUD showSuccess:@"上传成功"];
                 
                 self.navigationItem.rightBarButtonItem.enabled = NO;
                 
@@ -184,9 +184,9 @@
             
             NSArray * array = result[@"data"];
          
-            if ((_isVideoSuccess && _isImgSuccess) || _videos.count ==0 || array.count==0) {
+            if ((_isVideoSuccess && _isImgSuccess) || (_videos.count ==0 && array.count==0)) {
                 
-                [LCProgressHUD showSuccess:@"图片上传成功"];
+                [LCProgressHUD showSuccess:@"上传成功"];
                 
                 self.navigationItem.rightBarButtonItem.enabled = NO;
                 

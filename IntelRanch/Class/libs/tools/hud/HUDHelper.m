@@ -197,6 +197,12 @@ static const char popAnimation;
     return  [pred evaluateWithObject:text];
 }
 
+/* 判断整数是否正确 */
++(BOOL)CheckIntNumInput:(NSString *)text{
+    NSString *regex = @"[1-9][0-9]{1,}";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return  [pred evaluateWithObject:text];
+}
 
 /**
  *  计算字符串中字符个数 一个汉字占据两个字符

@@ -136,7 +136,7 @@ singleton_interface(RequestTool);
  @param parameter 索引
  @param finishedblock 回调
  */
--(void)uploadWithCalfSampleParameter:(NSMutableDictionary *)parameter FinishedBlock:(RequestFinishedBlock)finishedblock;
+-(void)uploadWithCalfSampleParameter:(NSDictionary *)parameter FinishedBlock:(RequestFinishedBlock)finishedblock;
 
 /**
  获取牧场信息

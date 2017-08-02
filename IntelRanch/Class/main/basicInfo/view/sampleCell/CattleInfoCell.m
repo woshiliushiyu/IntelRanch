@@ -19,6 +19,7 @@
     
     TableCellView * tableView;
     NSInteger _line;
+    MyRanchInfoModel * _model;
     NSMutableDictionary * tempDict;
 }
 
@@ -46,6 +47,9 @@
         tempDict = [[NSMutableDictionary alloc] initWithDictionary:@{@"number":Str(_index),@"days":@"",@"weight":@"",@"height":@"",@"italic":@"",@"bust":@""}];
         
         [self addShadowToCell:_bgView];
+        
+        
+        _model = [[MyRanchInfoModel alloc] initWithDictionary:[LocalDataTool getDataToDataName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]] error:nil];
 
     }
     return self;
@@ -89,40 +93,40 @@
 }
 -(void)selectAddBtn
 {
-    NSUInteger num = [[[NSUserDefaults standardUserDefaults] objectForKey:@"isAdd"] integerValue];
+//    NSUInteger num = [[[NSUserDefaults standardUserDefaults] objectForKey:@"isAdd"] integerValue];
+//    
+//    if ((num-1) != _index && num != 0) {
+//        
+//        [LCProgressHUD showFailure:@"完成之后再次添加"];
+//        
+//        return;
+//    }
+//
+//    __block BOOL _isStop;
+//    
+//    NSDictionary * dic = self.dataArray.lastObject;
+//    
+//    [keys enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        
+//        if ([Str(dic[obj]) isEqualToString:@""]) {
+//            
+//            [LCProgressHUD showFailure:@"请完善信息"];
+//            
+//            _isStop = YES;
+//            
+//            return;
+//        }
+//    }];
+//    
+//    if (!_isUpload && _isStop) {
+//        
+//        [LCProgressHUD showInfoMsg:@"上传成功之后再次添加"];
+//        
+//        return;
+//    }
     
-    if ((num-1) != _index && num != 0) {
-        
-        [LCProgressHUD showFailure:@"完成之后再次添加"];
-        
-        return;
-    }
-
-    __block BOOL _isStop;
+//    if (!_isStop) {
     
-    NSDictionary * dic = self.dataArray.lastObject;
-    
-    [keys enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-        if ([Str(dic[obj]) isEqualToString:@""]) {
-            
-            [LCProgressHUD showFailure:@"请完善信息"];
-            
-            _isStop = YES;
-            
-            return;
-        }
-    }];
-    
-    if (!_isUpload && _isStop) {
-        
-        [LCProgressHUD showInfoMsg:@"上传成功之后再次添加"];
-        
-        return;
-    }
-    
-    if (!_isStop) {
-        
         [self.dataArray addObject:@{@"number":Str(self.dataArray.count+1),@"days":@"",@"weight":@"",@"height":@"",@"italic":@"",@"bust":@""}];
         
         tableView.dataArray = self.dataArray;
@@ -134,9 +138,9 @@
     
         self.ReloadDataBlcok(_index);
         
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedInteger:_index+1] forKey:@"isAdd"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+//        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedInteger:_index+1] forKey:@"isAdd"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//    }
 }
 -(void)selectRowSection:(NSInteger)line List:(NSInteger)list
 {
@@ -155,21 +159,30 @@
     
     [alertView confirmBtnClickBlock:^(NSString *inputString) {
         
-        [self.dataArray removeObjectAtIndex:line];
+        if (![HUDHelper CheckIntNumInput:inputString]) {
+            
+            [LCProgressHUD showInfoMsg:@"请输入整数"];
+            
+            return;
+        }
+    
+        NSMutableDictionary * tempDic = [[NSMutableDictionary alloc] initWithDictionary:self.dataArray[line]];
         
-        [tempDict setObject:Str(line+1) forKey:@"number"];
+        [tempDic setObject:Str(_index+1) forKey:@"type"];
         
-        [tempDict removeObjectForKey:keys[list-1]];
+        [tempDic setObject:_model.id forKey:@"pasture_id"];
         
-        [tempDict setObject:inputString forKey:keys[list-1]];
+        [tempDic removeObjectForKey:keys[list-1]];
         
-        [self.dataArray insertObject:tempDict atIndex:line];
+        [tempDic setObject:inputString forKey:keys[list-1]];
+    
+        [self.dataArray replaceObjectAtIndex:line withObject:tempDic];
         
         tableView.dataArray = self.dataArray;
         
         [tableView reloadView];
     
-        self.PassDataBlcok(tempDict);
+        self.PassDataBlcok(self.dataArray,_index);
     }];
     
     _line = line;

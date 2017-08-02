@@ -125,14 +125,8 @@ singleton_implementation(RequestTool);
     [[HttpToolManager sharedManager] requestWithMethod:kGET URLString:sampleAverge parameters:parameter Upload:NO option:BcRequestCenterCachePolicyCacheAndLocal finished:finishedBlock];
 }
 //上传犊牛样本数据
--(void)uploadWithCalfSampleParameter:(NSMutableDictionary *)parameter FinishedBlock:(RequestFinishedBlock)finishedblock
-{
-    [LCProgressHUD showLoading:@"保存中..."];
-    
-    MyRanchInfoModel * model = [[MyRanchInfoModel alloc] initWithDictionary:[LocalDataTool getDataToDataName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]] error:nil];
-    
-    [parameter setObject:model.id forKey:@"pasture_id"];
-    
+-(void)uploadWithCalfSampleParameter:(NSDictionary *)parameter FinishedBlock:(RequestFinishedBlock)finishedblock
+{    
     NSString * URLString = [NSString stringWithFormat:@"%@?token=%@",uploadCalfSample,[LoginInfoModel getLoginInfoModel].token];
     
     [[HttpToolManager sharedManager] requestWithMethod:kPOST URLString:URLString parameters:parameter Upload:YES option:BcRequestCenterCachePolicyNormal finished:finishedblock];

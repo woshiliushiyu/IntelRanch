@@ -146,6 +146,17 @@ static YTKKeyValueStore *_store;
         
         finishedBlock(responseObject,nil);
         
+        if ([responseObject[@"status_code"] integerValue] == 401) {
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [[HttpToolManager sharedManager] clearLocalData];
+                [LocalDataTool clearDataTableName:[NSString stringWithString:NSStringFromClass([MyRanchInfoModel class])]];
+                [LoginInfoModel clearnLoginInfo];
+                
+                AppDelegateMain.window.rootViewController = [[RootNaviController alloc] initWithRootViewController:[[LoginController alloc] init]];
+            });
+        }
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         [LCProgressHUD showFailure:@"上传失败"];

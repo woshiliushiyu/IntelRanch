@@ -46,6 +46,8 @@
     
     _sum = 1;
     
+    _teamId = 0;
+    
     _dataArray = @[@"牧场基本信息",@"新生犊牛管理",@"犊牛饲喂管理",@"犊牛疾病管理"];
     
 }
@@ -91,14 +93,14 @@
         
         return;
     }
-    if (_teamId==nil) {
-        
-        [LCProgressHUD showInfoMsg:@"请选择专家"];
-        
-        [self shake:self.teamView];
-        
-        return;
-    }
+//    if (_teamId==nil) {
+//        
+//        [LCProgressHUD showInfoMsg:@"请选择专家"];
+//        
+//        [self shake:self.teamView];
+//        
+//        return;
+//    }
     
     [LCProgressHUD showLoading:@"上传中..."];
     

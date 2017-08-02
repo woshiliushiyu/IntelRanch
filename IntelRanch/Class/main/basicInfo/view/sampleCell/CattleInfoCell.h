@@ -10,7 +10,7 @@
 
 @interface CattleInfoCell : UITableViewCell
 @property(nonatomic,copy)void (^ReloadDataBlcok)(NSUInteger index);
-@property(nonatomic,copy)void (^PassDataBlcok)(NSDictionary * dataDic);
+@property(nonatomic,copy)void (^PassDataBlcok)(NSArray * dataArray,NSUInteger index);
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property(nonatomic,assign)NSUInteger index;
 
