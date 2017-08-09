@@ -18,6 +18,10 @@
 
 #import "SelectTableView.h"
 @interface MainViewController ()
+
+@property (strong, nonatomic) IBOutlet UIView *itemView;
+
+
 @property (strong, nonatomic) IBOutlet UIView *bgBottemView;
 
 
